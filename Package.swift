@@ -6,21 +6,27 @@ import PackageDescription
 let package = Package(
     name: "SwiftTagger",
     products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "SwiftTagger",
             targets: ["SwiftTagger"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(
+            name: "SwiftTaggerMP4",
+            url: "https://github.com/NCrusher74/SwiftTaggerMP4",
+            .branch("master")),
+        .package(
+            name: "SwiftTaggerID3",
+            url: "https://github.com/NCrusher74/SwiftTaggerID3",
+            .branch("master")),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "SwiftTagger",
-            dependencies: []),
+            dependencies: [
+            .product(name: "SwiftTaggerMP4", package: "SwiftTaggerMP4"),
+            .product(name: "SwiftTaggerID3", package: "SwiftTaggerID3")],
+        path: "Sources"),
         .testTarget(
             name: "SwiftTaggerTests",
             dependencies: ["SwiftTagger"]),
