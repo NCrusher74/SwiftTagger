@@ -10,7 +10,7 @@ import SwiftTaggerID3
 import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
-public enum Metadata {
+public enum Metadata: CaseIterable {
     // MARK: A
     case acknowledgment
     case album
@@ -395,6 +395,23 @@ public enum Metadata {
         }
     }
     
+    private static let id3KeyToMetadataMapping: [SwiftTaggerID3.FrameKey : Metadata] = {
+        var mapping = [SwiftTaggerID3.FrameKey : Metadata]()
+        for item in Metadata.allCases {
+            let id3Key = item.id3Key
+            mapping[id3Key] = item
+        }
+        return mapping
+    }()
+    
+    init?(from id3Key: SwiftTaggerID3.FrameKey) {
+        if let metadata = Metadata.id3KeyToMetadataMapping[id3Key] {
+            self = metadata
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: - MP4 Atom Identifiers
     var mp4Key: SwiftTaggerMP4.AtomIdentifier {
         switch self {
@@ -646,4 +663,22 @@ public enum Metadata {
                 return .recordingYear
         }
     }
+    
+    private static let mp4KeyToMetadataMapping: [SwiftTaggerMP4.AtomIdentifier : Metadata] = {
+        var mapping = [SwiftTaggerMP4.AtomIdentifier : Metadata]()
+        for item in Metadata.allCases {
+            let mp4Key = item.mp4Key
+            mapping[mp4Key] = item
+        }
+        return mapping
+    }()
+    
+    init?(from mp4Key: SwiftTaggerMP4.AtomIdentifier) {
+        if let metadata = Metadata.mp4KeyToMetadataMapping[mp4Key] {
+            self = metadata
+        } else {
+            return nil
+        }
+    }
+
 }
