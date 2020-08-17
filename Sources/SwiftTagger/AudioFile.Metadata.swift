@@ -109,7 +109,6 @@ extension AudioFile {
                     case .website: return mp4Tag.website
                     case .work: return mp4Tag.workName
                     case .writer: return mp4Tag.writer
-                    default: return nil // 69
             }
             case .id3:
                 switch stringMetadataID {
@@ -124,7 +123,7 @@ extension AudioFile {
                     case .artistWebpage: return id3Tag.artistWebpage
                     case .audioFileWebpage: return id3Tag.audioFileWebpage
                     case .audioSourceWebpage: return id3Tag.audioSourceWebpage
-                    case .comment: return id3Tag["Comments", .und]
+                    case .comment: return id3Tag["Comment", .und]
                     case .composer: return id3Tag.composer
                     case .composerSort: return id3Tag.composerSort
                     case .conductor: return id3Tag.conductor
@@ -183,7 +182,6 @@ extension AudioFile {
                     case .website: return id3Tag[userDefinedUrl: "Website"]
                     case .work: return id3Tag.contentGroup
                     case .writer: return id3Tag["Writer"]
-                    default: return nil
             }
         }
     }
@@ -333,7 +331,6 @@ extension AudioFile {
                             self.mp4Tag.workName = string
                         case .writer:
                             self.mp4Tag.writer = string
-                        default: break
                 }
                 case .id3:
                     switch stringMetadataID {
@@ -360,7 +357,7 @@ extension AudioFile {
                         case .audioSourceWebpage:
                             self.id3Tag.audioSourceWebpage = string
                         case .comment:
-                            self.id3Tag["Comments", .und] = string
+                            self.id3Tag["Comment", .und] = string
                         case .composer:
                             self.id3Tag.composer = string
                         case .composerSort:
@@ -477,7 +474,6 @@ extension AudioFile {
                             self.id3Tag.contentGroup = string
                         case .writer:
                             self.id3Tag["Writer"] = string
-                        default: break
                 }
             }
         } else {
@@ -624,7 +620,6 @@ extension AudioFile {
                             self.mp4Tag.workName = nil
                         case .writer:
                             self.mp4Tag.writer = nil
-                        default: break
                 }
                 case .id3:
                     switch stringMetadataID {
@@ -768,7 +763,6 @@ extension AudioFile {
                             self.id3Tag.contentGroup = nil
                         case .writer:
                             self.id3Tag["Writer"] = nil
-                        default: break
                 }
             }
         }
