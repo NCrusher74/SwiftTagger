@@ -39,6 +39,7 @@ public enum Metadata: CaseIterable {
     case composerSort
     case conductor
     case conductorID
+    case contentAdvisory
     case copyright
     case copyrightWebpage
     case coverArt
@@ -180,6 +181,7 @@ public enum Metadata: CaseIterable {
                 return .audioFileWebpage
             case .audioSourceWebpage:
                 return .audioSourceWebpage
+            // MARK: - B-C
             case .bpm:
                 return .bpm
             case .comment:
@@ -198,12 +200,15 @@ public enum Metadata: CaseIterable {
                 return .conductor
             case .conductorID:
                 return .userDefinedText(description: "ConductorID")
+            case .contentAdvisory:
+                return .userDefinedText(description: "Content Advisory")
             case .copyright:
                 return .copyright
             case .copyrightWebpage:
                 return .copyrightWebpage
             case .coverArt:
                 return .attachedPicture(description: "FrontCover")
+            // MARK: - D-F
             case .date:
                 return .date
             case .description:
@@ -226,6 +231,7 @@ public enum Metadata: CaseIterable {
                 return .fileType
             case .filmMakerWebpage:
                 return .userDefinedWebpage(description: "FilmMaker Webpage")
+            // MARK: - G-L
             case .gaplessPlayback:
                 return .playlistDelay
             case .genre:
@@ -256,6 +262,7 @@ public enum Metadata: CaseIterable {
                 return .unsynchronizedLyrics(description: "Lyrics")
             case .lyricist:
                 return .lyricist
+            // MARK: - M-N
             case .mediaType:
                 return .mediaType
             case .mood:
@@ -282,6 +289,7 @@ public enum Metadata: CaseIterable {
                 return .originalReleaseTime
             case .owner:
                 return .fileOwner
+            // MARK: - P
             case .paymentWebpage:
                 return .paymentWebpage
             case .performers:
@@ -314,6 +322,7 @@ public enum Metadata: CaseIterable {
                 return .publisherWebpage
             case .purchaseDate:
                 return .userDefinedText(description: "Purchase Date")
+            // MARK: - R-S
             case .radioStation:
                 return .radioStation
             case .radioStationOwner:
@@ -352,6 +361,7 @@ public enum Metadata: CaseIterable {
                 return .subtitle
             case .subtitleKeywords:
                 return .userDefinedText(description: "Subtitle Keywords")
+            // MARK: - T-Z
             case .taggingTime:
                 return .taggingTime
             case .time:
@@ -395,6 +405,7 @@ public enum Metadata: CaseIterable {
         }
     }
     
+    // MARK: - Init from FrameKey
     private static let id3KeyToMetadataMapping: [SwiftTaggerID3.FrameKey : Metadata] = {
         var mapping = [SwiftTaggerID3.FrameKey : Metadata]()
         for item in Metadata.allCases {
@@ -449,6 +460,7 @@ public enum Metadata: CaseIterable {
                 return .unknown
             case .audioSourceWebpage:
                 return .unknown
+            // MARK: - B-C
             case .bpm:
                 return .bpm
             case .comment:
@@ -467,12 +479,15 @@ public enum Metadata: CaseIterable {
                 return .conductor
             case .conductorID:
                 return .conductorID
+            case .contentAdvisory:
+                return .unknown
             case .copyright:
                 return .copyright
             case .copyrightWebpage:
                 return .unknown
             case .coverArt:
                 return .coverArt
+            // MARK: - D-F
             case .date:
                 return .unknown
             case .description:
@@ -495,6 +510,7 @@ public enum Metadata: CaseIterable {
                 return .format
             case .filmMakerWebpage:
                 return .filmMakerUrl
+            // MARK: - G-L
             case .gaplessPlayback:
                 return .gaplessPlayback
             case .genre:
@@ -525,6 +541,7 @@ public enum Metadata: CaseIterable {
                 return .lyrics
             case .lyricist:
                 return .lyricist
+            // MARK: - M-N
             case .mediaType:
                 return .mediaType
             case .mood:
@@ -551,6 +568,7 @@ public enum Metadata: CaseIterable {
                 return .unknown
             case .owner:
                 return .owner
+            // MARK: - P
             case .paymentWebpage:
                 return .unknown
             case .performers:
@@ -583,6 +601,7 @@ public enum Metadata: CaseIterable {
                 return .publisherUrl
             case .purchaseDate:
                 return .purchaseDate
+            // MARK: - R-S
             case .radioStation:
                 return .unknown
             case .radioStationOwner:
@@ -621,6 +640,7 @@ public enum Metadata: CaseIterable {
                 return .subtitle
             case .subtitleKeywords:
                 return .subtitleKeywords
+            // MARK: - T-Z
             case .taggingTime:
                 return .unknown
             case .time:
@@ -664,6 +684,7 @@ public enum Metadata: CaseIterable {
         }
     }
     
+    // MARK: Init From AtomID
     private static let mp4KeyToMetadataMapping: [SwiftTaggerMP4.AtomIdentifier : Metadata] = {
         var mapping = [SwiftTaggerMP4.AtomIdentifier : Metadata]()
         for item in Metadata.allCases {
@@ -681,4 +702,68 @@ public enum Metadata: CaseIterable {
         }
     }
 
+    // MARK: - Handling
+    enum ValueType {
+        case string
+        case int
+        case stringArray
+        case intArray
+        case tuple
+        case bool
+        case date
+        case other
+        case image
+        case rawData
+    }
+    
+    var valueType: ValueType {
+        switch self {
+            case .coverArt: return .image
+            case .date,
+                 .encodingTime,
+                 .originalReleaseTime,
+                 .purchaseDate,
+                 .recordingDate,
+                 .releaseDate,
+                 .taggingTime,
+                 .time,
+                 .year: return .date
+            case .arrangerKeywords,
+                 .artistKeywords,
+                 .composerKeywords,
+                 .podcastKeywords,
+                 .titleKeywords,
+                 .subtitleKeywords,
+                 .songwriterKeywords,
+                 .producerKeywords: return .stringArray
+            case .compilation,
+                 .gaplessPlayback,
+                 .podcast,
+                 .showWorkAndMovement: return .bool
+            case .albumID,
+                 .artistID,
+                 .bpm,
+                 .composerID,
+                 .conductorID,
+                 .genreID,
+                 .length,
+                 .movementCount,
+                 .movementNumber,
+                 .playlistID,
+                 .tvEpisodeNumber,
+                 .tvSeason: return .int
+            case .discNumber,
+                 .trackNumber: return .tuple
+            case .involvedPeopleList,
+                 .musicianCreditsList,
+                 .performers,
+                 .contentAdvisory,
+                 .initialKey,
+                 .mediaType,
+                 .fileType,
+                 .predefinedGenre,
+                 .rating: return .other
+            default: return .string
+        }
+    }
 }
