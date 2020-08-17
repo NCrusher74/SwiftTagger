@@ -12,9 +12,6 @@ import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
 struct AudioFile {
-    var location: URL
-    var library: Library
-    
     public init(location: URL) throws {
         self.location = location
         let validMp4Extensions = ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"]
@@ -41,6 +38,7 @@ struct AudioFile {
         }
     }
     
+    // MARK: - Write
     public func write(outputLocation: URL) throws {
         switch library {
             case .mp4:
@@ -53,6 +51,10 @@ struct AudioFile {
             }
         }
     }
+    
+    // MARK: - Properties
+    var location: URL
+    var library: Library
     
     private var mp4: SwiftTaggerMP4.Mp4File? = nil
     private var _mp4Tag: SwiftTaggerMP4.Tag? = nil
