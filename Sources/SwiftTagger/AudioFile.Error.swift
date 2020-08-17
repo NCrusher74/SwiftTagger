@@ -13,5 +13,7 @@ extension AudioFile {
     public enum Error: Swift.Error {
         /// Error thrown when audio file does not have a recognized extension
         case InvalidAudioFile
+        /// Error thrown when metadata ID cannot return specified valueType
+        case InvalidReturnValueForMetadataType
     }
 }

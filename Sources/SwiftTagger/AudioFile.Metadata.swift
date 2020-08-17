@@ -2,45 +2,38 @@
 //  File.swift
 //  
 //
-//  Created by Nolaine Crusher on 8/15/20.
+//  Created by Nolaine Crusher on 8/17/20.
 //
+
+import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
-import Foundation
 
 @available(OSX 10.13, *)
 extension AudioFile {
-    
-    public var listMetadata: [(metadataID: Metadata, value: Any)] {
-        var entries = [(Metadata, Any)]()
-        do {
-            if self.library == .SwiftTaggerMP4 {
-                let mp4File = try Mp4File(location: self.location)
-                let tag = try SwiftTaggerMP4.Tag(from: mp4File)
-                for item in tag.metadata {
-                    if let id = Metadata(from: item.identifier) {
-                        let value = item.value
-                        let entry = (id, value)
-                        entries.append(entry)
-                    }
-                }
-            } else {
-                let mp3File = try Mp3File(location: self.location)
-                let tag = try SwiftTaggerID3.Tag(readFrom: mp3File)
-                
-                for item in try tag.listMetadata() {
-                    if let id = Metadata(from: item.frameKey) {
-                        let value = item.value
-                        let entry = (id, value)
-                        entries.append(entry)
-                    }
+    public var listMetadata: [(metadataID: MetadataItem, value: Any)] {
+        var entries = [(MetadataItem, Any)]()
+        if self.library == .mp4 {
+            let tag = mp4Tag
+            for item in tag.metadata {
+                if let id = MetadataItem(from: item.identifier) {
+                    let value = item.value
+                    let entry = (id, value)
+                    entries.append(entry)
                 }
             }
-        } catch {
-            print("Unable to access metadata from source file")
+        } else {
+            let tag = id3Tag
+            for item in tag.listMetadata() {
+                if let id = MetadataItem(from: item.frameKey) {
+                    let value = item.value
+                    let entry = (id, value)
+                    entries.append(entry)
+                }
+            }
         }
         return entries
     }
     
-//    private func get(_ stringMetadataID: )
+
 }

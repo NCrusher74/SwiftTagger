@@ -10,7 +10,7 @@ import SwiftTaggerID3
 import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
-public enum Metadata: CaseIterable {
+public enum MetadataItem: CaseIterable {
     // MARK: A
     case acknowledgment
     case album
@@ -406,9 +406,9 @@ public enum Metadata: CaseIterable {
     }
     
     // MARK: - Init from FrameKey
-    private static let id3KeyToMetadataMapping: [SwiftTaggerID3.FrameKey : Metadata] = {
-        var mapping = [SwiftTaggerID3.FrameKey : Metadata]()
-        for item in Metadata.allCases {
+    private static let id3KeyToMetadataMapping: [SwiftTaggerID3.FrameKey : MetadataItem] = {
+        var mapping = [SwiftTaggerID3.FrameKey : MetadataItem]()
+        for item in MetadataItem.allCases {
             let id3Key = item.id3Key
             mapping[id3Key] = item
         }
@@ -416,7 +416,7 @@ public enum Metadata: CaseIterable {
     }()
     
     init?(from id3Key: SwiftTaggerID3.FrameKey) {
-        if let metadata = Metadata.id3KeyToMetadataMapping[id3Key] {
+        if let metadata = MetadataItem.id3KeyToMetadataMapping[id3Key] {
             self = metadata
         } else {
             return nil
@@ -685,9 +685,9 @@ public enum Metadata: CaseIterable {
     }
     
     // MARK: Init From AtomID
-    private static let mp4KeyToMetadataMapping: [SwiftTaggerMP4.AtomIdentifier : Metadata] = {
-        var mapping = [SwiftTaggerMP4.AtomIdentifier : Metadata]()
-        for item in Metadata.allCases {
+    private static let mp4KeyToMetadataMapping: [SwiftTaggerMP4.AtomIdentifier : MetadataItem] = {
+        var mapping = [SwiftTaggerMP4.AtomIdentifier : MetadataItem]()
+        for item in MetadataItem.allCases {
             let mp4Key = item.mp4Key
             mapping[mp4Key] = item
         }
@@ -695,7 +695,7 @@ public enum Metadata: CaseIterable {
     }()
     
     init?(from mp4Key: SwiftTaggerMP4.AtomIdentifier) {
-        if let metadata = Metadata.mp4KeyToMetadataMapping[mp4Key] {
+        if let metadata = MetadataItem.mp4KeyToMetadataMapping[mp4Key] {
             self = metadata
         } else {
             return nil
