@@ -18,7 +18,7 @@ let package = Package(
         .package(
             name: "SwiftTaggerID3",
             url: "https://github.com/NCrusher74/SwiftTaggerID3",
-            .branch("master")),
+            .branch("listMetadataFeature")),
     ],
     targets: [
         .target(

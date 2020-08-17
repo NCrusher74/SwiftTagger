@@ -27,8 +27,13 @@ extension AudioFile {
             } else {
                 let mp3File = try Mp3File(location: self.location)
                 let tag = try SwiftTaggerID3.Tag(readFrom: mp3File)
-                if let acknowledgment = tag.acknowledgment {
-                    
+                
+                for item in try tag.listMetadata() {
+                    if let id = Metadata(from: item.frameKey) {
+                        let value = item.value
+                        let entry = (id, value)
+                        entries.append(entry)
+                    }
                 }
             }
         } catch {

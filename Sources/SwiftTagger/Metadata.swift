@@ -183,7 +183,7 @@ public enum Metadata: CaseIterable {
             case .bpm:
                 return .bpm
             case .comment:
-                return .comments(description: "")
+                return .comments(description: "Comment")
             case .compilation:
                 return .compilation
             case .composer:
