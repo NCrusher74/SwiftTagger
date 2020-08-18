@@ -783,4 +783,150 @@ extension AudioFile {
         }
     }
     
+    var radioStation: String? {
+        get {
+            if let value = self.get(.radioStation) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.radioStation, stringValue: newValue)
+        }
+    }
+
+    var radioStationOwner: String? {
+        get {
+            if let value = self.get(.radioStationOwner) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.radioStationOwner, stringValue: newValue)
+        }
+    }
+    
+    var radioStationWebpage: String? {
+        get {
+            if let value = self.get(.radioStationWebpage) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.radioStationWebpage, stringValue: newValue)
+        }
+    }
+    
+    var recordCompany: String? {
+        get {
+            if let value = self.get(.recordCompany) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.recordCompany, stringValue: newValue)
+        }
+    }
+    
+    var recordingCopyright: String? {
+        get {
+            if let value = self.get(.recordingCopyright) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.recordingCopyright, stringValue: newValue)
+        }
+    }
+    
+    var requirements: String? {
+        get {
+            if let value = self.get(.requirements) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.requirements, stringValue: newValue)
+        }
+    }
+    
+    var sellerID: String? {
+        get {
+            if let value = self.get(.sellerID) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.sellerID, stringValue: newValue)
+        }
+    }
+    
+    var softwareVersion: String? {
+        get {
+            if let value = self.get(.softwareVersion) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.softwareVersion, stringValue: newValue)
+        }
+    }
+    
+    var songDescription: String? {
+        get {
+            if let value = self.get(.songDescription) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.songDescription, stringValue: newValue)
+        }
+    }
+    
+    var sourceCredit: String? {
+        get {
+            if let value = self.get(.sourceCredit) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.sourceCredit, stringValue: newValue)
+        }
+    }
+    
+    var subtitle: String? {
+        get {
+            if let value = self.get(.subtitle) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.subtitle, stringValue: newValue)
+        }
+    }
+    
+
 }
+/*
+ */

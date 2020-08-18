@@ -112,7 +112,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.originalLyricist = "New Original Lyricist"
         XCTAssertEqual(file.owner, "Owner")
         file.owner = "New Owner"
-
         XCTAssertEqual(file.paymentWebpage, "payment webpage")
         file.paymentWebpage = "New Payment Webpage"
         XCTAssertEqual(file.podcastCategory, "Category")
@@ -129,6 +128,29 @@ final class SwiftTaggerTests: XCTestCase {
         file.publisher = "New Publisher"
         XCTAssertEqual(file.publisherWebpage, "Publisher Url")
         file.publisherWebpage = "New Publisher Webpage"
+
+        XCTAssertEqual(file.radioStation, "radio station")
+        file.radioStation = "New Radio Station"
+        XCTAssertEqual(file.radioStationOwner, "radio station owner")
+        file.radioStationOwner = "New Radio Station Owner"
+        XCTAssertEqual(file.radioStationWebpage, "radio station webpage")
+        file.radioStationWebpage = "New Radio Station Webpage"
+        XCTAssertEqual(file.recordCompany, "Record Company")
+        file.recordCompany = "New Record Company"
+        XCTAssertEqual(file.recordingCopyright, "Recording Copyright")
+        file.recordingCopyright = "New Recording Copyright"
+        XCTAssertEqual(file.requirements, "Requirements")
+        file.requirements = "New Requirements"
+        XCTAssertEqual(file.sellerID, "Seller")
+        file.sellerID = "New Seller ID"
+        XCTAssertEqual(file.softwareVersion, "Software Version")
+        file.softwareVersion = "New Software Version"
+        XCTAssertEqual(file.songDescription, "Song Description")
+        file.songDescription = "New Song Description"
+        XCTAssertEqual(file.sourceCredit, "Source Credit")
+        file.sourceCredit = "New Source Credit"
+        XCTAssertEqual(file.subtitle, "Subtitle")
+        file.subtitle = "New Subtitle"
 
         let mp4Output = try localDirectory(fileName: "testMp4", fileExtension: "m4a")
         try file.write(outputLocation: mp4Output)
@@ -181,6 +203,17 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.producedNotice, "New Produced Notice")
         XCTAssertEqual(newFile.publisher, "New Publisher")
         XCTAssertEqual(newFile.publisherWebpage, "New Publisher Webpage")
+        XCTAssertEqual(newFile.radioStation, "New Radio Station")
+        XCTAssertEqual(newFile.radioStationOwner, "New Radio Station Owner")
+        XCTAssertEqual(newFile.radioStationWebpage, "New Radio Station Webpage")
+        XCTAssertEqual(newFile.recordCompany, "New Record Company")
+        XCTAssertEqual(newFile.recordingCopyright, "New Recording Copyright")
+        XCTAssertEqual(newFile.requirements, "New Requirements")
+        XCTAssertEqual(newFile.sellerID, "New Seller ID")
+        XCTAssertEqual(newFile.softwareVersion, "New Software Version")
+        XCTAssertEqual(newFile.songDescription, "New Song Description")
+        XCTAssertEqual(newFile.sourceCredit, "New Source Credit")
+        XCTAssertEqual(newFile.subtitle, "New Subtitle")
     }
     
     // MARK: - Mp3 String
@@ -264,7 +297,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.originalLyricist = "New Original Lyricist"
         XCTAssertEqual(file.owner, "File Owner")
         file.owner = "New Owner"
-
         XCTAssertEqual(file.paymentWebpage, "http://payment.url")
         file.paymentWebpage = "New Payment Webpage"
         XCTAssertEqual(file.podcastCategory, "Podcast Category")
@@ -281,6 +313,29 @@ final class SwiftTaggerTests: XCTestCase {
         file.publisher = "New Publisher"
         XCTAssertEqual(file.publisherWebpage, "http://publisher.url")
         file.publisherWebpage = "New Publisher Webpage"
+
+        XCTAssertEqual(file.radioStation, "Radio Station")
+        file.radioStation = "New Radio Station"
+        XCTAssertEqual(file.radioStationOwner, "Radio Station Owner")
+        file.radioStationOwner = "New Radio Station Owner"
+        XCTAssertEqual(file.radioStationWebpage, "http://radiostation.url")
+        file.radioStationWebpage = "New Radio Station Webpage"
+        XCTAssertEqual(file.recordCompany, "New Publisher")
+        file.recordCompany = "New Record Company"
+        XCTAssertNil(file.recordingCopyright)
+        file.recordingCopyright = "New Recording Copyright"
+        XCTAssertNil(file.requirements)
+        file.requirements = "New Requirements"
+        XCTAssertNil(file.sellerID)
+        file.sellerID = "New Seller ID"
+        XCTAssertNil(file.softwareVersion)
+        file.softwareVersion = "New Software Version"
+        XCTAssertEqual(file.songDescription, "Song Description")
+        file.songDescription = "New Song Description"
+        XCTAssertEqual(file.sourceCredit, "Source Credit")
+        file.sourceCredit = "New Source Credit"
+        XCTAssertEqual(file.subtitle, "Subtitle")
+        file.subtitle = "New Subtitle"
 
         let mp3Output = try localDirectory(fileName: "testMp3", fileExtension: "mp3")
         try file.write(outputLocation: mp3Output)
@@ -312,7 +367,7 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.grouping, "New Grouping")
         XCTAssertEqual(newFile.information, "New Information")
         XCTAssertEqual(newFile.isrc, "1234ISRC5678")
-        XCTAssertEqual(newFile.label, "New Publisher")
+        XCTAssertEqual(newFile.label, "New Record Company")
         XCTAssertEqual(newFile.linerNotes,"New Liner Notes")
         XCTAssertEqual(newFile.longDescription,"New Long Description")
         XCTAssertEqual(newFile.lyricist,"New Lyricist")
@@ -331,7 +386,18 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.podcastFeed, "New Podcast Feed")
         XCTAssertEqual(newFile.podcastID, "New PodcastID")
         XCTAssertEqual(newFile.producedNotice, "New Produced Notice")
-        XCTAssertEqual(newFile.publisher, "New Publisher")
+        XCTAssertEqual(newFile.publisher, "New Record Company")
         XCTAssertEqual(newFile.publisherWebpage, "New Publisher Webpage")
+        XCTAssertEqual(newFile.radioStation, "New Radio Station")
+        XCTAssertEqual(newFile.radioStationOwner, "New Radio Station Owner")
+        XCTAssertEqual(newFile.radioStationWebpage, "New Radio Station Webpage")
+        XCTAssertEqual(newFile.recordCompany, "New Record Company")
+        XCTAssertEqual(newFile.recordingCopyright, "New Recording Copyright")
+        XCTAssertEqual(newFile.requirements, "New Requirements")
+        XCTAssertEqual(newFile.sellerID, "New Seller ID")
+        XCTAssertEqual(newFile.softwareVersion, "New Software Version")
+        XCTAssertEqual(newFile.songDescription, "New Song Description")
+        XCTAssertEqual(newFile.sourceCredit, "New Source Credit")
+        XCTAssertEqual(newFile.subtitle, "New Subtitle")
     }
 }
