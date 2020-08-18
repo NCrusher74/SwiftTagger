@@ -646,7 +646,7 @@ extension AudioFile {
                         case .audioSourceWebpage:
                             self.id3Tag.audioSourceWebpage = nil
                         case .comment:
-                            self.id3Tag["Comments", .und] = nil
+                            self.id3Tag["Comment", .und] = nil
                         case .composer:
                             self.id3Tag.composer = nil
                         case .composerSort:
