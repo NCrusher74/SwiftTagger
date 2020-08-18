@@ -31,53 +31,73 @@ final class SwiftTaggerTests: XCTestCase {
         }
     }
     
-    func testReadWriteMp4StringMetadataA_C() throws {
+    // MARK: - Mp4 String
+    func testReadWriteMp4StringMetadataA_L() throws {
         var file = try AudioFile(location: mp4Meta)
-        XCTAssertEqual(file.acknowledgment, "ACKNOWLEDGMENT")
+        XCTAssertEqual(file.acknowledgment, "Acknowledgment")
         file.acknowledgment = "New Acknowledgment"
-        XCTAssertEqual(file.album, "ALBUM")
+        XCTAssertEqual(file.album, "Album")
         file.album = "New Album"
-        XCTAssertEqual(file.albumArtist, "ALBUMARTIST")
+        XCTAssertEqual(file.albumArtist, "Album Artist")
         file.albumArtist = "New Album Artist"
-        XCTAssertEqual(file.albumArtistSort, "SORTALBUMARTIST")
+        XCTAssertEqual(file.albumArtistSort, "Album Artist Sort")
         file.albumArtistSort = "New Album Artist Sort"
-        XCTAssertEqual(file.albumSort, "SORTALBUM")
+        XCTAssertEqual(file.albumSort, "Album Sort")
         file.albumSort = "New Album Sort"
-        XCTAssertEqual(file.arranger, "ARRANGER")
+        XCTAssertEqual(file.arranger, "Arranger")
         file.arranger = "New Arranger"
-        XCTAssertEqual(file.artist, "ARTIST")
+        XCTAssertEqual(file.artist, "Artist")
         file.artist = "New Artist"
-        XCTAssertEqual(file.artistSort, "SORTARTIST")
+        XCTAssertEqual(file.artistSort, "Artist Sort")
         file.artistSort = "New Artist Sort"
-        XCTAssertEqual(file.artistWebpage, "WWW.ARTIST.URL")
+        XCTAssertEqual(file.artistWebpage, "Artist Url")
         file.artistWebpage = "New Artist Webpage"
-        XCTAssertNil(file.audioFileWebpage)
+        XCTAssertEqual(file.audioFileWebpage, "audio file webpage")
         file.audioFileWebpage = "New Audio File Webpage"
-        XCTAssertNil(file.audioSourceWebpage)
+        XCTAssertEqual(file.audioSourceWebpage, "audio source webpage")
         file.audioSourceWebpage = "New Audio Source Webpage"
-        XCTAssertEqual(file.comment, "COMMENT")
+        XCTAssertEqual(file.comment, "Comment")
         file.comment = "New Comment"
-        XCTAssertEqual(file.composer, "COMPOSER")
+        XCTAssertEqual(file.composer, "Composer")
         file.composer = "New Composer"
-        XCTAssertEqual(file.composerSort, "SORTCOMPOSER")
+        XCTAssertEqual(file.composerSort, "Composer Sort")
         file.composerSort = "New Composer Sort"
-        XCTAssertEqual(file.conductor, "CONDUCTOR")
+        XCTAssertEqual(file.conductor, "Conductor")
         file.conductor = "New Conductor"
-        XCTAssertEqual(file.copyright, "2020 COPYRIGHT")
+        XCTAssertEqual(file.copyright, "Copyright")
         file.copyright = "New Copyright"
-        XCTAssertNil(file.copyrightWebpage)
+        XCTAssertEqual(file.copyrightWebpage, "copyright webpage")
         file.copyrightWebpage = "New Copyright Webpage"
-
-        XCTAssertEqual(file.description, "DESCRIPTION")
+        XCTAssertEqual(file.description, "Description")
         file.description = "New Description"
-        XCTAssertEqual(file.encodedBy, "ENCODED BY")
+        XCTAssertEqual(file.encodedBy, "Encoded By")
         file.encodedBy = "New EncodedBy"
-        XCTAssertNil(file.encodingSettings)
+        XCTAssertEqual(file.encodingSettings, "encoding settings")
         file.encodingSettings = "New Encoding Settings"
-        XCTAssertEqual(file.encodingTool, "ENCODING TOOL")
+        XCTAssertEqual(file.encodingTool, "Encoding Tool")
         file.encodingTool = "New Encoding Tool"
-        XCTAssertEqual(file.filmMakerWebpage, "FILMMAKER.COM")
+        XCTAssertEqual(file.filmMakerWebpage, "Filmmaker Url")
         file.filmMakerWebpage = "New FilmMaker Webpage"
+        XCTAssertEqual(file.genre, "Custom Genre")
+        file.genre = "New Genre"
+        XCTAssertEqual(file.grouping, "Grouping")
+        file.grouping = "New Grouping"
+        XCTAssertEqual(file.information, "Information")
+        file.information = "New Information"
+        XCTAssertEqual(file.isrc, "123456789012")
+        file.isrc = "1234ISRC5678"
+        
+        XCTAssertEqual(file.label, "Label")
+        file.label = "New Label"
+        XCTAssertEqual(file.linerNotes, "Liner Notes")
+        file.linerNotes = "New Liner Notes"
+        XCTAssertEqual(file.longDescription, "Long Description")
+        file.longDescription = "New Long Description"
+        XCTAssertEqual(file.lyricist, "Lyricist")
+        file.lyricist = "New Lyricist"
+        XCTAssertEqual(file.lyrics, "Lyrics")
+        file.lyrics = "New Lyrics"
+
 
         let mp4Output = try localDirectory(fileName: "testMp4", fileExtension: "m4a")
         try file.write(outputLocation: mp4Output)
@@ -105,9 +125,19 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.encodingSettings, "New Encoding Settings")
         XCTAssertEqual(newFile.encodingTool, "New Encoding Tool")
         XCTAssertEqual(newFile.filmMakerWebpage, "New FilmMaker Webpage")
+        XCTAssertEqual(newFile.genre, "New Genre")
+        XCTAssertEqual(newFile.grouping, "New Grouping")
+        XCTAssertEqual(newFile.information, "New Information")
+        XCTAssertEqual(newFile.isrc, "1234ISRC5678")
+        XCTAssertEqual(newFile.label, "New Label")
+        XCTAssertEqual(newFile.linerNotes,"New Liner Notes")
+        XCTAssertEqual(newFile.longDescription,"New Long Description")
+        XCTAssertEqual(newFile.lyricist,"New Lyricist")
+        XCTAssertEqual(newFile.lyrics,"New Lyrics")
     }
     
-    func testReadWriteMp3StringMetadataA_F() throws {
+    // MARK: - Mp3 String
+    func testReadWriteMp3StringMetadataA_L() throws {
         var file = try AudioFile(location: mp3v24)
         XCTAssertEqual(file.acknowledgment, "Acknowledgment")
         file.acknowledgment = "New Acknowledgment"
@@ -153,6 +183,25 @@ final class SwiftTaggerTests: XCTestCase {
         file.encodingTool = "New Encoding Tool"
         XCTAssertNil(file.filmMakerWebpage)
         file.filmMakerWebpage = "New FilmMaker Webpage"
+        XCTAssertEqual(file.genre, "Blues Refinement")
+        file.genre = "New Genre"
+        XCTAssertEqual(file.grouping, "Grouping")
+        file.grouping = "New Grouping"
+        XCTAssertNil(file.information)
+        file.information = "New Information"
+        XCTAssertEqual(file.isrc, "987654321098")
+        file.isrc = "1234ISRC5678"
+
+        XCTAssertEqual(file.label, "Publisher")
+        file.label = "New Label"
+        XCTAssertEqual(file.linerNotes, "Liner Notes")
+        file.linerNotes = "New Liner Notes"
+        XCTAssertEqual(file.longDescription, "Long Description")
+        file.longDescription = "New Long Description"
+        XCTAssertEqual(file.lyricist, "Lyricist")
+        file.lyricist = "New Lyricist"
+        XCTAssertEqual(file.lyrics, "Lyrics Content")
+        file.lyrics = "New Lyrics"
 
         let mp3Output = try localDirectory(fileName: "testMp3", fileExtension: "mp3")
         try file.write(outputLocation: mp3Output)
@@ -180,17 +229,16 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.encodingSettings, "New Encoding Settings")
         XCTAssertEqual(newFile.encodingTool, "New Encoding Tool")
         XCTAssertEqual(newFile.filmMakerWebpage, "New FilmMaker Webpage")
+        XCTAssertEqual(newFile.genre, "New Genre")
+        XCTAssertEqual(newFile.grouping, "New Grouping")
+        XCTAssertEqual(newFile.information, "New Information")
+        XCTAssertEqual(newFile.isrc, "1234ISRC5678")
+        XCTAssertEqual(newFile.label, "New Label")
+        XCTAssertEqual(newFile.linerNotes,"New Liner Notes")
+        XCTAssertEqual(newFile.longDescription,"New Long Description")
+        XCTAssertEqual(newFile.lyricist,"New Lyricist")
+        XCTAssertEqual(newFile.lyrics,"New Lyrics")
     }
 }
-
 /*
- /*
- case description
- case encodedBy
- case encodingSettings
- case encodingTool
- case filmMakerWebpage
  */
- */
-
-

@@ -43,8 +43,8 @@ enum MetadataID_String: CaseIterable { // 70 items
     case label
     case linerNotes
     case longDescription
-    case lyrics
     case lyricist
+    case lyrics
     // MARK: - M-N
     case mood
     case movementName
@@ -456,6 +456,121 @@ extension AudioFile {
         }
     }
     
+    var genre: String? {
+        get {
+            if let value = self.get(.genre) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.genre, stringValue: newValue)
+        }
+    }
 
-    
+    var grouping: String? {
+        get {
+            if let value = self.get(.grouping) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.grouping, stringValue: newValue)
+        }
+    }
+
+    var information: String? {
+        get {
+            if let value = self.get(.information) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.information, stringValue: newValue)
+        }
+    }
+
+    var isrc: String? {
+        get {
+            if let value = self.get(.isrc) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.isrc, stringValue: newValue)
+        }
+    }
+
+    var label: String? {
+        get {
+            if let value = self.get(.label) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.label, stringValue: newValue)
+        }
+    }
+
+    var linerNotes: String? {
+        get {
+            if let value = self.get(.linerNotes) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.linerNotes, stringValue: newValue)
+        }
+    }
+
+    var longDescription: String? {
+        get {
+            if let value = self.get(.longDescription) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.longDescription, stringValue: newValue)
+        }
+    }
+
+    var lyricist: String? {
+        get {
+            if let value = self.get(.lyricist) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.lyricist, stringValue: newValue)
+        }
+    }
+
+    var lyrics: String? {
+        get {
+            if let value = self.get(.lyrics) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.lyrics, stringValue: newValue)
+        }
+    }
+
 }

@@ -69,8 +69,8 @@ public enum MetadataItem: CaseIterable {
     case length // int 8
     case linerNotes
     case longDescription
-    case lyrics
     case lyricist
+    case lyrics
     // MARK: - M-N
     case mediaType // other 9
     case mood
@@ -258,10 +258,10 @@ public enum MetadataItem: CaseIterable {
                 return .comments(description: "Liner Notes")
             case .longDescription:
                 return .comments(description: "Long Description")
-            case .lyrics:
-                return .unsynchronizedLyrics(description: "Lyrics")
             case .lyricist:
                 return .lyricist
+            case .lyrics:
+                return .unsynchronizedLyrics(description: "Lyrics")
             // MARK: - M-N
             case .mediaType:
                 return .mediaType
@@ -537,10 +537,10 @@ public enum MetadataItem: CaseIterable {
                 return .linerNotes
             case .longDescription:
                 return .longDescription
-            case .lyrics:
-                return .lyrics
             case .lyricist:
                 return .lyricist
+            case .lyrics:
+                return .lyrics
             // MARK: - M-N
             case .mediaType:
                 return .mediaType

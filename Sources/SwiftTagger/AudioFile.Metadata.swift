@@ -249,10 +249,10 @@ extension AudioFile {
                             self.mp4Tag.linerNotes = string
                         case .longDescription:
                             self.mp4Tag.longDescription = string
-                        case .lyrics:
-                            self.mp4Tag.lyrics = string
                         case .lyricist:
                             self.mp4Tag.lyricist = string
+                        case .lyrics:
+                            self.mp4Tag.lyrics = string
                         case .mood:
                             self.mp4Tag.mood = string
                         case .movementName:
@@ -387,7 +387,7 @@ extension AudioFile {
                         case .isrc:
                             self.id3Tag.isrc = string
                         case .label:
-                            self.id3Tag["Label"] = string
+                            self.id3Tag.label = string
                         case .linerNotes:
                             self.id3Tag["Liner Notes", .und] = string
                         case .longDescription:
@@ -538,10 +538,10 @@ extension AudioFile {
                             self.mp4Tag.linerNotes = nil
                         case .longDescription:
                             self.mp4Tag.longDescription = nil
-                        case .lyrics:
-                            self.mp4Tag.lyrics = nil
                         case .lyricist:
                             self.mp4Tag.lyricist = nil
+                        case .lyrics:
+                            self.mp4Tag.lyrics = nil
                         case .mood:
                             self.mp4Tag.mood = nil
                         case .movementName:
@@ -676,7 +676,7 @@ extension AudioFile {
                         case .isrc:
                             self.id3Tag.isrc = nil
                         case .label:
-                            self.id3Tag["Label"] = nil
+                            self.id3Tag.label = nil
                         case .linerNotes:
                             self.id3Tag["Liner Notes", .und] = nil
                         case .longDescription:
