@@ -32,7 +32,7 @@ final class SwiftTaggerTests: XCTestCase {
     }
     
     // MARK: - Mp4 String
-    func testReadWriteMp4StringMetadataA_O() throws {
+    func testReadWriteMp4StringMetadataA_P() throws {
         var file = try AudioFile(location: mp4Meta)
         XCTAssertEqual(file.acknowledgment, "Acknowledgment")
         file.acknowledgment = "New Acknowledgment"
@@ -96,7 +96,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.lyricist = "New Lyricist"
         XCTAssertEqual(file.lyrics, "Lyrics")
         file.lyrics = "New Lyrics"
-
         XCTAssertNil(file.mood)
         file.mood = "New Mood"
         XCTAssertEqual(file.movement, "Movement Name")
@@ -113,6 +112,23 @@ final class SwiftTaggerTests: XCTestCase {
         file.originalLyricist = "New Original Lyricist"
         XCTAssertEqual(file.owner, "Owner")
         file.owner = "New Owner"
+
+        XCTAssertEqual(file.paymentWebpage, "payment webpage")
+        file.paymentWebpage = "New Payment Webpage"
+        XCTAssertEqual(file.podcastCategory, "Category")
+        file.podcastCategory = "New Podcast Category"
+        XCTAssertNil(file.podcastDescription)
+        file.podcastDescription = "New Podcast Description"
+        XCTAssertEqual(file.podcastFeed, "Podcast Url")
+        file.podcastFeed = "New Podcast Feed"
+        XCTAssertEqual(file.podcastID, "Podcast ID")
+        file.podcastID = "New PodcastID"
+        XCTAssertNil(file.producedNotice)
+        file.producedNotice = "New Produced Notice"
+        XCTAssertEqual(file.publisher, "Publisher")
+        file.publisher = "New Publisher"
+        XCTAssertEqual(file.publisherWebpage, "Publisher Url")
+        file.publisherWebpage = "New Publisher Webpage"
 
         let mp4Output = try localDirectory(fileName: "testMp4", fileExtension: "m4a")
         try file.write(outputLocation: mp4Output)
@@ -157,10 +173,18 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.originalFilename, "New Original Filename")
         XCTAssertEqual(newFile.originalLyricist, "New Original Lyricist")
         XCTAssertEqual(newFile.owner, "New Owner")
+        XCTAssertEqual(newFile.paymentWebpage, "New Payment Webpage")
+        XCTAssertEqual(newFile.podcastCategory, "New Podcast Category")
+        XCTAssertEqual(newFile.podcastDescription, "New Podcast Description")
+        XCTAssertEqual(newFile.podcastFeed, "New Podcast Feed")
+        XCTAssertEqual(newFile.podcastID, "New PodcastID")
+        XCTAssertEqual(newFile.producedNotice, "New Produced Notice")
+        XCTAssertEqual(newFile.publisher, "New Publisher")
+        XCTAssertEqual(newFile.publisherWebpage, "New Publisher Webpage")
     }
     
     // MARK: - Mp3 String
-    func testReadWriteMp3StringMetadataA_O() throws {
+    func testReadWriteMp3StringMetadataA_P() throws {
         var file = try AudioFile(location: mp3v24)
         XCTAssertEqual(file.acknowledgment, "Acknowledgment")
         file.acknowledgment = "New Acknowledgment"
@@ -224,7 +248,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.lyricist = "New Lyricist"
         XCTAssertEqual(file.lyrics, "Lyrics Content")
         file.lyrics = "New Lyrics"
-
         XCTAssertEqual(file.mood, "Mood")
         file.mood = "New Mood"
         XCTAssertEqual(file.movement, "Movement Name")
@@ -241,6 +264,23 @@ final class SwiftTaggerTests: XCTestCase {
         file.originalLyricist = "New Original Lyricist"
         XCTAssertEqual(file.owner, "File Owner")
         file.owner = "New Owner"
+
+        XCTAssertEqual(file.paymentWebpage, "http://payment.url")
+        file.paymentWebpage = "New Payment Webpage"
+        XCTAssertEqual(file.podcastCategory, "Podcast Category")
+        file.podcastCategory = "New Podcast Category"
+        XCTAssertEqual(file.podcastDescription, "Podcast Description")
+        file.podcastDescription = "New Podcast Description"
+        XCTAssertEqual(file.podcastFeed, "http://podcast.url")
+        file.podcastFeed = "New Podcast Feed"
+        XCTAssertEqual(file.podcastID, "Podcast ID")
+        file.podcastID = "New PodcastID"
+        XCTAssertEqual(file.producedNotice, "2020 Produced Notice")
+        file.producedNotice = "New Produced Notice"
+        XCTAssertEqual(file.publisher, "New Label")
+        file.publisher = "New Publisher"
+        XCTAssertEqual(file.publisherWebpage, "http://publisher.url")
+        file.publisherWebpage = "New Publisher Webpage"
 
         let mp3Output = try localDirectory(fileName: "testMp3", fileExtension: "mp3")
         try file.write(outputLocation: mp3Output)
@@ -272,12 +312,11 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.grouping, "New Grouping")
         XCTAssertEqual(newFile.information, "New Information")
         XCTAssertEqual(newFile.isrc, "1234ISRC5678")
-        XCTAssertEqual(newFile.label, "New Label")
+        XCTAssertEqual(newFile.label, "New Publisher")
         XCTAssertEqual(newFile.linerNotes,"New Liner Notes")
         XCTAssertEqual(newFile.longDescription,"New Long Description")
         XCTAssertEqual(newFile.lyricist,"New Lyricist")
         XCTAssertEqual(newFile.lyrics,"New Lyrics")
-        
         XCTAssertEqual(newFile.mood, "New Mood")
         XCTAssertEqual(newFile.movement, "New Movement")
         XCTAssertEqual(newFile.narrator, "New Narrator")
@@ -286,7 +325,13 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.originalFilename, "New Original Filename")
         XCTAssertEqual(newFile.originalLyricist, "New Original Lyricist")
         XCTAssertEqual(newFile.owner, "New Owner")
+        XCTAssertEqual(newFile.paymentWebpage, "New Payment Webpage")
+        XCTAssertEqual(newFile.podcastCategory, "New Podcast Category")
+        XCTAssertEqual(newFile.podcastDescription, "New Podcast Description")
+        XCTAssertEqual(newFile.podcastFeed, "New Podcast Feed")
+        XCTAssertEqual(newFile.podcastID, "New PodcastID")
+        XCTAssertEqual(newFile.producedNotice, "New Produced Notice")
+        XCTAssertEqual(newFile.publisher, "New Publisher")
+        XCTAssertEqual(newFile.publisherWebpage, "New Publisher Webpage")
     }
 }
-/*
- */

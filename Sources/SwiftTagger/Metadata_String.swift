@@ -679,5 +679,108 @@ extension AudioFile {
         }
     }
     
+    var paymentWebpage: String? {
+        get {
+            if let value = self.get(.paymentWebpage) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.paymentWebpage, stringValue: newValue)
+        }
+    }
+    
+    var podcastCategory: String? {
+        get {
+            if let value = self.get(.podcastCategory) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.podcastCategory, stringValue: newValue)
+        }
+    }
+ 
+    var podcastDescription: String? {
+        get {
+            if let value = self.get(.podcastDescription) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.podcastDescription, stringValue: newValue)
+        }
+    }
+    
+    var podcastFeed: String? {
+        get {
+            if let value = self.get(.podcastFeed) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.podcastFeed, stringValue: newValue)
+        }
+    }
+    
+    var podcastID: String? {
+        get {
+            if let value = self.get(.podcastID) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.podcastID, stringValue: newValue)
+        }
+    }
 
+    var producedNotice: String? {
+        get {
+            if let value = self.get(.producedNotice) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.producedNotice, stringValue: newValue)
+        }
+    }
+    
+    var publisher: String? {
+        get {
+            if let value = self.get(.publisher) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.publisher, stringValue: newValue)
+        }
+    }
+   
+    var publisherWebpage: String? {
+        get {
+            if let value = self.get(.publisherWebpage) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.publisherWebpage, stringValue: newValue)
+        }
+    }
+    
 }

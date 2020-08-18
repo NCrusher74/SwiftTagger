@@ -153,7 +153,7 @@ extension AudioFile {
                     case .owner: return id3Tag.fileOwner
                     case .paymentWebpage: return id3Tag.paymentWebpage
                     case .podcastCategory: return id3Tag.podcastCategory
-                    case .podcastDescription: return id3Tag["Podcast Description"]
+                    case .podcastDescription: return id3Tag.podcastDescription
                     case .podcastFeed: return id3Tag.podcastFeedLink
                     case .podcastID: return id3Tag.podcastID
                     case .producedNotice: return id3Tag.producedNotice
