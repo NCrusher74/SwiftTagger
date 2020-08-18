@@ -88,6 +88,7 @@ public enum MetadataItem: CaseIterable {
     // MARK: - P
     case paymentWebpage
     case performers // other 11
+    case playlistDelay
     case playlistID // int 11
     case podcast // bool 3
     case podcastCategory
@@ -294,6 +295,8 @@ public enum MetadataItem: CaseIterable {
                 return .paymentWebpage
             case .performers:
                 return .musicianCreditsList
+            case .playlistDelay:
+                return .playlistDelay
             case .playlistID:
                 return .userDefinedWebpage(description: "PlaylistID")
             case .podcast:
@@ -573,6 +576,8 @@ public enum MetadataItem: CaseIterable {
                 return .unknown
             case .performers:
                 return .performers
+            case .playlistDelay:
+                return .gaplessPlayback
             case .playlistID:
                 return .playlistID
             case .podcast:

@@ -34,6 +34,7 @@ extension AudioFile {
         }
         return entries
     }
+    
     func get(_ intMetadataID: MetadataID_Int) -> Int? {
         switch library {
             case .mp4:
@@ -64,41 +65,31 @@ extension AudioFile {
                         return mp4Tag.tvEpisodeNumber
                     case .tvSeason:
                         return mp4Tag.tvSeason
+                    case .playlistDelay:
+                        if let bool = mp4Tag.gaplessPlayback {
+                            if bool == true {
+                                return 1
+                            } else if bool == false {
+                                return 0
+                            }
+                        } else {
+                            return nil
+                    }
             }
             case .id3:
                 switch intMetadataID {
                     case .albumID:
-                        if let int = Int(id3Tag["albumID"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
+                        return Int(id3Tag["albumID"] ?? "")
                     case .appleStoreCountryID:
-                        if let int = Int(id3Tag["appleStoreCountryID"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
+                        return Int(id3Tag["appleStoreCountryID"] ?? "")
                     case .artistID:
-                        if let int = Int(id3Tag["artistID"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
+                        return Int(id3Tag["artistID"] ?? "")
                     case .bpm:
                         return id3Tag.bpm
                     case .composerID:
-                        if let int = Int(id3Tag["composerID"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
+                        return Int(id3Tag["composerID"] ?? "")
                     case .conductorID:
-                        if let int = Int(id3Tag["conductorID"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
+                        return Int(id3Tag["conductorID"] ?? "")
                     case .genreID:
                         return id3Tag.genre?.presetGenre?.code
                     case .length:
@@ -108,25 +99,15 @@ extension AudioFile {
                     case .movementNumber:
                         return id3Tag.movementNumber
                     case .playlistID:
-                        if let int = Int(id3Tag["playlistID"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
+                        return Int(id3Tag["playlistID"] ?? "")
                     case .tvEpisodeNumber:
-                        if let int = Int(id3Tag["tvEpisodeNumber"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
+                        return Int(id3Tag["tvEpisodeNumber"] ?? "")
                     case .tvSeason:
-                        if let int = Int(id3Tag["tvSeason"] ?? "") {
-                            return int
-                        } else {
-                            return nil
-                    }
-            }
-        }
+                        return Int(id3Tag["tvSeason"] ?? "")
+                    case .playlistDelay:
+                        return id3Tag.playlistDelay
+                }
+        }; return nil
     }
     
     func get(_ stringMetadataID: MetadataID_String) -> String? {
@@ -893,6 +874,12 @@ extension AudioFile {
                             mp4Tag.tvEpisodeNumber = int
                         case .tvSeason:
                             mp4Tag.tvSeason = int
+                        case .playlistDelay:
+                            if int == 1 {
+                                mp4Tag.gaplessPlayback = true
+                            } else if int == 0 {
+                                mp4Tag.gaplessPlayback = false
+                        }
                 }
                 case .id3:
                     switch intMetadataID {
@@ -922,6 +909,8 @@ extension AudioFile {
                             id3Tag["tvEpisodeNumber"] = String(int)
                         case .tvSeason:
                             id3Tag["tvSeason"] = String(int)
+                        case .playlistDelay:
+                            id3Tag.playlistDelay = int
                 }
             }
         } else {
@@ -954,6 +943,8 @@ extension AudioFile {
                             mp4Tag.tvEpisodeNumber = nil
                         case .tvSeason:
                             mp4Tag.tvSeason = nil
+                        case .playlistDelay:
+                            mp4Tag.gaplessPlayback = nil
                 }
                 case .id3:
                     switch intMetadataID {
@@ -983,6 +974,8 @@ extension AudioFile {
                             id3Tag["tvEpisodeNumber"] = nil
                         case .tvSeason:
                             id3Tag["tvSeason"] = nil
+                        case .playlistDelay:
+                            id3Tag.playlistDelay = nil
                 }
             }
         }

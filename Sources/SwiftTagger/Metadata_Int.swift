@@ -21,6 +21,7 @@ enum MetadataID_Int: CaseIterable {
     case length // int 8
     case movementCount // int 9
     case movementNumber // int 10
+    case playlistDelay
     case playlistID // int 11
     case tvEpisodeNumber // int 12
     case tvSeason // int 13
@@ -37,6 +38,7 @@ enum MetadataID_Int: CaseIterable {
             case .length: return .length
             case .movementCount: return .movementCount
             case .movementNumber: return .movementNumber
+            case .playlistDelay: return .playlistDelay
             case .playlistID: return .playlistID
             case .tvEpisodeNumber: return .tvEpisodeNumber
             case .tvSeason: return .tvSeason
@@ -191,7 +193,29 @@ extension AudioFile {
             set(.movementNumber, intValue: newValue)
         }
     }
-
+    
+    public var playlistDelay: Int? {
+        get {
+            switch library {
+                case .id3:
+                    if let value = self.get(.playlistDelay) {
+                        return value
+                    } else {
+                        return nil
+                }
+                case .mp4:
+                    if let int = self.get(.playlistDelay) {
+                        return int
+                    } else {
+                        return nil
+                }
+            }
+        }
+       set {
+            set(.playlistID, intValue: newValue)
+        }
+    }
+    
     public var playlistID: Int? {
         get {
             if let value = self.get(.playlistID) {
