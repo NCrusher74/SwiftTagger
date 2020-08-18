@@ -193,5 +193,4 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertNil(newFile.tvEpisodeNumber)
         XCTAssertNil(newFile.tvSeason)
     }
-
 }

@@ -24,4 +24,30 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertNotNil(mp3.id3Tag)
         XCTAssertFalse(mp3.listMetadata.isEmpty)
     }
+    
+    func testRemoveAllMetadataMp4() throws {
+        var file = try AudioFile(location: mp4Meta)
+        try file.removeAllMetadata()
+        XCTAssertTrue(file.listMetadata.isEmpty)
+
+        let mp4Output = try localDirectory(fileName: "testMp4-removeAll", fileExtension: "m4a")
+        try file.write(outputLocation: mp4Output)
+        
+        let newFile = try AudioFile(location: mp4Output)
+        XCTAssertTrue(newFile.listMetadata.isEmpty)
+    }
+    
+    func testRemoveAllMetadataMp3() throws {
+        var file = try AudioFile(location: mp3v24)
+        try file.removeAllMetadata()
+        XCTAssertTrue(file.listMetadata.isEmpty)
+        print(file.listMetadata)
+        
+        let mp3Output = try localDirectory(fileName: "testMp3-removeAll", fileExtension: "mp3")
+        try file.write(outputLocation: mp3Output)
+        
+        let newFile = try AudioFile(location: mp3Output)
+        XCTAssertTrue(newFile.listMetadata.isEmpty)
+    }
+
 }

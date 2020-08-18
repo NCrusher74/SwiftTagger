@@ -35,6 +35,13 @@ extension AudioFile {
         return entries
     }
     
+    public mutating func removeAllMetadata() throws {
+        switch library {
+            case .id3: try id3Tag.removeAllMetadata()
+            case .mp4: try mp4Tag.removeAllMetadata()
+        }
+    }
+
     func get(_ intMetadataID: MetadataID_Int) -> Int? {
         switch library {
             case .mp4:
