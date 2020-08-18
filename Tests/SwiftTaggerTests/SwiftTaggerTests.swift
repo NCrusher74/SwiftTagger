@@ -8,8 +8,8 @@ final class SwiftTaggerTests: XCTestCase {
     
     func testCompletion() throws {
         XCTAssertEqual(MetadataItem.allCases.count, (MetadataID_Int.allCases.count + MetadataID_Bool.allCases.count + MetadataID_Date.allCases.count + MetadataID_Image.allCases.count + MetadataID_Other.allCases.count + MetadataID_PartOfTotal.allCases.count + MetadataID_StringArray.allCases.count + MetadataID_String.allCases.count))
-        print(MetadataItem.allCases.count)
     }
+    
     func testAudioFileInit() throws {
         XCTAssertNoThrow(try AudioFile(location: mp4NoMeta))
         XCTAssertNoThrow(try AudioFile(location: mp3NoMeta))        
@@ -19,20 +19,14 @@ final class SwiftTaggerTests: XCTestCase {
         let mp4 = try AudioFile(location: mp4Meta)
         XCTAssertNotNil(mp4.mp4Tag)
         XCTAssertFalse(mp4.listMetadata.isEmpty)
-        for item in mp4.listMetadata {
-            print(item)
-        }
         
         let mp3 = try AudioFile(location: mp3v24)
         XCTAssertNotNil(mp3.id3Tag)
         XCTAssertFalse(mp3.listMetadata.isEmpty)
-        for item in mp3.listMetadata {
-            print(item)
-        }
     }
     
     // MARK: - Mp4 String
-    func testReadWriteMp4StringMetadataA_P() throws {
+    func testReadWriteMp4StringMetadata() throws {
         var file = try AudioFile(location: mp4Meta)
         XCTAssertEqual(file.acknowledgment, "Acknowledgment")
         file.acknowledgment = "New Acknowledgment"
@@ -128,7 +122,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.publisher = "New Publisher"
         XCTAssertEqual(file.publisherWebpage, "Publisher Url")
         file.publisherWebpage = "New Publisher Webpage"
-
         XCTAssertEqual(file.radioStation, "radio station")
         file.radioStation = "New Radio Station"
         XCTAssertEqual(file.radioStationOwner, "radio station owner")
@@ -151,6 +144,31 @@ final class SwiftTaggerTests: XCTestCase {
         file.sourceCredit = "New Source Credit"
         XCTAssertEqual(file.subtitle, "Subtitle")
         file.subtitle = "New Subtitle"
+
+        XCTAssertEqual(file.title, "Title")
+        file.title = "New Title"
+        XCTAssertEqual(file.titleSort, "Title Sort")
+        file.titleSort = "New Title Sort"
+        XCTAssertEqual(file.thanks, "Thanks")
+        file.thanks = "New Thanks"
+        XCTAssertEqual(file.trackSubtitle, "Track Subtitle")
+        file.trackSubtitle = "New Track Subtitle"
+        XCTAssertEqual(file.tvEpisodeTitle, "TV Episode Title")
+        file.tvEpisodeTitle = "New TV Episode Title"
+        XCTAssertEqual(file.tvNetwork, "TV Network")
+        file.tvNetwork = "New TV Network"
+        XCTAssertEqual(file.tvShow, "TV Show")
+        file.tvShow = "New TV Show"
+        XCTAssertEqual(file.tvShowDescription, "TV Show Description")
+        file.tvShowDescription = "New TV Show Description"
+        XCTAssertEqual(file.tvShowSort, "TV Show Sort")
+        file.tvShowSort = "New TV Show Sort"
+        XCTAssertEqual(file.website, "Website")
+        file.website = "New Website"
+        XCTAssertEqual(file.work, "Work")
+        file.work = "New Work"
+        XCTAssertEqual(file.writer, "Writer")
+        file.writer = "New Writer"
 
         let mp4Output = try localDirectory(fileName: "testMp4", fileExtension: "m4a")
         try file.write(outputLocation: mp4Output)
@@ -214,6 +232,18 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.songDescription, "New Song Description")
         XCTAssertEqual(newFile.sourceCredit, "New Source Credit")
         XCTAssertEqual(newFile.subtitle, "New Subtitle")
+        XCTAssertEqual(newFile.title, "New Title")
+        XCTAssertEqual(newFile.titleSort, "New Title Sort")
+        XCTAssertEqual(newFile.thanks, "New Thanks")
+        XCTAssertEqual(newFile.trackSubtitle, "New Track Subtitle")
+        XCTAssertEqual(newFile.tvEpisodeTitle, "New TV Episode Title")
+        XCTAssertEqual(newFile.tvNetwork, "New TV Network")
+        XCTAssertEqual(newFile.tvShow, "New TV Show")
+        XCTAssertEqual(newFile.tvShowDescription, "New TV Show Description")
+        XCTAssertEqual(newFile.tvShowSort, "New TV Show Sort")
+        XCTAssertEqual(newFile.website, "New Website")
+        XCTAssertEqual(newFile.work, "New Work")
+        XCTAssertEqual(newFile.writer, "New Writer")
     }
     
     // MARK: - Mp3 String
@@ -313,7 +343,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.publisher = "New Publisher"
         XCTAssertEqual(file.publisherWebpage, "http://publisher.url")
         file.publisherWebpage = "New Publisher Webpage"
-
         XCTAssertEqual(file.radioStation, "Radio Station")
         file.radioStation = "New Radio Station"
         XCTAssertEqual(file.radioStationOwner, "Radio Station Owner")
@@ -336,6 +365,31 @@ final class SwiftTaggerTests: XCTestCase {
         file.sourceCredit = "New Source Credit"
         XCTAssertEqual(file.subtitle, "Subtitle")
         file.subtitle = "New Subtitle"
+
+        XCTAssertEqual(file.title, "Title")
+        file.title = "New Title"
+        XCTAssertEqual(file.titleSort, "Title Sort")
+        file.titleSort = "New Title Sort"
+        XCTAssertEqual(file.thanks, "Thanks")
+        file.thanks = "New Thanks"
+        XCTAssertEqual(file.trackSubtitle, "Set Subtitle")
+        file.trackSubtitle = "New Track Subtitle"
+        XCTAssertNil(file.tvEpisodeTitle)
+        file.tvEpisodeTitle = "New TV Episode Title"
+        XCTAssertNil(file.tvNetwork)
+        file.tvNetwork = "New TV Network"
+        XCTAssertNil(file.tvShow)
+        file.tvShow = "New TV Show"
+        XCTAssertEqual(file.tvShowDescription, "")
+        file.tvShowDescription = "New TV Show Description"
+        XCTAssertNil(file.tvShowSort)
+        file.tvShowSort = "New TV Show Sort"
+        XCTAssertNil(file.website)
+        file.website = "New Website"
+        XCTAssertEqual(file.work, "Content Group")
+        file.work = "New Work"
+        XCTAssertNil(file.writer)
+        file.writer = "New Writer"
 
         let mp3Output = try localDirectory(fileName: "testMp3", fileExtension: "mp3")
         try file.write(outputLocation: mp3Output)
@@ -399,5 +453,17 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.songDescription, "New Song Description")
         XCTAssertEqual(newFile.sourceCredit, "New Source Credit")
         XCTAssertEqual(newFile.subtitle, "New Subtitle")
+        XCTAssertEqual(newFile.title, "New Title")
+        XCTAssertEqual(newFile.titleSort, "New Title Sort")
+        XCTAssertEqual(newFile.thanks, "New Thanks")
+        XCTAssertEqual(newFile.trackSubtitle, "New Track Subtitle")
+        XCTAssertEqual(newFile.tvEpisodeTitle, "New TV Episode Title")
+        XCTAssertEqual(newFile.tvNetwork, "New TV Network")
+        XCTAssertEqual(newFile.tvShow, "New TV Show")
+        XCTAssertEqual(newFile.tvShowDescription, "New TV Show Description")
+        XCTAssertEqual(newFile.tvShowSort, "New TV Show Sort")
+        XCTAssertEqual(newFile.website, "New Website")
+        XCTAssertEqual(newFile.work, "New Work")
+        XCTAssertEqual(newFile.writer, "New Writer")
     }
 }

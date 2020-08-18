@@ -783,6 +783,7 @@ extension AudioFile {
         }
     }
     
+    // MARK: - Accessors R-S
     var radioStation: String? {
         get {
             if let value = self.get(.radioStation) {
@@ -926,7 +927,160 @@ extension AudioFile {
         }
     }
     
+    // MARK: - Accesors T-Z
+    var title: String? {
+        get {
+            if let value = self.get(.title) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.title, stringValue: newValue)
+        }
+    }
 
+    var titleSort: String? {
+        get {
+            if let value = self.get(.titleSort) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.titleSort, stringValue: newValue)
+        }
+    }
+
+    var thanks: String? {
+        get {
+            if let value = self.get(.thanks) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.thanks, stringValue: newValue)
+        }
+    }
+
+    var trackSubtitle: String? {
+        get {
+            if let value = self.get(.trackSubtitle) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.trackSubtitle, stringValue: newValue)
+        }
+    }
+    
+    var tvEpisodeTitle: String? {
+        get {
+            if let value = self.get(.tvEpisodeTitle) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.tvEpisodeTitle, stringValue: newValue)
+        }
+    }
+
+    var tvNetwork: String? {
+        get {
+            if let value = self.get(.tvNetwork) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.tvNetwork, stringValue: newValue)
+        }
+    }
+
+    var tvShow: String? {
+        get {
+            if let value = self.get(.tvShow) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.tvShow, stringValue: newValue)
+        }
+    }
+
+    var tvShowDescription: String? {
+        get {
+            if let value = self.get(.tvShowDescription) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.tvShowDescription, stringValue: newValue)
+        }
+    }
+
+    var tvShowSort: String? {
+        get {
+            if let value = self.get(.tvShowSort) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.tvShowSort, stringValue: newValue)
+        }
+    }
+
+    var website: String? {
+        get {
+            if let value = self.get(.website) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.website, stringValue: newValue)
+        }
+    }
+
+    var work: String? {
+        get {
+            if let value = self.get(.work) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.work, stringValue: newValue)
+        }
+    }
+
+    var writer: String? {
+        get {
+            if let value = self.get(.writer) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.writer, stringValue: newValue)
+        }
+    }
 }
-/*
- */
