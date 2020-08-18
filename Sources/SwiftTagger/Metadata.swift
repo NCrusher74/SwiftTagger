@@ -34,6 +34,100 @@ extension AudioFile {
         }
         return entries
     }
+    func get(_ intMetadataID: MetadataID_Int) -> Int? {
+        switch library {
+            case .mp4:
+                switch intMetadataID {
+                    case .albumID:
+                        return mp4Tag.albumID
+                    case .appleStoreCountryID:
+                        return mp4Tag.appleStoreCountryID
+                    case .artistID:
+                        return mp4Tag.artistID
+                    case .bpm:
+                        return mp4Tag.bpm
+                    case .composerID:
+                        return mp4Tag.composerID
+                    case .conductorID:
+                        return mp4Tag.conductorID
+                    case .genreID:
+                        return mp4Tag.genreID?.rawValue
+                    case .length:
+                        return mp4Tag.length
+                    case .movementCount:
+                        return mp4Tag.movementCount
+                    case .movementNumber:
+                        return mp4Tag.movementNumber
+                    case .playlistID:
+                        return mp4Tag.playlistID
+                    case .tvEpisodeNumber:
+                        return mp4Tag.tvEpisodeNumber
+                    case .tvSeason:
+                        return mp4Tag.tvSeason
+            }
+            case .id3:
+                switch intMetadataID {
+                    case .albumID:
+                        if let int = Int(id3Tag["albumID"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+                    case .appleStoreCountryID:
+                        if let int = Int(id3Tag["appleStoreCountryID"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+                    case .artistID:
+                        if let int = Int(id3Tag["artistID"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+                    case .bpm:
+                        return id3Tag.bpm
+                    case .composerID:
+                        if let int = Int(id3Tag["composerID"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+                    case .conductorID:
+                        if let int = Int(id3Tag["conductorID"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+                    case .genreID:
+                        return id3Tag.genre?.presetGenre?.code
+                    case .length:
+                        return id3Tag.length
+                    case .movementCount:
+                        return id3Tag.totalMovements
+                    case .movementNumber:
+                        return id3Tag.movementNumber
+                    case .playlistID:
+                        if let int = Int(id3Tag["playlistID"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+                    case .tvEpisodeNumber:
+                        if let int = Int(id3Tag["tvEpisodeNumber"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+                    case .tvSeason:
+                        if let int = Int(id3Tag["tvSeason"] ?? "") {
+                            return int
+                        } else {
+                            return nil
+                    }
+            }
+        }
+    }
     
     func get(_ stringMetadataID: MetadataID_String) -> String? {
         switch library {
@@ -768,4 +862,129 @@ extension AudioFile {
         }
     }
     
+    mutating func set(_ intMetadataID: MetadataID_Int, intValue: Int?) {
+        if let int = intValue {
+            switch library {
+                case .mp4:
+                    switch intMetadataID {
+                        case .albumID:
+                            mp4Tag.albumID = int
+                        case .appleStoreCountryID:
+                            mp4Tag.appleStoreCountryID = int
+                        case .artistID:
+                            mp4Tag.artistID = int
+                        case .bpm:
+                            mp4Tag.bpm = int
+                        case .composerID:
+                            mp4Tag.composerID = int
+                        case .conductorID:
+                            mp4Tag.conductorID = int
+                        case .genreID:
+                            mp4Tag.genreID = SwiftTaggerMP4.Genres(rawValue: int)
+                        case .length:
+                            break
+                        case .movementCount:
+                            mp4Tag.movementCount = int
+                        case .movementNumber:
+                            mp4Tag.movementNumber = int
+                        case .playlistID:
+                            mp4Tag.playlistID = int
+                        case .tvEpisodeNumber:
+                            mp4Tag.tvEpisodeNumber = int
+                        case .tvSeason:
+                            mp4Tag.tvSeason = int
+                }
+                case .id3:
+                    switch intMetadataID {
+                        case .albumID:
+                        id3Tag["albumID"] = String(int)
+                        case .appleStoreCountryID:
+                            id3Tag["appleStoreCountryID"] = String(int)
+                        case .artistID:
+                            id3Tag["artistID"] = String(int)
+                        case .bpm:
+                            id3Tag.bpm = int
+                        case .composerID:
+                        id3Tag["composerID"] = String(int)
+                        case.conductorID:
+                        id3Tag["conductorID"] = String(int)
+                        case .genreID:
+                            id3Tag.genre?.presetGenre = SwiftTaggerID3.GenreType(code: int)
+                        case .length:
+                            id3Tag.length = int
+                        case .movementCount:
+                            id3Tag.totalMovements = int
+                        case .movementNumber:
+                            id3Tag.movementNumber = int
+                        case .playlistID:
+                            id3Tag["playlistID"] = String(int)
+                        case .tvEpisodeNumber:
+                            id3Tag["tvEpisodeNumber"] = String(int)
+                        case .tvSeason:
+                            id3Tag["tvSeason"] = String(int)
+                }
+            }
+        } else {
+            switch library {
+                case .mp4:
+                    switch intMetadataID {
+                        case .albumID:
+                            mp4Tag.albumID = nil
+                        case .appleStoreCountryID:
+                            mp4Tag.appleStoreCountryID = nil
+                        case .artistID:
+                            mp4Tag.artistID = nil
+                        case .bpm:
+                            mp4Tag.bpm = nil
+                        case .composerID:
+                            mp4Tag.composerID = nil
+                        case .conductorID:
+                            mp4Tag.conductorID = nil
+                        case .genreID:
+                            mp4Tag.genreID = nil
+                        case .length:
+                            break
+                        case .movementCount:
+                            mp4Tag.movementCount = nil
+                        case .movementNumber:
+                            mp4Tag.movementNumber = nil
+                        case .playlistID:
+                            mp4Tag.playlistID = nil
+                        case .tvEpisodeNumber:
+                            mp4Tag.tvEpisodeNumber = nil
+                        case .tvSeason:
+                            mp4Tag.tvSeason = nil
+                }
+                case .id3:
+                    switch intMetadataID {
+                        case .albumID:
+                            id3Tag["albumID"] = nil
+                        case .appleStoreCountryID:
+                            id3Tag["appleStoreCountryID"] = nil
+                        case .artistID:
+                            id3Tag["artistID"] = nil
+                        case .bpm:
+                            id3Tag.bpm = nil
+                        case .composerID:
+                            id3Tag["composerID"] = nil
+                        case.conductorID:
+                            id3Tag["conductorID"] = nil
+                        case .genreID:
+                            id3Tag.genre?.presetGenre = nil
+                        case .length:
+                            id3Tag.length = nil
+                        case .movementCount:
+                            id3Tag.totalMovements = nil
+                        case .movementNumber:
+                            id3Tag.movementNumber = nil
+                        case .playlistID:
+                            id3Tag["playlistID"] = nil
+                        case .tvEpisodeNumber:
+                            id3Tag["tvEpisodeNumber"] = nil
+                        case .tvSeason:
+                            id3Tag["tvSeason"] = nil
+                }
+            }
+        }
+    }
 }

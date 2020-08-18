@@ -834,37 +834,3 @@ enum MetadataID_Bool: CaseIterable {
         }
     }
 }
-@available(OSX 10.13, *)
-enum MetadataID_Int: CaseIterable {
-    case albumID // int 1
-    case appleStoreCountryID // int 2
-    case artistID // int 3
-    case bpm // int 4
-    case composerID // int 5
-    case conductorID // int 6
-    case genreID // int 7
-    case length // int 8
-    case movementCount // int 9
-    case movementNumber // int 10
-    case playlistID // int 11
-    case tvEpisodeNumber // int 12
-    case tvSeason // int 13
-    
-    var metadataItem: MetadataItem {
-        switch self {
-            case .albumID: return .albumID
-            case .appleStoreCountryID: return .appleStoreCountryID
-            case .artistID: return .artistID
-            case .bpm: return .bpm
-            case .composerID: return .composerID
-            case .conductorID: return .conductorID
-            case .genreID: return .genreID
-            case .length: return .length
-            case .movementCount: return .movementCount
-            case .movementNumber: return .movementNumber
-            case .playlistID: return .playlistID
-            case .tvEpisodeNumber: return .tvEpisodeNumber
-            case .tvSeason: return .tvSeason
-        }
-    }
-}

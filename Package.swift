@@ -14,11 +14,11 @@ let package = Package(
         .package(
             name: "SwiftTaggerMP4",
             url: "https://github.com/NCrusher74/SwiftTaggerMP4",
-            .branch("master")),
+            .branch("testing-as-dependency")),
         .package(
             name: "SwiftTaggerID3",
             url: "https://github.com/NCrusher74/SwiftTaggerID3",
-            .branch("master")),
+            .branch("testing-as-dependency")),
     ],
     targets: [
         .target(

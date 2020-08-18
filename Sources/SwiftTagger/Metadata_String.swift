@@ -168,7 +168,7 @@ enum MetadataID_String: CaseIterable { // 70 items
 @available(OSX 10.13, *)
 extension AudioFile {
     // MARK: - Accesors A
-    var acknowledgment: String? {
+    public var acknowledgment: String? {
         get {
             if let value = self.get(.acknowledgment) {
                 return value
@@ -181,7 +181,7 @@ extension AudioFile {
         }
     }
     
-    var album: String? {
+    public var album: String? {
         get {
             if let value = self.get(.album) {
                 return value
@@ -194,7 +194,7 @@ extension AudioFile {
         }
     }
 
-    var albumArtist: String? {
+    public var albumArtist: String? {
         get {
             if let value = self.get(.albumArtist) {
                 return value
@@ -207,7 +207,7 @@ extension AudioFile {
         }
     }
 
-    var albumArtistSort: String? {
+    public var albumArtistSort: String? {
         get {
             if let value = self.get(.albumArtistSort) {
                 return value
@@ -220,7 +220,7 @@ extension AudioFile {
         }
     }
 
-    var albumSort: String? {
+    public var albumSort: String? {
         get {
             if let value = self.get(.albumSort) {
                 return value
@@ -233,7 +233,7 @@ extension AudioFile {
         }
     }
 
-    var arranger: String? {
+    public var arranger: String? {
         get {
             if let value = self.get(.arranger) {
                 return value
@@ -246,7 +246,7 @@ extension AudioFile {
         }
     }
     
-    var artist: String? {
+    public var artist: String? {
         get {
             if let value = self.get(.artist) {
                 return value
@@ -259,7 +259,7 @@ extension AudioFile {
         }
     }
     
-    var artistSort: String? {
+    public var artistSort: String? {
         get {
             if let value = self.get(.artistSort) {
                 return value
@@ -272,7 +272,7 @@ extension AudioFile {
         }
     }
 
-    var artistWebpage: String? {
+    public var artistWebpage: String? {
         get {
             if let value = self.get(.artistWebpage) {
                 return value
@@ -285,7 +285,7 @@ extension AudioFile {
         }
     }
 
-    var audioFileWebpage: String? {
+    public var audioFileWebpage: String? {
         get {
             if let value = self.get(.audioFileWebpage) {
                 return value
@@ -298,7 +298,7 @@ extension AudioFile {
         }
     }
 
-    var audioSourceWebpage: String? {
+    public var audioSourceWebpage: String? {
         get {
             if let value = self.get(.audioSourceWebpage) {
                 return value
@@ -312,7 +312,7 @@ extension AudioFile {
     }
     
     // MARK: Accessors C
-    var comment: String? {
+    public var comment: String? {
         get {
             if let value = self.get(.comment) {
                 return value
@@ -325,7 +325,7 @@ extension AudioFile {
         }
     }
     
-    var composer: String? {
+    public var composer: String? {
         get {
             if let value = self.get(.composer) {
                 return value
@@ -338,7 +338,7 @@ extension AudioFile {
         }
     }
     
-    var composerSort: String? {
+    public var composerSort: String? {
         get {
             if let value = self.get(.composerSort) {
                 return value
@@ -351,7 +351,7 @@ extension AudioFile {
         }
     }
     
-    var conductor: String? {
+    public var conductor: String? {
         get {
             if let value = self.get(.conductor) {
                 return value
@@ -364,7 +364,7 @@ extension AudioFile {
         }
     }
     
-    var copyright: String? {
+    public var copyright: String? {
         get {
             if let value = self.get(.copyright) {
                 return value
@@ -377,7 +377,7 @@ extension AudioFile {
         }
     }
     
-    var copyrightWebpage: String? {
+    public var copyrightWebpage: String? {
         get {
             if let value = self.get(.copyrightWebpage) {
                 return value
@@ -391,7 +391,7 @@ extension AudioFile {
     }
     
     // MARK: - Accessors D-F
-    var description: String? {
+    public var description: String? {
         get {
             if let value = self.get(.description) {
                 return value
@@ -404,7 +404,7 @@ extension AudioFile {
         }
     }
     
-    var encodedBy: String? {
+    public var encodedBy: String? {
         get {
             if let value = self.get(.encodedBy) {
                 return value
@@ -417,7 +417,7 @@ extension AudioFile {
         }
     }
     
-    var encodingSettings: String? {
+    public var encodingSettings: String? {
         get {
             if let value = self.get(.encodingSettings) {
                 return value
@@ -430,7 +430,7 @@ extension AudioFile {
         }
     }
     
-    var encodingTool: String? {
+    public var encodingTool: String? {
         get {
             if let value = self.get(.encodingTool) {
                 return value
@@ -443,7 +443,7 @@ extension AudioFile {
         }
     }
     
-    var filmMakerWebpage: String? {
+    public var filmMakerWebpage: String? {
         get {
             if let value = self.get(.filmMakerWebpage) {
                 return value
@@ -457,7 +457,7 @@ extension AudioFile {
     }
     
     // MARK: - Accessors G-L
-    var genre: String? {
+    public var genre: String? {
         get {
             if let value = self.get(.genre) {
                 return value
@@ -470,7 +470,7 @@ extension AudioFile {
         }
     }
 
-    var grouping: String? {
+    public var grouping: String? {
         get {
             if let value = self.get(.grouping) {
                 return value
@@ -483,7 +483,7 @@ extension AudioFile {
         }
     }
 
-    var information: String? {
+    public var information: String? {
         get {
             if let value = self.get(.information) {
                 return value
@@ -496,7 +496,7 @@ extension AudioFile {
         }
     }
 
-    var isrc: String? {
+    public var isrc: String? {
         get {
             if let value = self.get(.isrc) {
                 return value
@@ -509,7 +509,7 @@ extension AudioFile {
         }
     }
 
-    var label: String? {
+    public var label: String? {
         get {
             if let value = self.get(.label) {
                 return value
@@ -522,7 +522,7 @@ extension AudioFile {
         }
     }
 
-    var linerNotes: String? {
+    public var linerNotes: String? {
         get {
             if let value = self.get(.linerNotes) {
                 return value
@@ -535,7 +535,7 @@ extension AudioFile {
         }
     }
 
-    var longDescription: String? {
+    public var longDescription: String? {
         get {
             if let value = self.get(.longDescription) {
                 return value
@@ -548,7 +548,7 @@ extension AudioFile {
         }
     }
 
-    var lyricist: String? {
+    public var lyricist: String? {
         get {
             if let value = self.get(.lyricist) {
                 return value
@@ -561,7 +561,7 @@ extension AudioFile {
         }
     }
 
-    var lyrics: String? {
+    public var lyrics: String? {
         get {
             if let value = self.get(.lyrics) {
                 return value
@@ -575,7 +575,7 @@ extension AudioFile {
     }
 
     // MARK: - Accesors M-O
-    var mood: String? {
+    public var mood: String? {
         get {
             if let value = self.get(.mood) {
                 return value
@@ -588,7 +588,7 @@ extension AudioFile {
         }
     }
     
-    var movement: String? {
+    public var movement: String? {
         get {
             if let value = self.get(.movementName) {
                 return value
@@ -601,7 +601,7 @@ extension AudioFile {
         }
     }
     
-    var narrator: String? {
+    public var narrator: String? {
         get {
             if let value = self.get(.narrator) {
                 return value
@@ -614,7 +614,7 @@ extension AudioFile {
         }
     }
     
-    var originalAlbum: String? {
+    public var originalAlbum: String? {
         get {
             if let value = self.get(.originalAlbum) {
                 return value
@@ -627,7 +627,7 @@ extension AudioFile {
         }
     }
     
-    var originalArtist: String? {
+    public var originalArtist: String? {
         get {
             if let value = self.get(.originalArtist) {
                 return value
@@ -640,7 +640,7 @@ extension AudioFile {
         }
     }
     
-    var originalFilename: String? {
+    public var originalFilename: String? {
         get {
             if let value = self.get(.originalFilename) {
                 return value
@@ -653,7 +653,7 @@ extension AudioFile {
         }
     }
     
-    var originalLyricist: String? {
+    public var originalLyricist: String? {
         get {
             if let value = self.get(.originalLyricist) {
                 return value
@@ -666,7 +666,7 @@ extension AudioFile {
         }
     }
     
-    var owner: String? {
+    public var owner: String? {
         get {
             if let value = self.get(.owner) {
                 return value
@@ -679,7 +679,7 @@ extension AudioFile {
         }
     }
     
-    var paymentWebpage: String? {
+    public var paymentWebpage: String? {
         get {
             if let value = self.get(.paymentWebpage) {
                 return value
@@ -692,7 +692,7 @@ extension AudioFile {
         }
     }
     
-    var podcastCategory: String? {
+    public var podcastCategory: String? {
         get {
             if let value = self.get(.podcastCategory) {
                 return value
@@ -705,7 +705,7 @@ extension AudioFile {
         }
     }
  
-    var podcastDescription: String? {
+    public var podcastDescription: String? {
         get {
             if let value = self.get(.podcastDescription) {
                 return value
@@ -718,7 +718,7 @@ extension AudioFile {
         }
     }
     
-    var podcastFeed: String? {
+    public var podcastFeed: String? {
         get {
             if let value = self.get(.podcastFeed) {
                 return value
@@ -731,7 +731,7 @@ extension AudioFile {
         }
     }
     
-    var podcastID: String? {
+    public var podcastID: String? {
         get {
             if let value = self.get(.podcastID) {
                 return value
@@ -744,7 +744,7 @@ extension AudioFile {
         }
     }
 
-    var producedNotice: String? {
+    public var producedNotice: String? {
         get {
             if let value = self.get(.producedNotice) {
                 return value
@@ -757,7 +757,7 @@ extension AudioFile {
         }
     }
     
-    var publisher: String? {
+    public var publisher: String? {
         get {
             if let value = self.get(.publisher) {
                 return value
@@ -770,7 +770,7 @@ extension AudioFile {
         }
     }
    
-    var publisherWebpage: String? {
+    public var publisherWebpage: String? {
         get {
             if let value = self.get(.publisherWebpage) {
                 return value
@@ -784,7 +784,7 @@ extension AudioFile {
     }
     
     // MARK: - Accessors R-S
-    var radioStation: String? {
+    public var radioStation: String? {
         get {
             if let value = self.get(.radioStation) {
                 return value
@@ -797,7 +797,7 @@ extension AudioFile {
         }
     }
 
-    var radioStationOwner: String? {
+    public var radioStationOwner: String? {
         get {
             if let value = self.get(.radioStationOwner) {
                 return value
@@ -810,7 +810,7 @@ extension AudioFile {
         }
     }
     
-    var radioStationWebpage: String? {
+    public var radioStationWebpage: String? {
         get {
             if let value = self.get(.radioStationWebpage) {
                 return value
@@ -823,7 +823,7 @@ extension AudioFile {
         }
     }
     
-    var recordCompany: String? {
+    public var recordCompany: String? {
         get {
             if let value = self.get(.recordCompany) {
                 return value
@@ -836,7 +836,7 @@ extension AudioFile {
         }
     }
     
-    var recordingCopyright: String? {
+    public var recordingCopyright: String? {
         get {
             if let value = self.get(.recordingCopyright) {
                 return value
@@ -849,7 +849,7 @@ extension AudioFile {
         }
     }
     
-    var requirements: String? {
+    public var requirements: String? {
         get {
             if let value = self.get(.requirements) {
                 return value
@@ -862,7 +862,7 @@ extension AudioFile {
         }
     }
     
-    var sellerID: String? {
+    public var sellerID: String? {
         get {
             if let value = self.get(.sellerID) {
                 return value
@@ -875,7 +875,7 @@ extension AudioFile {
         }
     }
     
-    var softwareVersion: String? {
+    public var softwareVersion: String? {
         get {
             if let value = self.get(.softwareVersion) {
                 return value
@@ -888,7 +888,7 @@ extension AudioFile {
         }
     }
     
-    var songDescription: String? {
+    public var songDescription: String? {
         get {
             if let value = self.get(.songDescription) {
                 return value
@@ -901,7 +901,7 @@ extension AudioFile {
         }
     }
     
-    var sourceCredit: String? {
+    public var sourceCredit: String? {
         get {
             if let value = self.get(.sourceCredit) {
                 return value
@@ -914,7 +914,7 @@ extension AudioFile {
         }
     }
     
-    var subtitle: String? {
+    public var subtitle: String? {
         get {
             if let value = self.get(.subtitle) {
                 return value
@@ -928,7 +928,7 @@ extension AudioFile {
     }
     
     // MARK: - Accesors T-Z
-    var title: String? {
+    public var title: String? {
         get {
             if let value = self.get(.title) {
                 return value
@@ -941,7 +941,7 @@ extension AudioFile {
         }
     }
 
-    var titleSort: String? {
+    public var titleSort: String? {
         get {
             if let value = self.get(.titleSort) {
                 return value
@@ -954,7 +954,7 @@ extension AudioFile {
         }
     }
 
-    var thanks: String? {
+    public var thanks: String? {
         get {
             if let value = self.get(.thanks) {
                 return value
@@ -967,7 +967,7 @@ extension AudioFile {
         }
     }
 
-    var trackSubtitle: String? {
+    public var trackSubtitle: String? {
         get {
             if let value = self.get(.trackSubtitle) {
                 return value
@@ -980,7 +980,7 @@ extension AudioFile {
         }
     }
     
-    var tvEpisodeTitle: String? {
+    public var tvEpisodeTitle: String? {
         get {
             if let value = self.get(.tvEpisodeTitle) {
                 return value
@@ -993,7 +993,7 @@ extension AudioFile {
         }
     }
 
-    var tvNetwork: String? {
+    public var tvNetwork: String? {
         get {
             if let value = self.get(.tvNetwork) {
                 return value
@@ -1006,7 +1006,7 @@ extension AudioFile {
         }
     }
 
-    var tvShow: String? {
+    public var tvShow: String? {
         get {
             if let value = self.get(.tvShow) {
                 return value
@@ -1019,7 +1019,7 @@ extension AudioFile {
         }
     }
 
-    var tvShowDescription: String? {
+    public var tvShowDescription: String? {
         get {
             if let value = self.get(.tvShowDescription) {
                 return value
@@ -1032,7 +1032,7 @@ extension AudioFile {
         }
     }
 
-    var tvShowSort: String? {
+    public var tvShowSort: String? {
         get {
             if let value = self.get(.tvShowSort) {
                 return value
@@ -1045,7 +1045,7 @@ extension AudioFile {
         }
     }
 
-    var website: String? {
+    public var website: String? {
         get {
             if let value = self.get(.website) {
                 return value
@@ -1058,7 +1058,7 @@ extension AudioFile {
         }
     }
 
-    var work: String? {
+    public var work: String? {
         get {
             if let value = self.get(.work) {
                 return value
@@ -1071,7 +1071,7 @@ extension AudioFile {
         }
     }
 
-    var writer: String? {
+    public var writer: String? {
         get {
             if let value = self.get(.writer) {
                 return value
