@@ -456,6 +456,7 @@ extension AudioFile {
         }
     }
     
+    // MARK: - Accessors G-L
     var genre: String? {
         get {
             if let value = self.get(.genre) {
@@ -572,5 +573,111 @@ extension AudioFile {
             set(.lyrics, stringValue: newValue)
         }
     }
+
+    // MARK: - Accesors M-O
+    var mood: String? {
+        get {
+            if let value = self.get(.mood) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.mood, stringValue: newValue)
+        }
+    }
+    
+    var movement: String? {
+        get {
+            if let value = self.get(.movementName) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.movementName, stringValue: newValue)
+        }
+    }
+    
+    var narrator: String? {
+        get {
+            if let value = self.get(.narrator) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.narrator, stringValue: newValue)
+        }
+    }
+    
+    var originalAlbum: String? {
+        get {
+            if let value = self.get(.originalAlbum) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.originalAlbum, stringValue: newValue)
+        }
+    }
+    
+    var originalArtist: String? {
+        get {
+            if let value = self.get(.originalArtist) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.originalArtist, stringValue: newValue)
+        }
+    }
+    
+    var originalFilename: String? {
+        get {
+            if let value = self.get(.originalFilename) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.originalFilename, stringValue: newValue)
+        }
+    }
+    
+    var originalLyricist: String? {
+        get {
+            if let value = self.get(.originalLyricist) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.originalLyricist, stringValue: newValue)
+        }
+    }
+    
+    var owner: String? {
+        get {
+            if let value = self.get(.owner) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.owner, stringValue: newValue)
+        }
+    }
+    
 
 }

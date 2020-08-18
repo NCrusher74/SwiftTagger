@@ -258,7 +258,7 @@ extension AudioFile {
                         case .movementName:
                             self.mp4Tag.movementName = string
                         case .narrator:
-                            self.mp4Tag.composer = string
+                            self.mp4Tag.narrator = string
                         case .originalAlbum:
                             self.mp4Tag.originalAlbum = string
                         case .originalArtist:
@@ -547,7 +547,7 @@ extension AudioFile {
                         case .movementName:
                             self.mp4Tag.movementName = nil
                         case .narrator:
-                            self.mp4Tag.composer = nil
+                            self.mp4Tag.narrator = nil
                         case .originalAlbum:
                             self.mp4Tag.originalAlbum = nil
                         case .originalArtist:

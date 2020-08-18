@@ -32,7 +32,7 @@ final class SwiftTaggerTests: XCTestCase {
     }
     
     // MARK: - Mp4 String
-    func testReadWriteMp4StringMetadataA_L() throws {
+    func testReadWriteMp4StringMetadataA_O() throws {
         var file = try AudioFile(location: mp4Meta)
         XCTAssertEqual(file.acknowledgment, "Acknowledgment")
         file.acknowledgment = "New Acknowledgment"
@@ -86,7 +86,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.information = "New Information"
         XCTAssertEqual(file.isrc, "123456789012")
         file.isrc = "1234ISRC5678"
-        
         XCTAssertEqual(file.label, "Label")
         file.label = "New Label"
         XCTAssertEqual(file.linerNotes, "Liner Notes")
@@ -98,6 +97,22 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(file.lyrics, "Lyrics")
         file.lyrics = "New Lyrics"
 
+        XCTAssertNil(file.mood)
+        file.mood = "New Mood"
+        XCTAssertEqual(file.movement, "Movement Name")
+        file.movement = "New Movement"
+        XCTAssertEqual(file.narrator, "Narrator")
+        file.narrator = "New Narrator"
+        XCTAssertNil(file.originalAlbum)
+        file.originalAlbum = "New Original Album"
+        XCTAssertEqual(file.originalArtist, "Original Artist")
+        file.originalArtist = "New Original Artist"
+        XCTAssertNil(file.originalFilename)
+        file.originalFilename = "New Original Filename"
+        XCTAssertNil(file.originalLyricist, "Original")
+        file.originalLyricist = "New Original Lyricist"
+        XCTAssertEqual(file.owner, "Owner")
+        file.owner = "New Owner"
 
         let mp4Output = try localDirectory(fileName: "testMp4", fileExtension: "m4a")
         try file.write(outputLocation: mp4Output)
@@ -134,10 +149,18 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.longDescription,"New Long Description")
         XCTAssertEqual(newFile.lyricist,"New Lyricist")
         XCTAssertEqual(newFile.lyrics,"New Lyrics")
+        XCTAssertEqual(newFile.mood, "New Mood")
+        XCTAssertEqual(newFile.movement, "New Movement")
+        XCTAssertEqual(newFile.narrator, "New Narrator")
+        XCTAssertEqual(newFile.originalAlbum, "New Original Album")
+        XCTAssertEqual(newFile.originalArtist, "New Original Artist")
+        XCTAssertEqual(newFile.originalFilename, "New Original Filename")
+        XCTAssertEqual(newFile.originalLyricist, "New Original Lyricist")
+        XCTAssertEqual(newFile.owner, "New Owner")
     }
     
     // MARK: - Mp3 String
-    func testReadWriteMp3StringMetadataA_L() throws {
+    func testReadWriteMp3StringMetadataA_O() throws {
         var file = try AudioFile(location: mp3v24)
         XCTAssertEqual(file.acknowledgment, "Acknowledgment")
         file.acknowledgment = "New Acknowledgment"
@@ -191,7 +214,6 @@ final class SwiftTaggerTests: XCTestCase {
         file.information = "New Information"
         XCTAssertEqual(file.isrc, "987654321098")
         file.isrc = "1234ISRC5678"
-
         XCTAssertEqual(file.label, "Publisher")
         file.label = "New Label"
         XCTAssertEqual(file.linerNotes, "Liner Notes")
@@ -202,6 +224,23 @@ final class SwiftTaggerTests: XCTestCase {
         file.lyricist = "New Lyricist"
         XCTAssertEqual(file.lyrics, "Lyrics Content")
         file.lyrics = "New Lyrics"
+
+        XCTAssertEqual(file.mood, "Mood")
+        file.mood = "New Mood"
+        XCTAssertEqual(file.movement, "Movement Name")
+        file.movement = "New Movement"
+        XCTAssertEqual(file.narrator, "New Composer")
+        file.narrator = "New Narrator"
+        XCTAssertEqual(file.originalAlbum, "Original Album")
+        file.originalAlbum = "New Original Album"
+        XCTAssertEqual(file.originalArtist, "Original Artist")
+        file.originalArtist = "New Original Artist"
+        XCTAssertEqual(file.originalFilename, "Original Filename")
+        file.originalFilename = "New Original Filename"
+        XCTAssertEqual(file.originalLyricist, "Original Lyricist")
+        file.originalLyricist = "New Original Lyricist"
+        XCTAssertEqual(file.owner, "File Owner")
+        file.owner = "New Owner"
 
         let mp3Output = try localDirectory(fileName: "testMp3", fileExtension: "mp3")
         try file.write(outputLocation: mp3Output)
@@ -219,7 +258,7 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.audioFileWebpage, "New Audio File Webpage")
         XCTAssertEqual(newFile.audioSourceWebpage, "New Audio Source Webpage")
         XCTAssertEqual(newFile.comment, "New Comment")
-        XCTAssertEqual(newFile.composer, "New Composer")
+        XCTAssertEqual(newFile.composer, "New Narrator")
         XCTAssertEqual(newFile.composerSort, "New Composer Sort")
         XCTAssertEqual(newFile.conductor, "New Conductor")
         XCTAssertEqual(newFile.copyright, "New Copyright")
@@ -238,6 +277,15 @@ final class SwiftTaggerTests: XCTestCase {
         XCTAssertEqual(newFile.longDescription,"New Long Description")
         XCTAssertEqual(newFile.lyricist,"New Lyricist")
         XCTAssertEqual(newFile.lyrics,"New Lyrics")
+        
+        XCTAssertEqual(newFile.mood, "New Mood")
+        XCTAssertEqual(newFile.movement, "New Movement")
+        XCTAssertEqual(newFile.narrator, "New Narrator")
+        XCTAssertEqual(newFile.originalAlbum, "New Original Album")
+        XCTAssertEqual(newFile.originalArtist, "New Original Artist")
+        XCTAssertEqual(newFile.originalFilename, "New Original Filename")
+        XCTAssertEqual(newFile.originalLyricist, "New Original Lyricist")
+        XCTAssertEqual(newFile.owner, "New Owner")
     }
 }
 /*
