@@ -129,11 +129,11 @@ extension AudioFile {
                     case .conductor: return id3Tag.conductor
                     case .copyright: return id3Tag.copyright
                     case .copyrightWebpage: return id3Tag.copyrightWebpage
-                    case .description: return id3Tag.description
+                    case .description: return id3Tag["Description", .und]
                     case .encodedBy: return id3Tag.encodedBy
                     case .encodingSettings: return id3Tag.encodingSettings
                     case .encodingTool: return id3Tag["Encoding Tool"]
-                    case .filmMakerWebpage: return id3Tag["Filmmaker Url"]
+                    case .filmMakerWebpage: return id3Tag["Filmmaker Webpage"]
                     case .genre: return id3Tag.genre?.customGenre
                     case .grouping: return id3Tag.grouping
                     case .information: return id3Tag["Information"]

@@ -389,4 +389,73 @@ extension AudioFile {
             set(.copyrightWebpage, stringValue: newValue)
         }
     }
+    
+    // MARK: - Accessors D-F
+    var description: String? {
+        get {
+            if let value = self.get(.description) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.description, stringValue: newValue)
+        }
+    }
+    
+    var encodedBy: String? {
+        get {
+            if let value = self.get(.encodedBy) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.encodedBy, stringValue: newValue)
+        }
+    }
+    
+    var encodingSettings: String? {
+        get {
+            if let value = self.get(.encodingSettings) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.encodingSettings, stringValue: newValue)
+        }
+    }
+    
+    var encodingTool: String? {
+        get {
+            if let value = self.get(.encodingTool) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.encodingTool, stringValue: newValue)
+        }
+    }
+    
+    var filmMakerWebpage: String? {
+        get {
+            if let value = self.get(.filmMakerWebpage) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.filmMakerWebpage, stringValue: newValue)
+        }
+    }
+    
+
+    
 }
