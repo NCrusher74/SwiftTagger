@@ -41,7 +41,216 @@ extension AudioFile {
             case .mp4: try mp4Tag.removeAllMetadata()
         }
     }
+    // MARK: - String Array
+    func get(_ stringArrayMetadataID: MetadataID_StringArray) -> [String]? {
+        switch library {
+            case .mp4:
+                switch stringArrayMetadataID {
+                    case .arrangerKeywords:
+                        if let keywords = mp4Tag.arrangerKeywords {
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .artistKeywords:
+                        if let keywords = mp4Tag.artistKeywords {
+                            return keywords
+                        }  else {
+                            return nil
+                    }
+                    case .composerKeywords:
+                        if let keywords = mp4Tag.composerKeywords {
+                            return keywords
+                        }  else {
+                            return nil
+                    }
+                    case .podcastKeywords:
+                        if let keywords = mp4Tag.podcastKeywords {
+                            return keywords
+                        }  else {
+                            return nil
+                    }
+                    case .producerKeywords:
+                        if let keywords = mp4Tag.producerKeywords {
+                            return keywords
+                        }  else {
+                            return nil
+                    }
+                    case .songwriterKeywords:
+                        if let keywords = mp4Tag.songwriterKeywords {
+                            return keywords
+                        }  else {
+                            return nil
+                    }
+                    case .subtitleKeywords:
+                        if let keywords = mp4Tag.subtitleKeywords {
+                            return keywords
+                        }  else {
+                            return nil
+                    }
+                    case .titleKeywords:
+                        if let keywords = mp4Tag.titleKeywords {
+                            return keywords
+                        }  else {
+                            return nil
+                    }
+            }
+            case .id3:
+                switch stringArrayMetadataID {
+                    case .arrangerKeywords:
+                        if let string = id3Tag["arrangerKeywords"] {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .artistKeywords:
+                        if let string = id3Tag["artistKeywords"] {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .composerKeywords:
+                        if let string = id3Tag["composerKeywords"] {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .podcastKeywords:
+                        if let string = id3Tag.podcastKeywords {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .producerKeywords:
+                        if let string = id3Tag["producerKeywords"] {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .songwriterKeywords:
+                        if let string = id3Tag["songwriterKeywords"] {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .subtitleKeywords:
+                        if let string = id3Tag["subtitleKeywords"] {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+                    case .titleKeywords:
+                        if let string = id3Tag["titleKeywords"] {
+                            let keywords: [String] = string.components(separatedBy: ";")
+                            return keywords
+                        } else {
+                            return nil
+                    }
+            }
+        }
+    }
     
+    mutating func set(_ stringArrayMetadataID: MetadataID_StringArray, arrayValue: [String]?) {
+        if let array = arrayValue, !array.isEmpty {
+            switch library {
+                case .mp4:
+                    switch stringArrayMetadataID {
+                        case .arrangerKeywords:
+                            mp4Tag.arrangerKeywords = array
+                        case .artistKeywords:
+                            mp4Tag.artistKeywords = array
+                        case .composerKeywords:
+                            mp4Tag.composerKeywords = array
+                        case .podcastKeywords:
+                            mp4Tag.podcastKeywords = array
+                        case .producerKeywords:
+                            mp4Tag.producerKeywords = array
+                        case .songwriterKeywords:
+                            mp4Tag.songwriterKeywords = array
+                        case .subtitleKeywords:
+                            mp4Tag.subtitleKeywords = array
+                        case .titleKeywords:
+                            mp4Tag.titleKeywords = array
+                }
+                case .id3:
+                    switch stringArrayMetadataID {
+                        case .arrangerKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag["arrangerKeywords"] = string
+                        case .artistKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag["artistKeywords"] = string
+                        case .composerKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag["composerKeywords"] = string
+                        case .podcastKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag.podcastKeywords = string
+                        case .producerKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag["producerKeywords"] = string
+                        case .songwriterKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag["songwriterKeywords"] = string
+                        case .subtitleKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag["subtitleKeywords"] = string
+                        case .titleKeywords:
+                                let string = array.joined(separator: ";")
+                                id3Tag["titleKeywords"] = string
+                }
+            }
+        } else {
+            switch library {
+                case .mp4:
+                    switch stringArrayMetadataID {
+                        case .arrangerKeywords:
+                            mp4Tag.arrangerKeywords = nil
+                        case .artistKeywords:
+                            mp4Tag.artistKeywords = nil
+                        case .composerKeywords:
+                            mp4Tag.composerKeywords = nil
+                        case .podcastKeywords:
+                            mp4Tag.podcastKeywords = nil
+                        case .producerKeywords:
+                            mp4Tag.producerKeywords = nil
+                        case .songwriterKeywords:
+                            mp4Tag.songwriterKeywords = nil
+                        case .subtitleKeywords:
+                            mp4Tag.subtitleKeywords = nil
+                        case .titleKeywords:
+                            mp4Tag.titleKeywords = nil
+                }
+                case .id3:
+                    switch stringArrayMetadataID {
+                        case .arrangerKeywords:
+                            id3Tag["arrangerKeywords"] = nil
+                        case .artistKeywords:
+                            id3Tag["artistKeywords"] = nil
+                        case .composerKeywords:
+                            id3Tag["composerKeywords"] = nil
+                        case .podcastKeywords:
+                            id3Tag.podcastKeywords = nil
+                        case .producerKeywords:
+                            id3Tag["producerKeywords"] = nil
+                        case .songwriterKeywords:
+                            id3Tag["songwriterKeywords"] = nil
+                        case .subtitleKeywords:
+                            id3Tag["subtitleKeywords"] = nil
+                        case .titleKeywords:
+                            id3Tag["titleKeywords"] = nil
+                }
+            }
+        }
+    }
+
     // MARK: - Bool
     func get(_ boolMetadataID: MetadataID_Bool) -> Bool? {
         switch library {
@@ -143,7 +352,11 @@ extension AudioFile {
                         case .compilation:
                             id3Tag.compilation = nil
                         case .gaplessPlayback:
-                            return
+                            if id3Tag.playlistDelay == 0 {
+                                id3Tag.playlistDelay = nil
+                            } else {
+                                return
+                        }
                         case .podcast:
                             return
                         case .showWorkAndMovement:

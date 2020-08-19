@@ -799,27 +799,3 @@ enum MetadataID_Date: CaseIterable {
         }
     }
 }
-@available(OSX 10.13, *)
-enum MetadataID_StringArray: CaseIterable {
-    case arrangerKeywords // array 1
-    case artistKeywords // array 2
-    case composerKeywords // array 3
-    case podcastKeywords // array 4
-    case producerKeywords // array 5
-    case songwriterKeywords // array 6
-    case subtitleKeywords // array 7
-    case titleKeywords // array 8
-
-    var metadataItem: MetadataItem {
-        switch self {
-            case .arrangerKeywords: return .arrangerKeywords
-            case .artistKeywords: return .artistKeywords
-            case .composerKeywords: return .composerKeywords
-            case .podcastKeywords: return .podcastKeywords
-            case .producerKeywords: return .producerKeywords
-            case .songwriterKeywords: return .songwriterKeywords
-            case .subtitleKeywords: return .subtitleKeywords
-            case .titleKeywords: return .titleKeywords
-        }
-    }
-}
