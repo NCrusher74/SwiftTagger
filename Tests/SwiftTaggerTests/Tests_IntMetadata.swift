@@ -7,38 +7,39 @@ import SwiftTaggerMP4
 final class SwiftTaggerTests_IntMetadata: XCTestCase {
     
     func testReadWriteMp4IntMetadata() throws {
-        var file = try AudioFile(location: mp4Meta)
-        XCTAssertEqual(file.albumID, 123456)
-        XCTAssertEqual(file.appleStoreCountryID, 678901)
-        XCTAssertEqual(file.artistID, 234567)
-        XCTAssertEqual(file.bpm, 99)
-        XCTAssertEqual(file.composerID, 345678)
-        XCTAssertEqual(file.conductorID, 456789)
-        XCTAssertEqual(file.genreID, 50000024)
-        XCTAssertEqual(file.length, 5016)
-        XCTAssertEqual(file.movementCount, 9)
-        XCTAssertEqual(file.movementNumber, 8)
-        XCTAssertEqual(file.playlistID, 567890)
-        XCTAssertEqual(file.tvEpisodeNumber, 7)
-        XCTAssertEqual(file.tvSeason, 6)
+        let read = try AudioFile(location: mp4Meta)
+        XCTAssertEqual(read.albumID, 123456)
+        XCTAssertEqual(read.appleStoreCountryID, 678901)
+        XCTAssertEqual(read.artistID, 234567)
+        XCTAssertEqual(read.bpm, 99)
+        XCTAssertEqual(read.composerID, 345678)
+        XCTAssertEqual(read.conductorID, 456789)
+        XCTAssertEqual(read.genreID, 50000024)
+        XCTAssertEqual(read.length, 5016)
+        XCTAssertEqual(read.movementCount, 9)
+        XCTAssertEqual(read.movementNumber, 8)
+        XCTAssertEqual(read.playlistID, 567890)
+        XCTAssertEqual(read.tvEpisodeNumber, 7)
+        XCTAssertEqual(read.tvSeason, 6)
         
-        file.albumID = 654321
-        file.appleStoreCountryID = 765432
-        file.artistID = 876543
-        file.bpm = 98
-        file.composerID = 987654
-        file.conductorID = 098765
-        file.setMp4GenreID(genre: .audiobooks)
-        file.movementCount = 6
-        file.movementNumber = 5
-        file.playlistID = 109876
-        file.tvEpisodeNumber = 5
-        file.tvSeason = 4
+        var write = try AudioFile(location: mp4NoMeta)
+        write.albumID = 654321
+        write.appleStoreCountryID = 765432
+        write.artistID = 876543
+        write.bpm = 98
+        write.composerID = 987654
+        write.conductorID = 098765
+        write.setMp4GenreID(genre: .audiobooks)
+        write.movementCount = 6
+        write.movementNumber = 5
+        write.playlistID = 109876
+        write.tvEpisodeNumber = 5
+        write.tvSeason = 4
 
-        let mp4Output = try localDirectory(fileName: "testMp4-Int", fileExtension: "m4a")
-        try file.write(outputLocation: mp4Output)
+        let outputUrl = try localDirectory(fileName: "testMp4-Int", fileExtension: "m4a")
+        try write.write(outputLocation: outputUrl)
         
-        let newFile = try AudioFile(location: mp4Output)
+        let newFile = try AudioFile(location: outputUrl)
         XCTAssertEqual(newFile.albumID, 654321)
         XCTAssertEqual(newFile.appleStoreCountryID, 765432)
         XCTAssertEqual(newFile.artistID, 876543)
@@ -54,44 +55,45 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
     }
     
     func testReadWriteId3IntMetadata() throws {
-        var file = try AudioFile(location: mp3v24)
-        XCTAssertNil(file.albumID)
-        XCTAssertNil(file.appleStoreCountryID)
-        XCTAssertNil(file.artistID)
-        XCTAssertEqual(file.bpm, 99)
-        XCTAssertNil(file.composerID)
-        XCTAssertNil(file.conductorID)
-        XCTAssertEqual(file.genreID, 0)
-        XCTAssertEqual(file.length, 9767)
-        XCTAssertEqual(file.movementCount, 6)
-        XCTAssertEqual(file.movementNumber, 5)
-        XCTAssertNil(file.playlistID)
-        XCTAssertNil(file.tvEpisodeNumber)
-        XCTAssertNil(file.tvSeason)
+        let read = try AudioFile(location: mp3v24)
+        XCTAssertNil(read.albumID)
+        XCTAssertNil(read.appleStoreCountryID)
+        XCTAssertNil(read.artistID)
+        XCTAssertEqual(read.bpm, 99)
+        XCTAssertNil(read.composerID)
+        XCTAssertNil(read.conductorID)
+        XCTAssertEqual(read.genreID, 0)
+        XCTAssertEqual(read.length, 9767)
+        XCTAssertEqual(read.movementCount, 6)
+        XCTAssertEqual(read.movementNumber, 5)
+        XCTAssertNil(read.playlistID)
+        XCTAssertNil(read.tvEpisodeNumber)
+        XCTAssertNil(read.tvSeason)
         
-        file.albumID = 654321
-        file.appleStoreCountryID = 765432
-        file.artistID = 876543
-        file.bpm = 98
-        file.composerID = 987654
-        file.conductorID = 098765
-        file.setID3GenreID(genre: .Audiobook)
-        file.movementCount = 6
-        file.movementNumber = 5
-        file.playlistID = 109876
-        file.tvEpisodeNumber = 5
-        file.tvSeason = 4
+        var write = try AudioFile(location: mp3NoMeta)
+        write.albumID = 654321
+        write.appleStoreCountryID = 765432
+        write.artistID = 876543
+        write.bpm = 98
+        write.composerID = 987654
+        write.conductorID = 543210
+        write.setID3GenreID(genre: .Audiobook)
+        write.movementCount = 6
+        write.movementNumber = 5
+        write.playlistID = 109876
+        write.tvEpisodeNumber = 5
+        write.tvSeason = 4
         
-        let mp3Output = try localDirectory(fileName: "testMp3-Int", fileExtension: "mp3")
-        try file.write(outputLocation: mp3Output)
+        let outputUrl = try localDirectory(fileName: "testMp3-Int", fileExtension: "mp3")
+        try write.write(outputLocation: outputUrl)
         
-        let newFile = try AudioFile(location: mp3Output)
+        let newFile = try AudioFile(location: outputUrl)
         XCTAssertEqual(newFile.albumID, 654321)
         XCTAssertEqual(newFile.appleStoreCountryID, 765432)
         XCTAssertEqual(newFile.artistID, 876543)
         XCTAssertEqual(newFile.bpm, 98)
         XCTAssertEqual(newFile.composerID, 987654)
-        XCTAssertEqual(newFile.conductorID, 098765)
+        XCTAssertEqual(newFile.conductorID, 543210)
         XCTAssertEqual(newFile.genreID, 183)
         XCTAssertEqual(newFile.movementCount, 6)
         XCTAssertEqual(newFile.movementNumber, 5)
@@ -101,38 +103,39 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
     }
     
     func testRemoveMp4IntMetadata() throws {
-        var file = try AudioFile(location: mp4Meta)
-        XCTAssertEqual(file.albumID, 123456)
-        XCTAssertEqual(file.appleStoreCountryID, 678901)
-        XCTAssertEqual(file.artistID, 234567)
-        XCTAssertEqual(file.bpm, 99)
-        XCTAssertEqual(file.composerID, 345678)
-        XCTAssertEqual(file.conductorID, 456789)
-        XCTAssertEqual(file.genreID, 50000024)
-        XCTAssertEqual(file.length, 5016)
-        XCTAssertEqual(file.movementCount, 9)
-        XCTAssertEqual(file.movementNumber, 8)
-        XCTAssertEqual(file.playlistID, 567890)
-        XCTAssertEqual(file.tvEpisodeNumber, 7)
-        XCTAssertEqual(file.tvSeason, 6)
+        let read = try AudioFile(location: mp4Meta)
+        XCTAssertEqual(read.albumID, 123456)
+        XCTAssertEqual(read.appleStoreCountryID, 678901)
+        XCTAssertEqual(read.artistID, 234567)
+        XCTAssertEqual(read.bpm, 99)
+        XCTAssertEqual(read.composerID, 345678)
+        XCTAssertEqual(read.conductorID, 456789)
+        XCTAssertEqual(read.genreID, 50000024)
+        XCTAssertEqual(read.length, 5016)
+        XCTAssertEqual(read.movementCount, 9)
+        XCTAssertEqual(read.movementNumber, 8)
+        XCTAssertEqual(read.playlistID, 567890)
+        XCTAssertEqual(read.tvEpisodeNumber, 7)
+        XCTAssertEqual(read.tvSeason, 6)
         
-        file.albumID = nil
-        file.appleStoreCountryID = nil
-        file.artistID = nil
-        file.bpm = nil
-        file.composerID = nil
-        file.conductorID = nil
-        file.genreID = nil
-        file.movementCount = nil
-        file.movementNumber = nil
-        file.playlistID = nil
-        file.tvEpisodeNumber = nil
-        file.tvSeason = nil
+        var write = try AudioFile(location: mp4Meta)
+        write.albumID = nil
+        write.appleStoreCountryID = nil
+        write.artistID = nil
+        write.bpm = nil
+        write.composerID = nil
+        write.conductorID = nil
+        write.genreID = nil
+        write.movementCount = nil
+        write.movementNumber = nil
+        write.playlistID = nil
+        write.tvEpisodeNumber = nil
+        write.tvSeason = nil
         
-        let mp4Output = try localDirectory(fileName: "testMp4-Int", fileExtension: "m4a")
-        try file.write(outputLocation: mp4Output)
+        let outputUrl = try localDirectory(fileName: "testMp4-Int", fileExtension: "m4a")
+        try write.write(outputLocation: outputUrl)
         
-        let newFile = try AudioFile(location: mp4Output)
+        let newFile = try AudioFile(location: outputUrl)
         XCTAssertNil(newFile.albumID)
         XCTAssertNil(newFile.appleStoreCountryID)
         XCTAssertNil(newFile.artistID)
@@ -148,38 +151,39 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
     }
     
     func testRemoveId3IntMetadata() throws {
-        var file = try AudioFile(location: mp3v24)
-        XCTAssertNil(file.albumID)
-        XCTAssertNil(file.appleStoreCountryID)
-        XCTAssertNil(file.artistID)
-        XCTAssertEqual(file.bpm, 99)
-        XCTAssertNil(file.composerID)
-        XCTAssertNil(file.conductorID)
-        XCTAssertEqual(file.genreID, 0)
-        XCTAssertEqual(file.length, 9767)
-        XCTAssertEqual(file.movementCount, 6)
-        XCTAssertEqual(file.movementNumber, 5)
-        XCTAssertNil(file.playlistID)
-        XCTAssertNil(file.tvEpisodeNumber)
-        XCTAssertNil(file.tvSeason)
+        let read = try AudioFile(location: mp3v24)
+        XCTAssertNil(read.albumID)
+        XCTAssertNil(read.appleStoreCountryID)
+        XCTAssertNil(read.artistID)
+        XCTAssertEqual(read.bpm, 99)
+        XCTAssertNil(read.composerID)
+        XCTAssertNil(read.conductorID)
+        XCTAssertEqual(read.genreID, 0)
+        XCTAssertEqual(read.length, 9767)
+        XCTAssertEqual(read.movementCount, 6)
+        XCTAssertEqual(read.movementNumber, 5)
+        XCTAssertNil(read.playlistID)
+        XCTAssertNil(read.tvEpisodeNumber)
+        XCTAssertNil(read.tvSeason)
         
-        file.albumID = nil
-        file.appleStoreCountryID = nil
-        file.artistID = nil
-        file.bpm = nil
-        file.composerID = nil
-        file.conductorID = nil
-        file.setID3GenreID(genre: nil)
-        file.movementCount = nil
-        file.movementNumber = nil
-        file.playlistID = nil
-        file.tvEpisodeNumber = nil
-        file.tvSeason = nil
+        var write = try AudioFile(location: mp3v24)
+        write.albumID = nil
+        write.appleStoreCountryID = nil
+        write.artistID = nil
+        write.bpm = nil
+        write.composerID = nil
+        write.conductorID = nil
+        write.setID3GenreID(genre: nil)
+        write.movementCount = nil
+        write.movementNumber = nil
+        write.playlistID = nil
+        write.tvEpisodeNumber = nil
+        write.tvSeason = nil
         
-        let mp3Output = try localDirectory(fileName: "testMp3-Int", fileExtension: "mp3")
-        try file.write(outputLocation: mp3Output)
+        let outputUrl = try localDirectory(fileName: "testMp3-Int", fileExtension: "mp3")
+        try write.write(outputLocation: outputUrl)
         
-        let newFile = try AudioFile(location: mp3Output)
+        let newFile = try AudioFile(location: outputUrl)
         XCTAssertNil(newFile.albumID)
         XCTAssertNil(newFile.appleStoreCountryID)
         XCTAssertNil(newFile.artistID)

@@ -823,19 +823,3 @@ enum MetadataID_StringArray: CaseIterable {
         }
     }
 }
-@available(OSX 10.13, *)
-enum MetadataID_Bool: CaseIterable {
-    case compilation // bool 1
-    case gaplessPlayback // bool 2
-    case podcast // bool 3
-    case showWorkAndMovement // bool 4
-    
-    var metadataItem: MetadataItem {
-        switch self {
-            case .compilation: return .compilation
-            case .gaplessPlayback: return .gaplessPlayback
-            case .podcast: return .podcast
-            case .showWorkAndMovement: return .showWorkAndMovement
-        }
-    }
-}
