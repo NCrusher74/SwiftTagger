@@ -132,7 +132,7 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         write.tvEpisodeNumber = nil
         write.tvSeason = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp4-Int", fileExtension: "m4a")
+        let outputUrl = try localDirectory(fileName: "testMp4-Int-Removal", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -180,7 +180,7 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         write.tvEpisodeNumber = nil
         write.tvSeason = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp3-Int", fileExtension: "mp3")
+        let outputUrl = try localDirectory(fileName: "testMp3-Int-Removal", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)

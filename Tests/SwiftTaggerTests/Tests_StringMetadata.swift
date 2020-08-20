@@ -10,147 +10,148 @@ final class SwiftTaggerTests_StringMetadata: XCTestCase {
     func testReadWriteMp4StringMetadata() throws {
         var file = try AudioFile(location: mp4Meta)
         XCTAssertEqual(file.acknowledgment, "Acknowledgment")
-        file.acknowledgment = "New Acknowledgment"
         XCTAssertEqual(file.album, "Album")
-        file.album = "New Album"
         XCTAssertEqual(file.albumArtist, "Album Artist")
-        file.albumArtist = "New Album Artist"
         XCTAssertEqual(file.albumArtistSort, "Album Artist Sort")
-        file.albumArtistSort = "New Album Artist Sort"
         XCTAssertEqual(file.albumSort, "Album Sort")
-        file.albumSort = "New Album Sort"
         XCTAssertEqual(file.arranger, "Arranger")
-        file.arranger = "New Arranger"
         XCTAssertEqual(file.artist, "Artist")
-        file.artist = "New Artist"
         XCTAssertEqual(file.artistSort, "Artist Sort")
-        file.artistSort = "New Artist Sort"
         XCTAssertEqual(file.artistWebpage, "Artist Url")
-        file.artistWebpage = "New Artist Webpage"
         XCTAssertEqual(file.audioFileWebpage, "audio file webpage")
-        file.audioFileWebpage = "New Audio File Webpage"
         XCTAssertEqual(file.audioSourceWebpage, "audio source webpage")
-        file.audioSourceWebpage = "New Audio Source Webpage"
         XCTAssertEqual(file.comment, "Comment")
-        file.comment = "New Comment"
         XCTAssertEqual(file.composer, "Composer")
-        file.composer = "New Composer"
         XCTAssertEqual(file.composerSort, "Composer Sort")
-        file.composerSort = "New Composer Sort"
         XCTAssertEqual(file.conductor, "Conductor")
-        file.conductor = "New Conductor"
         XCTAssertEqual(file.copyright, "Copyright")
-        file.copyright = "New Copyright"
         XCTAssertEqual(file.copyrightWebpage, "copyright webpage")
-        file.copyrightWebpage = "New Copyright Webpage"
         XCTAssertEqual(file.description, "Description")
-        file.description = "New Description"
         XCTAssertEqual(file.encodedBy, "Encoded By")
-        file.encodedBy = "New EncodedBy"
         XCTAssertEqual(file.encodingSettings, "encoding settings")
-        file.encodingSettings = "New Encoding Settings"
         XCTAssertEqual(file.encodingTool, "Encoding Tool")
-        file.encodingTool = "New Encoding Tool"
         XCTAssertEqual(file.filmMakerWebpage, "Filmmaker Url")
-        file.filmMakerWebpage = "New FilmMaker Webpage"
         XCTAssertEqual(file.genre, "Custom Genre")
-        file.genre = "New Genre"
         XCTAssertEqual(file.grouping, "Grouping")
-        file.grouping = "New Grouping"
         XCTAssertEqual(file.information, "Information")
-        file.information = "New Information"
         XCTAssertEqual(file.isrc, "123456789012")
-        file.isrc = "1234ISRC5678"
         XCTAssertEqual(file.label, "Label")
-        file.label = "New Label"
         XCTAssertEqual(file.linerNotes, "Liner Notes")
-        file.linerNotes = "New Liner Notes"
         XCTAssertEqual(file.longDescription, "Long Description")
-        file.longDescription = "New Long Description"
         XCTAssertEqual(file.lyricist, "Lyricist")
-        file.lyricist = "New Lyricist"
         XCTAssertEqual(file.lyrics, "Lyrics")
-        file.lyrics = "New Lyrics"
         XCTAssertNil(file.mood)
-        file.mood = "New Mood"
         XCTAssertEqual(file.movement, "Movement Name")
-        file.movement = "New Movement"
         XCTAssertEqual(file.narrator, "Narrator")
-        file.narrator = "New Narrator"
         XCTAssertNil(file.originalAlbum)
-        file.originalAlbum = "New Original Album"
         XCTAssertEqual(file.originalArtist, "Original Artist")
-        file.originalArtist = "New Original Artist"
         XCTAssertNil(file.originalFilename)
-        file.originalFilename = "New Original Filename"
         XCTAssertNil(file.originalLyricist, "Original")
-        file.originalLyricist = "New Original Lyricist"
         XCTAssertEqual(file.owner, "Owner")
-        file.owner = "New Owner"
         XCTAssertEqual(file.paymentWebpage, "payment webpage")
-        file.paymentWebpage = "New Payment Webpage"
         XCTAssertEqual(file.podcastCategory, "Category")
-        file.podcastCategory = "New Podcast Category"
         XCTAssertNil(file.podcastDescription)
-        file.podcastDescription = "New Podcast Description"
         XCTAssertEqual(file.podcastFeed, "Podcast Url")
-        file.podcastFeed = "New Podcast Feed"
         XCTAssertEqual(file.podcastID, "Podcast ID")
-        file.podcastID = "New PodcastID"
         XCTAssertNil(file.producedNotice)
-        file.producedNotice = "New Produced Notice"
         XCTAssertEqual(file.publisher, "Publisher")
-        file.publisher = "New Publisher"
         XCTAssertEqual(file.publisherWebpage, "Publisher Url")
-        file.publisherWebpage = "New Publisher Webpage"
         XCTAssertEqual(file.radioStation, "radio station")
-        file.radioStation = "New Radio Station"
         XCTAssertEqual(file.radioStationOwner, "radio station owner")
-        file.radioStationOwner = "New Radio Station Owner"
         XCTAssertEqual(file.radioStationWebpage, "radio station webpage")
-        file.radioStationWebpage = "New Radio Station Webpage"
         XCTAssertEqual(file.recordCompany, "Record Company")
-        file.recordCompany = "New Record Company"
         XCTAssertEqual(file.recordingCopyright, "Recording Copyright")
-        file.recordingCopyright = "New Recording Copyright"
         XCTAssertEqual(file.requirements, "Requirements")
-        file.requirements = "New Requirements"
         XCTAssertEqual(file.sellerID, "Seller")
-        file.sellerID = "New Seller ID"
         XCTAssertEqual(file.softwareVersion, "Software Version")
-        file.softwareVersion = "New Software Version"
         XCTAssertEqual(file.songDescription, "Song Description")
-        file.songDescription = "New Song Description"
         XCTAssertEqual(file.sourceCredit, "Source Credit")
-        file.sourceCredit = "New Source Credit"
         XCTAssertEqual(file.subtitle, "Subtitle")
-        file.subtitle = "New Subtitle"
         XCTAssertEqual(file.title, "Title")
-        file.title = "New Title"
         XCTAssertEqual(file.titleSort, "Title Sort")
-        file.titleSort = "New Title Sort"
         XCTAssertEqual(file.thanks, "Thanks")
-        file.thanks = "New Thanks"
         XCTAssertEqual(file.trackSubtitle, "Track Subtitle")
-        file.trackSubtitle = "New Track Subtitle"
         XCTAssertEqual(file.tvEpisodeTitle, "TV Episode Title")
-        file.tvEpisodeTitle = "New TV Episode Title"
         XCTAssertEqual(file.tvNetwork, "TV Network")
-        file.tvNetwork = "New TV Network"
         XCTAssertEqual(file.tvShow, "TV Show")
-        file.tvShow = "New TV Show"
         XCTAssertEqual(file.tvShowDescription, "TV Show Description")
-        file.tvShowDescription = "New TV Show Description"
         XCTAssertEqual(file.tvShowSort, "TV Show Sort")
-        file.tvShowSort = "New TV Show Sort"
         XCTAssertEqual(file.website, "Website")
-        file.website = "New Website"
         XCTAssertEqual(file.work, "Work")
-        file.work = "New Work"
         XCTAssertEqual(file.writer, "Writer")
+
+        file.acknowledgment = "New Acknowledgment"
+        file.album = "New Album"
+        file.albumArtist = "New Album Artist"
+        file.albumArtistSort = "New Album Artist Sort"
+        file.albumSort = "New Album Sort"
+        file.arranger = "New Arranger"
+        file.artist = "New Artist"
+        file.artistSort = "New Artist Sort"
+        file.artistWebpage = "New Artist Webpage"
+        file.audioFileWebpage = "New Audio File Webpage"
+        file.audioSourceWebpage = "New Audio Source Webpage"
+        file.comment = "New Comment"
+        file.composer = "New Composer"
+        file.composerSort = "New Composer Sort"
+        file.conductor = "New Conductor"
+        file.copyright = "New Copyright"
+        file.copyrightWebpage = "New Copyright Webpage"
+        file.description = "New Description"
+        file.encodedBy = "New EncodedBy"
+        file.encodingSettings = "New Encoding Settings"
+        file.encodingTool = "New Encoding Tool"
+        file.filmMakerWebpage = "New FilmMaker Webpage"
+        file.genre = "New Genre"
+        file.grouping = "New Grouping"
+        file.information = "New Information"
+        file.isrc = "1234ISRC5678"
+        file.label = "New Label"
+        file.linerNotes = "New Liner Notes"
+        file.longDescription = "New Long Description"
+        file.lyricist = "New Lyricist"
+        file.lyrics = "New Lyrics"
+        file.mood = "New Mood"
+        file.movement = "New Movement"
+        file.narrator = "New Narrator"
+        file.originalAlbum = "New Original Album"
+        file.originalArtist = "New Original Artist"
+        file.originalFilename = "New Original Filename"
+        file.originalLyricist = "New Original Lyricist"
+        file.owner = "New Owner"
+        file.paymentWebpage = "New Payment Webpage"
+        file.podcastCategory = "New Podcast Category"
+        file.podcastDescription = "New Podcast Description"
+        file.podcastFeed = "New Podcast Feed"
+        file.podcastID = "New PodcastID"
+        file.producedNotice = "New Produced Notice"
+        file.publisher = "New Publisher"
+        file.publisherWebpage = "New Publisher Webpage"
+        file.radioStation = "New Radio Station"
+        file.radioStationOwner = "New Radio Station Owner"
+        file.radioStationWebpage = "New Radio Station Webpage"
+        file.recordCompany = "New Record Company"
+        file.recordingCopyright = "New Recording Copyright"
+        file.requirements = "New Requirements"
+        file.sellerID = "New Seller ID"
+        file.softwareVersion = "New Software Version"
+        file.songDescription = "New Song Description"
+        file.sourceCredit = "New Source Credit"
+        file.subtitle = "New Subtitle"
+        file.title = "New Title"
+        file.titleSort = "New Title Sort"
+        file.thanks = "New Thanks"
+        file.trackSubtitle = "New Track Subtitle"
+        file.tvEpisodeTitle = "New TV Episode Title"
+        file.tvNetwork = "New TV Network"
+        file.tvShow = "New TV Show"
+        file.tvShowDescription = "New TV Show Description"
+        file.tvShowSort = "New TV Show Sort"
+        file.website = "New Website"
+        file.work = "New Work"
         file.writer = "New Writer"
 
-        let mp4Output = try localDirectory(fileName: "testMp4", fileExtension: "m4a")
+        let mp4Output = try localDirectory(fileName: "testMp4-string", fileExtension: "m4a")
         try file.write(outputLocation: mp4Output)
         
         let newFile = try AudioFile(location: mp4Output)
@@ -371,7 +372,7 @@ final class SwiftTaggerTests_StringMetadata: XCTestCase {
         XCTAssertNil(file.writer)
         file.writer = "New Writer"
 
-        let mp3Output = try localDirectory(fileName: "testMp3", fileExtension: "mp3")
+        let mp3Output = try localDirectory(fileName: "testMp3-string", fileExtension: "mp3")
         try file.write(outputLocation: mp3Output)
         
         let newFile = try AudioFile(location: mp3Output)
@@ -591,7 +592,7 @@ final class SwiftTaggerTests_StringMetadata: XCTestCase {
         XCTAssertEqual(file.writer, "Writer")
         file.writer = nil
         
-        let mp4Output = try localDirectory(fileName: "testMp4", fileExtension: "m4a")
+        let mp4Output = try localDirectory(fileName: "testMp4-removeString", fileExtension: "m4a")
         try file.write(outputLocation: mp4Output)
         
         let newFile = try AudioFile(location: mp4Output)
@@ -804,7 +805,7 @@ final class SwiftTaggerTests_StringMetadata: XCTestCase {
         XCTAssertNil(file.writer)
         file.writer = nil
         
-        let mp3Output = try localDirectory(fileName: "testMp3-Removal", fileExtension: "mp3")
+        let mp3Output = try localDirectory(fileName: "testMp3-RemovalString", fileExtension: "mp3")
         try file.write(outputLocation: mp3Output)
         
         let newFile = try AudioFile(location: mp3Output)

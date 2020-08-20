@@ -60,13 +60,13 @@ final class SwiftTaggerTests_BoolMetadata: XCTestCase {
         XCTAssertEqual(read.podcast, true)
         XCTAssertEqual(read.showWorkAndMovement, true)
         
-        var write = try AudioFile(location: mp4NoMeta)
+        var write = try AudioFile(location: mp4Meta)
         write.compilation = nil
         write.gaplessPlayback = nil
         write.podcast = nil
         write.showWorkAndMovement = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp4-Bool", fileExtension: "m4a")
+        let outputUrl = try localDirectory(fileName: "testMp4-Bool-Removal", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -83,7 +83,7 @@ final class SwiftTaggerTests_BoolMetadata: XCTestCase {
         XCTAssertNil(read.podcast)
         XCTAssertNil(read.showWorkAndMovement)
         
-        var write = try AudioFile(location: mp3NoMeta)
+        var write = try AudioFile(location: mp3v24)
         write.compilation = nil
         write.gaplessPlayback = nil
         write.podcast = nil

@@ -87,7 +87,7 @@ final class SwiftTaggerTests_StringArrayMetadata: XCTestCase {
         XCTAssertEqual(read.subtitleKeywords, ["Subtitle", "Keywords"])
         XCTAssertEqual(read.titleKeywords, ["Title", "Keywords"])
         
-        var write = try AudioFile(location: mp4NoMeta)
+        var write = try AudioFile(location: mp4Meta)
         write.arrangerKeywords = nil
         write.artistKeywords = nil
         write.composerKeywords = nil
@@ -97,7 +97,7 @@ final class SwiftTaggerTests_StringArrayMetadata: XCTestCase {
         write.subtitleKeywords = nil
         write.titleKeywords = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp4-Array", fileExtension: "m4a")
+        let outputUrl = try localDirectory(fileName: "testMp4-Array-Removal", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -115,10 +115,10 @@ final class SwiftTaggerTests_StringArrayMetadata: XCTestCase {
         let read = try AudioFile(location: mp3v24)
         XCTAssertEqual(read.podcastKeywords, ["Podcast Keywords"])
         
-        var write = try AudioFile(location: mp3NoMeta)
+        var write = try AudioFile(location: mp3v24)
         write.podcastKeywords = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp3-Array", fileExtension: "mp3")
+        let outputUrl = try localDirectory(fileName: "testMp3-Array-Removal", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
