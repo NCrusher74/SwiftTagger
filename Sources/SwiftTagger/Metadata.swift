@@ -40,7 +40,74 @@ extension AudioFile {
             case .id3: try id3Tag.removeAllMetadata()
             case .mp4: try mp4Tag.removeAllMetadata()
         }
+    }    
+    
+    // MARK: - Tuple
+    func get(_ tupleMetadataID: MetadataID_PartOfTotal) -> (Int?, Int?) {
+        switch library {
+            case .mp4:
+                switch tupleMetadataID {
+                    case .discNumber:
+                        return mp4Tag.discNumber
+                    case .trackNumber:
+                        return mp4Tag.trackNumber
+            }
+            case .id3:
+                switch tupleMetadataID {
+                    case .discNumber:
+                        return id3Tag.discNumber
+                    case .trackNumber:
+                        return id3Tag.trackNumber
+            }
+        }
     }
+    
+    mutating func set(_ tupleMetadataID: MetadataID_PartOfTotal, tupleValue: (part: Int?, total: Int?)) {
+        if tupleValue != (nil, nil) {
+            switch library {
+                case .mp4:
+                    switch tupleMetadataID {
+                        case .discNumber:
+                            mp4Tag.discNumber.disc = tupleValue.part
+                            mp4Tag.discNumber.totalDiscs = tupleValue.total
+                        case .trackNumber:
+                            mp4Tag.trackNumber.track = tupleValue.part
+                            mp4Tag.trackNumber.totalTracks = tupleValue.total
+                }
+                case .id3:
+                    switch tupleMetadataID {
+                        case .discNumber:
+                            id3Tag.discNumber.disc = tupleValue.part
+                            id3Tag.discNumber.totalDiscs = tupleValue.total
+                        case .trackNumber:
+                            id3Tag.trackNumber.track = tupleValue.part
+                            id3Tag.trackNumber.totalTracks = tupleValue.total
+                }
+            }
+        } else {
+            switch library {
+                case .mp4:
+                    switch tupleMetadataID {
+                        case .discNumber:
+                            mp4Tag.discNumber.disc = nil
+                            mp4Tag.discNumber.totalDiscs = nil
+                        case .trackNumber:
+                            mp4Tag.trackNumber.track = nil
+                            mp4Tag.trackNumber.totalTracks = nil
+                }
+                case .id3:
+                    switch tupleMetadataID {
+                        case .discNumber:
+                            id3Tag.discNumber.disc = nil
+                            id3Tag.discNumber.totalDiscs = nil
+                        case .trackNumber:
+                            id3Tag.trackNumber.track = nil
+                            id3Tag.trackNumber.totalTracks = nil
+                }
+            }
+        }
+    }
+    
     // MARK: - String Array
     func get(_ stringArrayMetadataID: MetadataID_StringArray) -> [String]? {
         switch library {

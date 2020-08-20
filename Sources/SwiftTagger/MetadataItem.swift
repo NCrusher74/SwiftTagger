@@ -752,18 +752,6 @@ enum MetadataID_Other: CaseIterable {
     }
 }
 @available(OSX 10.13, *)
-enum MetadataID_PartOfTotal: CaseIterable {
-    case discNumber
-    case trackNumber
-    
-    var metadataItem: MetadataItem {
-        switch self {
-            case .discNumber: return .discNumber
-            case .trackNumber: return .trackNumber
-        }
-    }
-}
-@available(OSX 10.13, *)
 enum MetadataID_Image: CaseIterable {
     case coverArt
     
