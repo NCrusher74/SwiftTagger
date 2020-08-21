@@ -191,6 +191,4 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertNil(newFile.trackNumber.track)
         XCTAssertNil(newFile.trackNumber.totalTracks)
     }
-    
-
 }

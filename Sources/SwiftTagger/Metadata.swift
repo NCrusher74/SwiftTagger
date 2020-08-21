@@ -41,6 +41,211 @@ extension AudioFile {
             case .mp4: try mp4Tag.removeAllMetadata()
         }
     }    
+    // MARK: - Date
+    func get(_ dateMetadataID: MetadataID_Date) -> Date? {
+        switch library {
+            case .mp4:
+                switch dateMetadataID {
+                    case .encodingTime:
+                        return mp4Tag.encodingTime
+                    case .originalReleaseTime:
+                        return mp4Tag.originalReleaseTime
+                    case .purchaseDate:
+                        return mp4Tag.purchaseDate
+                    case .recordingDate:
+                        return mp4Tag.recordingDate
+                    case .releaseDate:
+                        return mp4Tag.releaseDate
+                    case .taggingTime:
+                        return mp4Tag.taggingTime
+                    case .year:
+                        return mp4Tag.year
+            }
+            case .id3:
+                let formatter = ISO8601DateFormatter()
+                let calendar = Calendar.init(identifier: .iso8601)
+                let timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+                formatter.timeZone = timeZone
+                switch dateMetadataID {
+                    case .encodingTime:
+                        let components = id3Tag.encodingDateTime
+                            var dateComponents = DateComponents()
+                            dateComponents.calendar = calendar
+                            dateComponents.timeZone = timeZone
+                            dateComponents.year = components.year
+                            dateComponents.month = components.month
+                            dateComponents.day = components.day
+                            dateComponents.hour = components.hour
+                            dateComponents.minute = components.minute
+                            return dateComponents.date
+                    case .originalReleaseTime:
+                        let components = id3Tag.originalReleaseTime
+                            var dateComponents = DateComponents()
+                            dateComponents.calendar = calendar
+                            dateComponents.timeZone = timeZone
+                            dateComponents.year = components.year
+                            dateComponents.month = components.month
+                            dateComponents.day = components.day
+                            dateComponents.hour = components.hour
+                            dateComponents.minute = components.minute
+                            return dateComponents.date
+                    case .purchaseDate:
+                        if let string = id3Tag["Purchase Date"] {
+                            let date = formatter.date(from: string) ?? Date.distantPast
+                            return date
+                        } else {
+                            return nil
+                    }
+                    case .recordingDate:
+                        let components = id3Tag.recordingDateTime
+                            var dateComponents = DateComponents()
+                            dateComponents.calendar = calendar
+                            dateComponents.timeZone = timeZone
+                            dateComponents.year = components.year
+                            dateComponents.month = components.month
+                            dateComponents.day = components.day
+                            dateComponents.hour = components.hour
+                            dateComponents.minute = components.minute
+                            return dateComponents.date
+                    case .releaseDate:
+                        let components = id3Tag.releaseDateTime
+                            var dateComponents = DateComponents()
+                            dateComponents.calendar = calendar
+                            dateComponents.timeZone = timeZone
+                            dateComponents.year = components.year
+                            dateComponents.month = components.month
+                            dateComponents.day = components.day
+                            dateComponents.hour = components.hour
+                            dateComponents.minute = components.minute
+                            return dateComponents.date
+                    case .taggingTime:
+                        let components = id3Tag.taggingDateTime
+                            var dateComponents = DateComponents()
+                            dateComponents.calendar = calendar
+                            dateComponents.timeZone = timeZone
+                            dateComponents.year = components.year
+                            dateComponents.month = components.month
+                            dateComponents.day = components.day
+                            dateComponents.hour = components.hour
+                            dateComponents.minute = components.minute
+                            return dateComponents.date
+                    case .year:
+                        if let int = id3Tag.year {
+                            var components = DateComponents()
+                            components.year = int
+                            let date = calendar.date(from: components)
+                            return date
+                        } else {
+                            return nil
+                    }
+            }
+        }
+    }
+    
+    mutating func set(_ dateMetadataID: MetadataID_Date, dateValue: Date?) {
+        if let date = dateValue {
+            let formatter = ISO8601DateFormatter()
+            let calendar = Calendar.init(identifier: .iso8601)
+            let timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+            let components = calendar.dateComponents(in: timeZone, from: date)
+            formatter.timeZone = timeZone
+            
+            switch library {
+                case .mp4:
+                    switch dateMetadataID {
+                        case .encodingTime:
+                            mp4Tag.encodingTime = date
+                        case .originalReleaseTime:
+                            mp4Tag.originalReleaseTime = date
+                        case .purchaseDate:
+                            mp4Tag.purchaseDate = date
+                        case .recordingDate:
+                            mp4Tag.recordingDate = date
+                        case .releaseDate:
+                            mp4Tag.releaseDate = date
+                        case .taggingTime:
+                            mp4Tag.taggingTime = date
+                        case .year:
+                            mp4Tag.year = date
+                }
+                case .id3:
+                    switch dateMetadataID {
+                        case .encodingTime:
+                            id3Tag.encodingDateTime.year = components.year
+                            id3Tag.encodingDateTime.month = components.month
+                            id3Tag.encodingDateTime.day = components.day
+                            id3Tag.encodingDateTime.hour = components.hour
+                            id3Tag.encodingDateTime.minute = components.minute
+                        case .originalReleaseTime:
+                            id3Tag.originalReleaseTime.year = components.year
+                            id3Tag.originalReleaseTime.month = components.month
+                            id3Tag.originalReleaseTime.day = components.day
+                            id3Tag.originalReleaseTime.hour = components.hour
+                            id3Tag.originalReleaseTime.minute = components.minute
+                        case .purchaseDate:
+                            let string = formatter.string(from: date)
+                            id3Tag["Purchase Date"] = string
+                        case .recordingDate:
+                            id3Tag.recordingDateTime.year = components.year
+                            id3Tag.recordingDateTime.month = components.month
+                            id3Tag.recordingDateTime.day = components.day
+                            id3Tag.recordingDateTime.hour = components.hour
+                            id3Tag.recordingDateTime.minute = components.minute
+                        case .releaseDate:
+                            id3Tag.releaseDateTime.year = components.year
+                            id3Tag.releaseDateTime.month = components.month
+                            id3Tag.releaseDateTime.day = components.day
+                            id3Tag.releaseDateTime.hour = components.hour
+                            id3Tag.releaseDateTime.minute = components.minute
+                        case .taggingTime:
+                            id3Tag.taggingDateTime.year = components.year
+                            id3Tag.taggingDateTime.month = components.month
+                            id3Tag.taggingDateTime.day = components.day
+                            id3Tag.taggingDateTime.hour = components.hour
+                            id3Tag.taggingDateTime.minute = components.minute
+                        case .year:
+                            id3Tag.year = components.year
+                }
+            }
+        } else {
+            switch library {
+                case .mp4:
+                    switch dateMetadataID {
+                        case .encodingTime:
+                            mp4Tag.encodingTime = nil
+                        case .originalReleaseTime:
+                            mp4Tag.originalReleaseTime = nil
+                        case .purchaseDate:
+                            mp4Tag.purchaseDate = nil
+                        case .recordingDate:
+                            mp4Tag.recordingDate = nil
+                        case .releaseDate:
+                            mp4Tag.releaseDate = nil
+                        case .taggingTime:
+                            mp4Tag.taggingTime = nil
+                        case .year:
+                            mp4Tag.year = nil
+                }
+                case .id3:
+                    switch dateMetadataID {
+                        case .encodingTime:
+                            id3Tag.encodingDateTime = (nil, nil, nil, nil, nil)
+                        case .originalReleaseTime:
+                            id3Tag.originalReleaseTime = (nil, nil, nil, nil, nil)
+                        case .purchaseDate:
+                            id3Tag["Purchase Date"] = nil
+                        case .recordingDate:
+                            id3Tag.recordingDateTime = (nil, nil, nil, nil, nil)
+                        case .releaseDate:
+                            id3Tag.releaseDateTime = (nil, nil, nil, nil, nil)
+                        case .taggingTime:
+                            id3Tag.taggingDateTime = (nil, nil, nil, nil, nil)
+                        case .year:
+                            id3Tag.year = nil
+                }
+            }
+        }
+    }
     
     // MARK: - Tuple
     func get(_ tupleMetadataID: MetadataID_PartOfTotal) -> (Int?, Int?) {

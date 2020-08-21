@@ -44,7 +44,6 @@ public enum MetadataItem: CaseIterable {
     case copyrightWebpage
     case coverArt // image 1
     // MARK: - D-F
-    case date // date 1
     case description
     case director // other 3
     case discNumber // tuple 1
@@ -125,7 +124,6 @@ public enum MetadataItem: CaseIterable {
     case subtitleKeywords // array 7
     // MARK: - T-Z
     case taggingTime // date 7
-    case time // date 8
     case title
     case titleKeywords // array 8
     case titleSort
@@ -210,8 +208,6 @@ public enum MetadataItem: CaseIterable {
             case .coverArt:
                 return .attachedPicture(description: "FrontCover")
             // MARK: - D-F
-            case .date:
-                return .date
             case .description:
                 return .comments(description: "Description")
             case .director:
@@ -367,8 +363,6 @@ public enum MetadataItem: CaseIterable {
             // MARK: - T-Z
             case .taggingTime:
                 return .taggingTime
-            case .time:
-                return .time
             case .title:
                 return .title
             case .titleKeywords:
@@ -491,8 +485,6 @@ public enum MetadataItem: CaseIterable {
             case .coverArt:
                 return .coverArt
             // MARK: - D-F
-            case .date:
-                return .unknown
             case .description:
                 return .description
             case .director:
@@ -648,8 +640,6 @@ public enum MetadataItem: CaseIterable {
             // MARK: - T-Z
             case .taggingTime:
                 return .unknown
-            case .time:
-                return .unknown
             case .title:
                 return .title
             case .titleKeywords:
@@ -758,32 +748,6 @@ enum MetadataID_Image: CaseIterable {
     var metadataItem: MetadataItem {
         switch self {
             case .coverArt: return .coverArt
-        }
-    }
-}
-@available(OSX 10.13, *)
-enum MetadataID_Date: CaseIterable {
-    case date // date 1
-    case encodingTime // date 2
-    case originalReleaseTime // date 3
-    case purchaseDate // date 4
-    case recordingDate // date 5
-    case releaseDate // date 6
-    case taggingTime // date 7
-    case time // date 8
-    case year // date 9
-
-    var metadataItem: MetadataItem {
-        switch self {
-            case .date: return .date
-            case .encodingTime: return .encodingTime
-            case .originalReleaseTime: return .originalReleaseTime
-            case .purchaseDate: return .purchaseDate
-            case .recordingDate: return .recordingDate
-            case .releaseDate: return .releaseDate
-            case .taggingTime: return .taggingTime
-            case .time: return .time
-            case .year: return .year
         }
     }
 }
