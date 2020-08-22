@@ -5,8 +5,7 @@ import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
 final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
-    
-    
+        
     func testReadWriteMp4DateMetadata() throws {
         let read = try AudioFile(location: mp4Meta)
         var components = DateComponents()

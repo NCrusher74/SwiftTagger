@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import SwiftTaggerID3
-import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
 enum MetadataID_StringArray: CaseIterable {
@@ -36,7 +34,7 @@ enum MetadataID_StringArray: CaseIterable {
 
 @available(OSX 10.13, *)
 extension AudioFile {
-    var arrangerKeywords: [String]? {
+    public var arrangerKeywords: [String]? {
         get {
             if let array = self.get(.arrangerKeywords) {
                 return array
@@ -53,7 +51,7 @@ extension AudioFile {
         }
     }
     
-    var artistKeywords: [String]? {
+    public var artistKeywords: [String]? {
         get {
             if let array = self.get(.artistKeywords) {
                 return array
@@ -70,7 +68,7 @@ extension AudioFile {
         }
     }
 
-    var composerKeywords: [String]? {
+    public var composerKeywords: [String]? {
         get {
             if let array = self.get(.composerKeywords) {
                 return array
@@ -87,7 +85,7 @@ extension AudioFile {
         }
     }
 
-    var podcastKeywords: [String]? {
+    public var podcastKeywords: [String]? {
         get {
             if let array = self.get(.podcastKeywords) {
                 return array
@@ -104,7 +102,7 @@ extension AudioFile {
         }
     }
 
-    var producerKeywords: [String]? {
+    public var producerKeywords: [String]? {
         get {
             if let array = self.get(.producerKeywords) {
                 return array
@@ -121,7 +119,7 @@ extension AudioFile {
         }
     }
 
-    var songwriterKeywords: [String]? {
+    public var songwriterKeywords: [String]? {
         get {
             if let array = self.get(.songwriterKeywords) {
                 return array
@@ -138,7 +136,7 @@ extension AudioFile {
         }
     }
 
-    var subtitleKeywords: [String]? {
+    public var subtitleKeywords: [String]? {
         get {
             if let array = self.get(.subtitleKeywords) {
                 return array
@@ -155,7 +153,7 @@ extension AudioFile {
         }
     }
 
-    var titleKeywords: [String]? {
+    public var titleKeywords: [String]? {
         get {
             if let array = self.get(.titleKeywords) {
                 return array

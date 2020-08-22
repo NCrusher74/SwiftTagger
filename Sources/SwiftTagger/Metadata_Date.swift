@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import SwiftTaggerID3
-import SwiftTaggerMP4
+
 @available(OSX 10.13, *)
 enum MetadataID_Date: CaseIterable {
     case encodingTime // date 2

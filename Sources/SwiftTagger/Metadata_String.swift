@@ -5,8 +5,6 @@
 //  Created by Nolaine Crusher on 8/15/20.
 //
 import SwiftTaggerID3
-import SwiftTaggerMP4
-import Foundation
 
 @available(OSX 10.13, *)
 enum MetadataID_String: CaseIterable { // 70 items

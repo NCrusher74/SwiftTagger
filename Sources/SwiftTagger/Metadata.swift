@@ -40,7 +40,8 @@ extension AudioFile {
             case .id3: try id3Tag.removeAllMetadata()
             case .mp4: try mp4Tag.removeAllMetadata()
         }
-    }    
+    }
+    
     // MARK: - Date
     func get(_ dateMetadataID: MetadataID_Date) -> Date? {
         switch library {

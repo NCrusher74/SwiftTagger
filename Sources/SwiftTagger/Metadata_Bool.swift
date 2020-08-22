@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import SwiftTaggerID3
-import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
 enum MetadataID_Bool: CaseIterable {
