@@ -15,6 +15,7 @@ enum MetadataID_String: CaseIterable { // 70 items
     case albumArtistSort
     case albumSort
     case arranger
+    case artDirector
     case artist
     case artistSort
     case artistWebpage
@@ -29,9 +30,11 @@ enum MetadataID_String: CaseIterable { // 70 items
     case copyrightWebpage
     // MARK: - D-F
     case description
+    case director
     case encodedBy
     case encodingSettings
     case encodingTool
+    case executiveProducer
     case filmMakerWebpage
     // MARK: - G-L
     case genre
@@ -59,6 +62,7 @@ enum MetadataID_String: CaseIterable { // 70 items
     case podcastFeed
     case podcastID
     case producedNotice
+    case producer
     case publisher
     case publisherWebpage
     // MARK: - R-S
@@ -70,7 +74,9 @@ enum MetadataID_String: CaseIterable { // 70 items
     case requirements
     case sellerID
     case softwareVersion
+    case soloist
     case songDescription
+    case soundEngineer
     case sourceCredit
     case subtitle
     // MARK: - T-Z
@@ -159,6 +165,12 @@ enum MetadataID_String: CaseIterable { // 70 items
             case .website: return .website
             case .work: return .work
             case .writer: return .writer
+            case .artDirector: return .artDirector
+            case .director: return .director
+            case .executiveProducer: return .executiveProducer
+            case .producer: return .producer
+            case .soloist: return .soloist
+            case .soundEngineer: return .soundEngineer
         }
     }
 }
@@ -241,6 +253,19 @@ extension AudioFile {
         }
         set {
             set(.arranger, stringValue: newValue)
+        }
+    }
+    
+    public var artDirector: String? {
+        get {
+            if let value = self.get(.artDirector) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.artDirector, stringValue: newValue)
         }
     }
     
@@ -402,6 +427,19 @@ extension AudioFile {
         }
     }
     
+    public var director: String? {
+        get {
+            if let value = self.get(.director) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.director, stringValue: newValue)
+        }
+    }
+    
     public var encodedBy: String? {
         get {
             if let value = self.get(.encodedBy) {
@@ -438,6 +476,19 @@ extension AudioFile {
         }
         set {
             set(.encodingTool, stringValue: newValue)
+        }
+    }
+    
+    public var executiveProducer: String? {
+        get {
+            if let value = self.get(.executiveProducer) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.executiveProducer, stringValue: newValue)
         }
     }
     
@@ -755,6 +806,19 @@ extension AudioFile {
         }
     }
     
+    public var producer: String? {
+        get {
+            if let value = self.get(.producer) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.producer, stringValue: newValue)
+        }
+    }
+    
     public var publisher: String? {
         get {
             if let value = self.get(.publisher) {
@@ -886,6 +950,18 @@ extension AudioFile {
         }
     }
     
+    public var soloist: String? {
+        get {
+            if let value = self.get(.soloist) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.soloist, stringValue: newValue)
+        }
+    }
     public var songDescription: String? {
         get {
             if let value = self.get(.songDescription) {
@@ -896,6 +972,19 @@ extension AudioFile {
         }
         set {
             set(.songDescription, stringValue: newValue)
+        }
+    }
+    
+    public var soundEngineer: String? {
+        get {
+            if let value = self.get(.soundEngineer) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.soundEngineer, stringValue: newValue)
         }
     }
     

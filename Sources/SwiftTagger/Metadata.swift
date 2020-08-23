@@ -367,6 +367,12 @@ extension AudioFile {
                         }  else {
                             return nil
                     }
+                    case .performers:
+                        if let array = mp4Tag.performers {
+                            return array
+                        } else {
+                            return nil
+                    }
             }
             case .id3:
                 switch stringArrayMetadataID {
@@ -426,6 +432,13 @@ extension AudioFile {
                         } else {
                             return nil
                     }
+                    case .performers:
+                        if let string = id3Tag["performers"] {
+                            let array: [String] = string.components(separatedBy: ";")
+                            return array
+                        } else {
+                            return nil
+                    }
             }
         }
     }
@@ -451,6 +464,8 @@ extension AudioFile {
                             mp4Tag.subtitleKeywords = array
                         case .titleKeywords:
                             mp4Tag.titleKeywords = array
+                        case .performers:
+                            mp4Tag.performers = array
                 }
                 case .id3:
                     switch stringArrayMetadataID {
@@ -478,6 +493,9 @@ extension AudioFile {
                         case .titleKeywords:
                                 let string = array.joined(separator: ";")
                                 id3Tag["titleKeywords"] = string
+                        case .performers:
+                                let string = array.joined(separator: ";")
+                                id3Tag["performers"] = string
                 }
             }
         } else {
@@ -500,6 +518,8 @@ extension AudioFile {
                             mp4Tag.subtitleKeywords = nil
                         case .titleKeywords:
                             mp4Tag.titleKeywords = nil
+                        case .performers:
+                            mp4Tag.performers = nil
                 }
                 case .id3:
                     switch stringArrayMetadataID {
@@ -519,6 +539,8 @@ extension AudioFile {
                             id3Tag["subtitleKeywords"] = nil
                         case .titleKeywords:
                             id3Tag["titleKeywords"] = nil
+                        case .performers:
+                        id3Tag["performers"] = nil
                 }
             }
         }
@@ -928,6 +950,12 @@ extension AudioFile {
                     case .website: return mp4Tag.website
                     case .work: return mp4Tag.workName
                     case .writer: return mp4Tag.writer
+                    case .artDirector: return mp4Tag.artDirector
+                    case .director: return mp4Tag.director
+                    case .executiveProducer: return mp4Tag.executiveProducer
+                    case .producer: return mp4Tag.producer
+                    case .soloist: return mp4Tag.soloist
+                    case .soundEngineer: return mp4Tag.soundEngineer
             }
             case .id3:
                 switch stringMetadataID {
@@ -1001,6 +1029,12 @@ extension AudioFile {
                     case .website: return id3Tag[userDefinedUrl: "Website"]
                     case .work: return id3Tag.contentGroup
                     case .writer: return id3Tag["Writer"]
+                    case .artDirector: return id3Tag["Art Director"]
+                    case .director: return id3Tag["Director"]
+                    case .executiveProducer: return id3Tag["Executive Producer"]
+                    case .producer: return id3Tag["Producer"]
+                    case .soloist: return id3Tag["Soloist"]
+                    case .soundEngineer: return id3Tag["Sound Engineer"]
             }
         }
     }
@@ -1150,6 +1184,18 @@ extension AudioFile {
                             self.mp4Tag.workName = string
                         case .writer:
                             self.mp4Tag.writer = string
+                        case .artDirector:
+                            self.mp4Tag.artDirector = string
+                        case .director:
+                            self.mp4Tag.director = string
+                        case .executiveProducer:
+                            self.mp4Tag.executiveProducer = string
+                        case .producer:
+                            self.mp4Tag.producer = string
+                        case .soloist:
+                            self.mp4Tag.soloist = string
+                        case .soundEngineer:
+                            self.mp4Tag.soundEngineer = string
                 }
                 case .id3:
                     switch stringMetadataID {
@@ -1293,6 +1339,18 @@ extension AudioFile {
                             self.id3Tag.contentGroup = string
                         case .writer:
                             self.id3Tag["Writer"] = string
+                        case .artDirector:
+                            self.id3Tag["Art Director"] = string
+                        case .director:
+                            self.id3Tag["Director"] = string
+                        case .executiveProducer:
+                            self.id3Tag["Executive Producer"] = string
+                        case .producer:
+                            self.id3Tag["Producer"] = string
+                        case .soloist:
+                            self.id3Tag["Soloist"] = string
+                        case .soundEngineer:
+                            self.id3Tag["Sound Engineer"] = string
                 }
             }
         } else {
@@ -1439,6 +1497,18 @@ extension AudioFile {
                             self.mp4Tag.workName = nil
                         case .writer:
                             self.mp4Tag.writer = nil
+                        case .artDirector:
+                            self.mp4Tag.artDirector = nil
+                        case .director:
+                            self.mp4Tag.director = nil
+                        case .executiveProducer:
+                            self.mp4Tag.executiveProducer = nil
+                        case .producer:
+                            self.mp4Tag.producer = nil
+                        case .soloist:
+                            self.mp4Tag.soloist = nil
+                        case .soundEngineer:
+                            self.mp4Tag.soundEngineer = nil
                 }
                 case .id3:
                     switch stringMetadataID {
@@ -1582,6 +1652,18 @@ extension AudioFile {
                             self.id3Tag.contentGroup = nil
                         case .writer:
                             self.id3Tag["Writer"] = nil
+                        case .artDirector:
+                        self.id3Tag["Art Director"] = nil
+                        case .director:
+                        self.id3Tag["Director"] = nil
+                        case .executiveProducer:
+                        self.id3Tag["Executive Producer"] = nil
+                        case .producer:
+                        self.id3Tag["Producer"] = nil
+                        case .soloist:
+                        self.id3Tag["Soloist"] = nil
+                        case .soundEngineer:
+                        self.id3Tag["Sound Engineer"] = nil
                 }
             }
         }

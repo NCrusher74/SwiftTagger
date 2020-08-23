@@ -12,6 +12,7 @@ enum MetadataID_StringArray: CaseIterable {
     case arrangerKeywords // array 1
     case artistKeywords // array 2
     case composerKeywords // array 3
+    case performers
     case podcastKeywords // array 4
     case producerKeywords // array 5
     case songwriterKeywords // array 6
@@ -28,6 +29,7 @@ enum MetadataID_StringArray: CaseIterable {
             case .songwriterKeywords: return .songwriterKeywords
             case .subtitleKeywords: return .subtitleKeywords
             case .titleKeywords: return .titleKeywords
+            case .performers: return .performers
         }
     }
 }
@@ -85,6 +87,22 @@ extension AudioFile {
         }
     }
 
+    public var performers: [String]? {
+        get {
+            if let array = self.get(.performers) {
+                return array
+            } else {
+                return nil
+            }
+        }
+        set {
+            if let new = newValue {
+                set(.performers, arrayValue: new)
+            } else {
+                set(.performers, arrayValue: nil)
+            }
+        }
+    }
     public var podcastKeywords: [String]? {
         get {
             if let array = self.get(.podcastKeywords) {
