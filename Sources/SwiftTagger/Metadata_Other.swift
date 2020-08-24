@@ -42,12 +42,74 @@ enum MetadataID_Other: CaseIterable {
 
 @available(OSX 10.13, *)
 extension AudioFile {
-//    public func addInvolvementCredit
-//    public func addPerformanceCredit
-//    public func clearInvolvementCreditList
-//    public func clearPerformerCreditList
-//    public func removeCreditForInvolvement(role: InvolvedPersonCredits)
-//    public func removeCreditForPerformance(role: MusicianAndPerformerCredits)
+    public mutating func addInvolvementCredit(_ role: InvolvedPersonCredits, person: String) {
+        switch library {
+            case .mp4:
+                if let role = SwiftTaggerMP4.InvolvedPersonCredits(rawValue: role.rawValue) {
+                    mp4Tag.addInvolvementCredit(role, person: person)
+            }
+            case .id3:
+                if let role = SwiftTaggerID3.InvolvedPersonCredits(rawValue: role.rawValue) {
+                    id3Tag.addInvolvementCredit(role: role, person: person)
+            }
+        }
+    }
+    public mutating func addPerformanceCredit(_ role: MusicianAndPerformerCredits, person: String) {
+        switch library {
+            case .mp4:
+                if let role = SwiftTaggerMP4.MusicianAndPerformerCredits(rawValue: role.rawValue) {
+                    mp4Tag.addPerformanceCredit(role, person: person)
+            }
+            case .id3:
+                if let role = SwiftTaggerID3.MusicianAndPerformerCredits(rawValue: role.rawValue) {
+                    id3Tag.addPerformanceCredit(role: role, person: person)
+            }
+        }
+    }
+
+
+    public mutating func removeInvolvementCredit(_ role: InvolvedPersonCredits) {
+        switch library {
+            case .id3:
+                if let role = SwiftTaggerID3.InvolvedPersonCredits(rawValue: role.rawValue) {
+                    id3Tag.removeInvolvementCredit(role: role)
+            }
+            case .mp4:
+                if let role = SwiftTaggerMP4.InvolvedPersonCredits(rawValue: role.rawValue) {
+                    mp4Tag.removeInvolvementCredit(role)
+            }
+        }
+    }
+    public mutating func removePerformanceCredit(_ role: MusicianAndPerformerCredits) {
+        switch library {
+            case .id3:
+                if let role = SwiftTaggerID3.MusicianAndPerformerCredits(rawValue: role.rawValue) {
+                    id3Tag.removePerformanceCredit(role: role)
+            }
+            case .mp4:
+                if let role = SwiftTaggerMP4.MusicianAndPerformerCredits(rawValue: role.rawValue) {
+                    mp4Tag.removePerformanceCredit(role)
+            }
+        }
+    }
+
+    public mutating func clearInvolvementCreditList() {
+        switch library {
+            case .id3:
+                id3Tag.clearInvolvementCreditList()
+            case .mp4:
+                mp4Tag.clearInvolvementCreditList()
+        }
+    }
+    public mutating func clearPerformanceCreditList() {
+        switch library {
+            case .id3:
+                id3Tag.clearPerformanceCreditList()
+            case .mp4:
+                mp4Tag.clearPerformanceCreditList()
+        }
+    }
+
     public var involvementCreditsList: [ InvolvedPersonCredits : [String]] {
         get {
             var outputDictionary = [ InvolvedPersonCredits : [String]]()
@@ -119,7 +181,7 @@ extension AudioFile {
         }
     }
     
-    public var performerCreditList: [ MusicianAndPerformerCredits : [String]] {
+    public var performanceCreditsList: [ MusicianAndPerformerCredits : [String]] {
         get {
             var outputDictionary = [ MusicianAndPerformerCredits : [String]]()
             switch library {
@@ -157,7 +219,7 @@ extension AudioFile {
                                 mp4Tag.performanceCreditsList[credit] = value
                                 let valueString = value.joined(separator: ";")
                                 switch credit {
-                                    case .featuredArtist:
+                                    case .artist:
                                         self.artist = valueString
                                     case .soloist:
                                         self.soloist = valueString

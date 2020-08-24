@@ -1170,4 +1170,32 @@ extension AudioFile {
             set(.writer, stringValue: newValue)
         }
     }
+    
+    public subscript(_ metadataDescription: String) -> String? {
+        get {
+            switch library {
+                case .mp4:
+                    return mp4Tag[metadataDescription]
+                case .id3:
+                    return id3Tag[metadataDescription]
+            }
+        }
+        set {
+            if let new = newValue {
+                switch library {
+                    case .mp4:
+                        mp4Tag[metadataDescription] = new
+                    case .id3:
+                        id3Tag[metadataDescription] = new
+                }
+            } else {
+                switch library {
+                    case .mp4:
+                        mp4Tag[metadataDescription] = nil
+                    case .id3:
+                        id3Tag[metadataDescription] = nil
+                }
+            }
+        }
+    }
 }
