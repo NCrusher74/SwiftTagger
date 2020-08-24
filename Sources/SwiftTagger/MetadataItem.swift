@@ -700,7 +700,6 @@ public enum MetadataItem: CaseIterable {
 
 @available(OSX 10.13, *)
 enum MetadataID_Other: CaseIterable {
-    case coverArt
     case contentRating
     case contentAdvisory
     case fileType
@@ -708,6 +707,7 @@ enum MetadataID_Other: CaseIterable {
     case initialKey
     case languages
     case predefinedGenre
+    case coverArt
     case involvedPeopleList
     case musicianCreditsList
     case unknown

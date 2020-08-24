@@ -8,9 +8,27 @@
  */
 
 import Foundation
+import SwiftTaggerID3
+import SwiftTaggerMP4
 
 public enum KeySignature: String {
     
+    init?(id3Value: SwiftTaggerID3.KeySignature) {
+        if let key = KeySignature(rawValue: id3Value.rawValue) {
+            self = key
+        } else {
+            return nil
+        }
+    }
+    
+    init?(mp4Value: SwiftTaggerMP4.KeySignature) {
+        if let key = KeySignature(rawValue: mp4Value.rawValue) {
+            self = key
+        } else {
+            return nil
+        }
+    }
+
     case cMajor = "C"
     case gMajor = "G"
     case dMajor = "D"

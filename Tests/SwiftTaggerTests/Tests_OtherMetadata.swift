@@ -47,4 +47,35 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         XCTAssertNotNil(try newFile2.getCoverArt())
     }
     
+    func testContentRatingAndAdvisoryMp4() throws {
+        var write = try AudioFile(location: mp4NoMeta)
+        write.contentAdvisory.rating = .us_Movie_Unrated
+        write.contentAdvisory.ratingNotes = "Notation"
+        write.contentRating = .clean
+
+        let outputUrl = try localDirectory(fileName: "testMp4-ratings", fileExtension: "m4a")
+        try write.write(outputLocation: outputUrl)
+        
+        let output = try AudioFile(location: outputUrl)
+        XCTAssertEqual(output.contentRating, .clean)
+        XCTAssertEqual(output.contentAdvisory.rating, .us_Movie_Unrated)
+        XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
+    }
+
+    func testContentRatingAndAdvisoryID3() throws {
+        var write = try AudioFile(location: mp3NoMeta)
+        write.contentAdvisory.rating = .us_Movie_Unrated
+        write.contentAdvisory.ratingNotes = "Notation"
+        write.contentRating = .clean
+        
+        let outputUrl = try localDirectory(fileName: "testMP3-ratings", fileExtension: "mp3")
+        try write.write(outputLocation: outputUrl)
+        
+        let output = try AudioFile(location: outputUrl)
+        XCTAssertEqual(output.contentRating, .clean)
+        XCTAssertEqual(output.contentAdvisory.rating, .us_Movie_Unrated)
+        XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
+    }
+
+    
 }
