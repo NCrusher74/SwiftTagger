@@ -40,6 +40,7 @@ public enum MetadataItem: CaseIterable {
     case conductor
     case conductorID // int 6
     case contentAdvisory // other 2
+    case contentRating // other 14
     case copyright
     case copyrightWebpage
     case coverArt // image 1
@@ -106,7 +107,6 @@ public enum MetadataItem: CaseIterable {
     case radioStation
     case radioStationOwner
     case radioStationWebpage
-    case rating // other 14
     case recordCompany
     case recordingDate // date 5
     case recordingCopyright
@@ -201,6 +201,8 @@ public enum MetadataItem: CaseIterable {
                 return .userDefinedText(description: "ConductorID")
             case .contentAdvisory:
                 return .userDefinedText(description: "Content Advisory")
+            case .contentRating:
+                return .userDefinedText(description: "Content Rating")
             case .copyright:
                 return .copyright
             case .copyrightWebpage:
@@ -328,8 +330,6 @@ public enum MetadataItem: CaseIterable {
                 return .radioStationOwner
             case .radioStationWebpage:
                 return .radioStationWebpage
-            case .rating:
-                return .userDefinedText(description: "Content Rating")
             case .recordCompany:
                 return .userDefinedText(description: "Record Company")
             case .recordingDate:
@@ -478,6 +478,8 @@ public enum MetadataItem: CaseIterable {
                 return .conductorID
             case .contentAdvisory:
                 return .unknown
+            case .contentRating:
+                return .rating
             case .copyright:
                 return .copyright
             case .copyrightWebpage:
@@ -605,8 +607,6 @@ public enum MetadataItem: CaseIterable {
                 return .unknown
             case .radioStationWebpage:
                 return .unknown
-            case .rating:
-                return .rating
             case .recordCompany:
                 return .recordCompany
             case .recordingDate:
@@ -694,6 +694,37 @@ public enum MetadataItem: CaseIterable {
             self = metadata
         } else {
             return nil
+        }
+    }
+}
+
+@available(OSX 10.13, *)
+enum MetadataID_Other: CaseIterable {
+    case coverArt
+    case contentRating
+    case contentAdvisory
+    case fileType
+    case mediaType
+    case initialKey
+    case languages
+    case predefinedGenre
+    case involvedPeopleList
+    case musicianCreditsList
+    case unknown
+    
+    var metadataItem: MetadataItem {
+        switch self {
+            case .contentAdvisory: return .contentAdvisory
+            case .coverArt: return .coverArt
+            case .fileType: return .fileType
+            case .initialKey: return .initialKey
+            case .involvedPeopleList: return .involvedPeopleList
+            case .languages: return .languages
+            case .mediaType: return .mediaType
+            case .musicianCreditsList: return .musicianCreditsList
+            case .predefinedGenre: return .predefinedGenre
+            case .contentRating: return .contentRating
+            case .unknown: return .unknown
         }
     }
 }

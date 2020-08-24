@@ -42,6 +42,11 @@ let mp3Chaptered = testDirectory
     .appendingPathComponent("mp3-chaptered")
     .appendingPathExtension("mp3")
 
+let sampleCover = testDirectory
+    .deletingLastPathComponent()
+    .appendingPathComponent("samplecover-green")
+    .appendingPathExtension("jpg")
+
 @available(OSX 10.12, *)
 func localDirectory(fileName: String, fileExtension: String) throws -> URL {
     let home = FileManager.default.homeDirectoryForCurrentUser
