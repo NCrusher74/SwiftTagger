@@ -714,18 +714,17 @@ enum MetadataID_Other: CaseIterable {
     
     var metadataItem: MetadataItem {
         switch self {
-            case .contentAdvisory: return .contentAdvisory
-            case .coverArt: return .coverArt
-            case .fileType: return .fileType
             case .initialKey: return .initialKey
-            case .involvedPeopleList: return .involvedPeopleList
             case .languages: return .languages
+            case .fileType: return .fileType
             case .mediaType: return .mediaType
-            case .musicianCreditsList: return .musicianCreditsList
             case .predefinedGenre: return .predefinedGenre
+            case .contentAdvisory: return .contentAdvisory
             case .contentRating: return .contentRating
+            case .coverArt: return .coverArt
+            case .involvedPeopleList: return .involvedPeopleList
+            case .musicianCreditsList: return .musicianCreditsList
             case .unknown: return .unknown
         }
     }
 }
-

@@ -129,5 +129,64 @@ extension AudioFile {
             }
         }
     }
+    
+    public var languages_mp4: [ICULocaleCode]? {
+        get {
+            if library == .mp4 {
+                var array = [ICULocaleCode]()
+                for language in mp4Tag.languages {
+                    if let code = ICULocaleCode(rawValue: language.rawValue) {
+                        array.append(code)
+                    }
+                }
+                return array
+            } else {
+                return nil
+            }
+        }
+        set {
+            if library == .mp4 {
+                if let new = newValue, !new.isEmpty {
+                    var array = [SwiftTaggerMP4.ICULocaleCode]()
+                    for language in new {
+                        if let code = SwiftTaggerMP4.ICULocaleCode(rawValue: language.rawValue) {
+                            array.append(code)
+                        }
+                    }
+                    mp4Tag.languages = array
+                }
+            }
+        }
+    }
+    
+    public var languages_id3: [ISO6392Codes]? {
+        get {
+            if library == .id3 {
+                var array = [ISO6392Codes]()
+                if let id3Languages = id3Tag.languages, !id3Languages.isEmpty {
+                    for language in id3Languages {
+                        if let code = ISO6392Codes(rawValue: language.rawValue) {
+                            array.append(code)
+                        }
+                    }
+                }
+                return array
+            } else {
+                return nil
+            }
+        }
+        set {
+            if library == .id3 {
+                if let new = newValue, !new.isEmpty {
+                    var array = [SwiftTaggerID3.ISO6392Codes]()
+                    for language in new {
+                        if let code = SwiftTaggerID3.ISO6392Codes(rawValue: language.rawValue) {
+                            array.append(code)
+                        }
+                    }
+                    id3Tag.languages = array
+                }
+            }
+        }
+    }
 }
-// mpaa|Unrated|???|Annotation
