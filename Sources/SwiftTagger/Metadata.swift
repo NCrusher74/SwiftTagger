@@ -936,6 +936,7 @@ extension AudioFile {
                     case .sellerID: return mp4Tag.sellerID
                     case .softwareVersion: return mp4Tag.softwareVersion
                     case .songDescription: return mp4Tag.songDescription
+                    case .songwriter: return mp4Tag.songwriter
                     case .sourceCredit: return mp4Tag.sourceCredit
                     case .subtitle: return mp4Tag.subtitle
                     case .thanks: return mp4Tag.thanks
@@ -1015,6 +1016,7 @@ extension AudioFile {
                     case .sellerID: return id3Tag["Seller ID"]
                     case .softwareVersion: return id3Tag["Software Version"]
                     case .songDescription: return id3Tag["Song Description", .und]
+                    case .songwriter: return id3Tag["Songwriter"]
                     case .sourceCredit: return id3Tag["Source Credit"]
                     case .subtitle: return id3Tag.subtitle
                     case .thanks: return id3Tag["Thanks"]
@@ -1156,6 +1158,8 @@ extension AudioFile {
                             self.mp4Tag.softwareVersion = string
                         case .songDescription:
                             self.mp4Tag.songDescription = string
+                        case .songwriter:
+                            self.mp4Tag.songwriter = string
                         case .sourceCredit:
                             self.mp4Tag.sourceCredit = string
                         case .subtitle:
@@ -1311,6 +1315,8 @@ extension AudioFile {
                             self.id3Tag["Software Version"] = string
                         case .songDescription:
                             self.id3Tag["Song Description", .und] = string
+                        case .songwriter:
+                            self.id3Tag["Songwriter"] = string
                         case .sourceCredit:
                             self.id3Tag["Source Credit"] = string
                         case .subtitle:
@@ -1469,6 +1475,8 @@ extension AudioFile {
                             self.mp4Tag.softwareVersion = nil
                         case .songDescription:
                             self.mp4Tag.songDescription = nil
+                        case .songwriter:
+                            self.mp4Tag.songwriter = nil
                         case .sourceCredit:
                             self.mp4Tag.sourceCredit = nil
                         case .subtitle:
@@ -1624,6 +1632,8 @@ extension AudioFile {
                             self.id3Tag["Software Version"] = nil
                         case .songDescription:
                             self.id3Tag["Song Description", .und] = nil
+                        case .songwriter:
+                            self.id3Tag["Songwriter"] = nil
                         case .sourceCredit:
                             self.id3Tag["Source Credit"] = nil
                         case .subtitle:

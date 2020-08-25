@@ -52,7 +52,8 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         write.contentAdvisory.rating = .us_Movie_Unrated
         write.contentAdvisory.ratingNotes = "Notation"
         write.contentRating = .clean
-        write.languages_mp4 = [.English]
+        write.keySignature = .aFlatMajor
+        write.language.mp4Language = .English_United_States
 
         let outputUrl = try localDirectory(fileName: "testMp4-ratings", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
@@ -61,7 +62,8 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         XCTAssertEqual(output.contentRating, .clean)
         XCTAssertEqual(output.contentAdvisory.rating, .us_Movie_Unrated)
         XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
-        XCTAssertEqual(output.languages_mp4, [.English])
+        XCTAssertEqual(output.keySignature, .aFlatMajor)
+        XCTAssertEqual(output.language.mp4Language, .English_United_States)
     }
 
     func testContentRatingAndAdvisoryID3() throws {
@@ -69,8 +71,9 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         write.contentAdvisory.rating = .us_Movie_Unrated
         write.contentAdvisory.ratingNotes = "Notation"
         write.contentRating = .clean
-        write.languages_id3 = [.eng]
-        
+        write.keySignature = .aFlatMajor
+        write.language.id3Languages = [.eng, .und]
+
         let outputUrl = try localDirectory(fileName: "testMP3-ratings", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
@@ -78,7 +81,8 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         XCTAssertEqual(output.contentRating, .clean)
         XCTAssertEqual(output.contentAdvisory.rating, .us_Movie_Unrated)
         XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
-        XCTAssertEqual(output.languages_id3, [.eng])
+        XCTAssertEqual(output.keySignature, .aFlatMajor)
+        XCTAssertEqual(output.language.id3Languages, [.eng, .und])
     }
 
     

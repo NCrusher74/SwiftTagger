@@ -130,61 +130,154 @@ extension AudioFile {
         }
     }
     
-    public var languages_mp4: [ICULocaleCode]? {
+    public var keySignature: KeySignature? {
         get {
-            if library == .mp4 {
-                var array = [ICULocaleCode]()
-                for language in mp4Tag.languages {
-                    if let code = ICULocaleCode(rawValue: language.rawValue) {
-                        array.append(code)
-                    }
+            switch library {
+                case .mp4:
+                    if let key = KeySignature(mp4Value: mp4Tag.initialKey ?? .unknown), key != .unknown {
+                        return key
+                    } else {
+                        return nil
                 }
-                return array
-            } else {
-                return nil
+                case .id3:
+                    if let key = KeySignature(id3Value: id3Tag.initialKey ?? .unknown) {
+                        return key
+                    } else {
+                        return nil
+                }
             }
         }
         set {
-            if library == .mp4 {
-                if let new = newValue, !new.isEmpty {
-                    var array = [SwiftTaggerMP4.ICULocaleCode]()
-                    for language in new {
-                        if let code = SwiftTaggerMP4.ICULocaleCode(rawValue: language.rawValue) {
-                            array.append(code)
-                        }
+            if let new = newValue {
+                switch library {
+                    case .mp4:
+                        if let key = SwiftTaggerMP4.KeySignature(rawValue: new.rawValue) {
+                            mp4Tag.initialKey = key
                     }
-                    mp4Tag.languages = array
+                    case .id3:
+                        if let key = SwiftTaggerID3.KeySignature(rawValue: new.rawValue) {
+                            id3Tag.initialKey = key
+                    }
                 }
             }
         }
     }
     
-    public var languages_id3: [ISO6392Codes]? {
+    /// ID3 (mp3 files) use `ISO-639-2` codes. MP4's `extendedLanguage` atom uses `ICULocaleCode`
+    public var language: (id3Languages: [ISO6392Codes]?, mp4Language: ICULocaleCode?) {
         get {
-            if library == .id3 {
-                var array = [ISO6392Codes]()
-                if let id3Languages = id3Tag.languages, !id3Languages.isEmpty {
-                    for language in id3Languages {
-                        if let code = ISO6392Codes(rawValue: language.rawValue) {
-                            array.append(code)
+            switch library {
+                case .mp4:
+                    if let language = mp4Tag.language {
+                        if let code = ICULocaleCode(rawValue: language.rawValue) {
+                            return (nil, code)
+                        } else {
+                            return (nil, nil)
                         }
-                    }
+                    } else {
+                        return (nil, nil)
                 }
-                return array
+                case .id3:
+                    if let languages = id3Tag.languages {
+                        var array = [ISO6392Codes]()
+                        for language in languages {
+                            if let code = ISO6392Codes(rawValue: language.rawValue) {
+                                array.append(code)
+                            }
+                        }
+                        return (array, nil)
+                    } else {
+                        return (nil, nil)
+                }
+            }
+        }
+        set {
+            switch library {
+                case .mp4:
+                    if let language = newValue.mp4Language {
+                        if let code = SwiftTaggerMP4.ICULocaleCode(rawValue: language.rawValue) {
+                            mp4Tag.language = code
+                        }
+                }
+                case .id3:
+                    if let languages = newValue.id3Languages, !languages.isEmpty {
+                        var array = [SwiftTaggerID3.ISO6392Codes]()
+                        for language in languages {
+                            if let code = SwiftTaggerID3.ISO6392Codes(rawValue: language.rawValue) {
+                                array.append(code)
+                            }
+                        }
+                        id3Tag.languages = array
+                }
+            }
+        }
+    }
+
+    /// MP4 ONLY. Media type atom.
+    public var stik: Stik? {
+        get {
+            if library == .mp4 {
+                if let stik = Stik(rawValue: mp4Tag.stik?.rawValue ?? 255) {
+                    return stik
+                } else {
+                    return nil
+                }
             } else {
                 return nil
             }
         }
         set {
-            if library == .id3 {
-                if let new = newValue, !new.isEmpty {
-                    var array = [SwiftTaggerID3.ISO6392Codes]()
-                    for language in new {
-                        if let code = SwiftTaggerID3.ISO6392Codes(rawValue: language.rawValue) {
-                            array.append(code)
-                        }
+            if library == .mp4 {
+                if let new = newValue {
+                    if let stik = SwiftTaggerMP4.Stik(rawValue: new.rawValue) {
+                        mp4Tag.stik = stik
                     }
-                    id3Tag.languages = array
+                } else {
+                    mp4Tag.stik = nil
+                }
+            }
+        }
+    }
+    
+    /// MP3 ONLY
+    public var mediaType: (mediaType: MediaType?, mediaTypeRefinement: MediaTypeRefinements?, additionalInformation: String?) {
+        get {
+            if library == .id3 {
+                if let type = MediaType(rawValue: id3Tag.mediaType.mediaType?.rawValue ?? "none") {
+                    if let refinement = MediaTypeRefinements(code: id3Tag.mediaType.mediaTypeRefinement?.code ?? "none") {
+                        if let string = id3Tag.mediaType.additionalInformation {
+                            return (type, refinement, string)
+                        } else {
+                            return (type, refinement, nil)
+                        }
+                    } else {
+                        return (type, nil, nil)
+                    }
+                } else {
+                    return (nil, nil, nil)
+                }
+            } else {
+                return (nil, nil, nil)
+            }
+        }
+        set {
+            if library == .id3 {
+                if newValue != (nil, nil, nil) {
+                    if let type = SwiftTaggerID3.MediaType(rawValue: newValue.mediaType?.rawValue ?? "none") {
+                        if let refinement = SwiftTaggerID3.MediaTypeRefinements(code: newValue.mediaTypeRefinement?.code ?? "none") {
+                            if let string = newValue.additionalInformation {
+                                id3Tag.mediaType = (type, refinement, string)
+                            } else {
+                                id3Tag.mediaType = (type, refinement, nil)
+                            }
+                        } else {
+                            id3Tag.mediaType = (type, nil, nil)
+                        }
+                    } else {
+                        id3Tag.mediaType = (nil, nil, nil)
+                    }
+                } else {
+                    id3Tag.mediaType = (nil, nil, nil)
                 }
             }
         }

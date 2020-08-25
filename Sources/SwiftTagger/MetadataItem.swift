@@ -118,6 +118,7 @@ public enum MetadataItem: CaseIterable {
     case softwareVersion
     case soloist // other 16
     case songDescription
+    case songwriter
     case songwriterKeywords // array 6
     case sourceCredit
     case subtitle
@@ -352,6 +353,8 @@ public enum MetadataItem: CaseIterable {
                 return .musicianCreditsList
             case .songDescription:
                 return .comments(description: "Song Description")
+            case .songwriter:
+                return .userDefinedText(description: "Songwriter")
             case .songwriterKeywords:
                 return .userDefinedText(description: "Songwriter Keywords")
             case .sourceCredit:
@@ -629,6 +632,8 @@ public enum MetadataItem: CaseIterable {
                 return .soloist
             case .songDescription:
                 return .songDescription
+            case .songwriter:
+                return .songwriter
             case .songwriterKeywords:
                 return .songwriterKeywords
             case .sourceCredit:
@@ -714,15 +719,15 @@ enum MetadataID_Other: CaseIterable {
     
     var metadataItem: MetadataItem {
         switch self {
-            case .initialKey: return .initialKey
-            case .languages: return .languages
             case .fileType: return .fileType
             case .mediaType: return .mediaType
             case .predefinedGenre: return .predefinedGenre
             case .contentAdvisory: return .contentAdvisory
             case .contentRating: return .contentRating
             case .coverArt: return .coverArt
+            case .initialKey: return .initialKey
             case .involvedPeopleList: return .involvedPeopleList
+            case .languages: return .languages
             case .musicianCreditsList: return .musicianCreditsList
             case .unknown: return .unknown
         }

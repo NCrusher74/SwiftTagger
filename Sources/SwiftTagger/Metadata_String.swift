@@ -76,6 +76,7 @@ enum MetadataID_String: CaseIterable { // 70 items
     case softwareVersion
     case soloist
     case songDescription
+    case songwriter
     case soundEngineer
     case sourceCredit
     case subtitle
@@ -151,6 +152,7 @@ enum MetadataID_String: CaseIterable { // 70 items
             case .sellerID: return .sellerID
             case .softwareVersion: return .softwareVersion
             case .songDescription: return .songDescription
+            case .songwriter: return .songwriter
             case .sourceCredit: return .sourceCredit
             case .subtitle: return .subtitle
             case .title: return .title
@@ -975,6 +977,19 @@ extension AudioFile {
         }
     }
     
+    public var songwriter: String? {
+        get {
+            if let value = self.get(.songwriter) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.songwriter, stringValue: newValue)
+        }
+    }
+
     public var soundEngineer: String? {
         get {
             if let value = self.get(.soundEngineer) {
