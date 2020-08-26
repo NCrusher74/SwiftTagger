@@ -202,15 +202,15 @@ public enum MetadataItem: CaseIterable {
             case .conductorID:
                 return .userDefinedText(description: "ConductorID")
             case .contentAdvisory:
-                return .userDefinedText(description: "ContentAdvisory")
-            case .contentRating:
                 return .userDefinedText(description: "ContentRating")
+            case .contentRating:
+                return .userDefinedText(description: "Rating")
             case .copyright:
                 return .copyright
             case .copyrightWebpage:
                 return .copyrightWebpage
             case .coverArt:
-                return .attachedPicture(description: "FrontCover")
+                return .attachedPicture(description: "Front Cover")
             // MARK: - D-F
             case .description:
                 return .comments(description: "Description")
@@ -265,7 +265,7 @@ public enum MetadataItem: CaseIterable {
                 return .unsynchronizedLyrics(description: "Lyrics")
             // MARK: - M-N
             case .mediaType:
-                return .mediaType
+                return .userDefinedText(description: "ContentType")
             case .mood:
                 return .mood
             case .movementName:
@@ -343,7 +343,7 @@ public enum MetadataItem: CaseIterable {
             case .requirements:
                 return .userDefinedText(description: "Requirements")
             case .sellerID:
-                return .userDefinedText(description: "Seller")
+                return .userDefinedText(description: "SellerID")
             case .showWork:
                 return .userDefinedText(description: "ShowWork")
             case .soundEngineer:
@@ -380,21 +380,21 @@ public enum MetadataItem: CaseIterable {
             case .trackSubtitle:
                 return .setSubtitle
             case .tvEpisodeNumber:
-                return .userDefinedWebpage(description: "EpisodeNumber")
+                return .userDefinedWebpage(description: "TVEpisodeNumber")
             case .tvEpisodeTitle:
-                return .userDefinedText(description: "EpisodeName")
+                return .userDefinedText(description: "TVEpisodeTitle")
             case .tvNetwork:
-                return .userDefinedText(description: "Network")
+                return .userDefinedText(description: "TVNetwork")
             case .tvSeason:
-                return .userDefinedText(description: "Season")
+                return .userDefinedText(description: "TVSeason")
             case .tvShow:
-                return .userDefinedText(description: "SeriesName")
+                return .userDefinedText(description: "TVShow")
             case .tvShowDescription:
-                return .comments(description: "SeriesDescription")
+                return .comments(description: "TVShowDescription")
             case .tvShowSort:
-                return .userDefinedText(description: "SeriesSort")
+                return .userDefinedText(description: "TVShowSort")
             case .website:
-                return .userDefinedWebpage(description: "Webpage")
+                return .userDefinedWebpage(description: "Website")
             case .work:
                 return .contentGroup
             case .writer:
@@ -700,33 +700,6 @@ public enum MetadataItem: CaseIterable {
             self = metadata
         } else {
             return nil
-        }
-    }
-}
-
-@available(OSX 10.13, *)
-enum MetadataID_Other: CaseIterable {
-    case contentRating
-    case contentAdvisory
-    case coverArt
-    case initialKey
-    case involvedPeopleList
-    case languages
-    case musicianCreditsList
-    case predefinedGenre
-    case unknown
-    
-    var metadataItem: MetadataItem {
-        switch self {
-            case .predefinedGenre: return .predefinedGenre
-            case .contentAdvisory: return .contentAdvisory
-            case .contentRating: return .contentRating
-            case .coverArt: return .coverArt
-            case .initialKey: return .initialKey
-            case .involvedPeopleList: return .involvedPeopleList
-            case .languages: return .languages
-            case .musicianCreditsList: return .musicianCreditsList
-            case .unknown: return .unknown
         }
     }
 }

@@ -17,7 +17,13 @@ extension AudioFile {
             case .mp4:
                 return try mp4Tag.getCoverArt()
             case .id3:
-                return id3Tag.coverArt
+                if let image = id3Tag.coverArt {
+                    return image
+                } else if let image = id3Tag.otherImage {
+                    return image
+                } else {
+                    return nil
+            }
         }
     }
     
@@ -26,9 +32,9 @@ extension AudioFile {
             case .mp4:
                 try mp4Tag.setCoverArt(url: url)
             case .id3:
-                if let image = NSImage(contentsOf: url) {
-                    id3Tag.coverArt = image
-            }
+                try id3Tag.set(imageType: .FrontCover,
+                               imageDescription: "Front Cover",
+                               location: url)
         }
     }
     
@@ -37,7 +43,7 @@ extension AudioFile {
             case .mp4:
                 try mp4Tag.removeCoverArt()
             case .id3:
-                id3Tag.coverArt = nil
+                id3Tag.removeAttachedPicture(withDescription: "Front Cover")
         }
     }
     

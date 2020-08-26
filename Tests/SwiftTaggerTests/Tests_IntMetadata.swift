@@ -1,6 +1,4 @@
 import XCTest
-import SwiftTaggerID3
-import SwiftTaggerMP4
 @testable import SwiftTagger
 
 @available(OSX 10.13, *)
@@ -65,7 +63,7 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertEqual(read.bpm, 99)
         XCTAssertNil(read.composerID)
         XCTAssertNil(read.conductorID)
-        XCTAssertEqual(read.genreID.id3Genre, GenreType.Blues)
+        XCTAssertEqual(read.genreID.id3Genre, GenreID3.Blues)
         XCTAssertNil(read.genreID.mp4Genre)
         XCTAssertEqual(read.length, 9767)
         XCTAssertEqual(read.movementCount, 6)

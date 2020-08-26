@@ -730,7 +730,7 @@ extension AudioFile {
                         case .conductorID:
                             mp4Tag.conductorID = int
                         case .genreID:
-                            mp4Tag.genreID = SwiftTaggerMP4.Genres(rawValue: int)
+                            mp4Tag.genreID = GenreMP4(rawValue: int)
                         case .length:
                             break
                         case .movementCount:
@@ -765,9 +765,9 @@ extension AudioFile {
                         case.conductorID:
                             id3Tag["ConductorID"] = String(int)
                         case .genreID:
-                            id3Tag.genre.genreCategory = SwiftTaggerID3.GenreType(code: int)
+                            id3Tag.genre.genreCategory = GenreID3(code: int)
                         case .length:
-                            id3Tag.length = int
+                            break
                         case .movementCount:
                             id3Tag.totalMovements = int
                         case .movementNumber:
@@ -832,7 +832,7 @@ extension AudioFile {
                         case .genreID:
                             id3Tag.genre.genreCategory = nil
                         case .length:
-                            id3Tag.length = nil
+                            break
                         case .movementCount:
                             id3Tag.totalMovements = nil
                         case .movementNumber:
@@ -956,7 +956,7 @@ extension AudioFile {
                     case .encodedBy: return id3Tag.encodedBy
                     case .encodingSettings: return id3Tag.encodingSettings
                     case .encodingTool: return id3Tag["EncodingTool"]
-                    case .filmMakerWebpage: return id3Tag["FilmmakerWebpage"]
+                    case .filmMakerWebpage: return id3Tag["FilmMakerWebpage"]
                     case .genre: return id3Tag.genre.genre
                     case .grouping: return id3Tag.grouping
                     case .information: return id3Tag["Information"]
@@ -1000,7 +1000,7 @@ extension AudioFile {
                     case .titleSort: return id3Tag.titleSort
                     case .trackSubtitle: return id3Tag.setSubtitle
                     case .tvEpisodeTitle: return id3Tag["TVEpisodeTitle"]
-                    case .tvNetwork: return id3Tag["Network"]
+                    case .tvNetwork: return id3Tag["TVNetwork"]
                     case .tvShow: return id3Tag["TVShow"]
                     case .tvShowDescription: return id3Tag["TVShowDescription", .und]
                     case .tvShowSort: return id3Tag["TVShowSort"]
@@ -1229,7 +1229,7 @@ extension AudioFile {
                         case .encodingTool:
                             self.id3Tag["EncodingTool"] = string
                         case .filmMakerWebpage:
-                            self.id3Tag["FilmmakerWebpage"] = string
+                            self.id3Tag["FilmMakerWebpage"] = string
                         case .genre:
                             self.id3Tag.genre.genre = string
                         case .grouping:
@@ -1315,7 +1315,7 @@ extension AudioFile {
                         case .tvEpisodeTitle:
                             self.id3Tag["TVEpisodeTitle"] = string
                         case .tvNetwork:
-                            self.id3Tag["Network"] = string
+                            self.id3Tag["TVNetwork"] = string
                         case .tvShow:
                             self.id3Tag["TVShow"] = string
                         case .tvShowDescription:
@@ -1546,7 +1546,7 @@ extension AudioFile {
                         case .encodingTool:
                             self.id3Tag["EncodingTool"] = nil
                         case .filmMakerWebpage:
-                            self.id3Tag["FilmmakerWebpage"] = nil
+                            self.id3Tag["FilmMakerWebpage"] = nil
                         case .genre:
                             self.id3Tag.genre.genre = nil
                         case .grouping:
@@ -1632,7 +1632,7 @@ extension AudioFile {
                         case .tvEpisodeTitle:
                             self.id3Tag["TVEpisodeTitle"] = nil
                         case .tvNetwork:
-                            self.id3Tag["Network"] = nil
+                            self.id3Tag["TVNetwork"] = nil
                         case .tvShow:
                             self.id3Tag["TVShow"] = nil
                         case .tvShowDescription:

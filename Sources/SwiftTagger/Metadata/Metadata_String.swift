@@ -1186,6 +1186,7 @@ extension AudioFile {
         }
     }
     
+    /// Freeform metadata tag accessed by description
     public subscript(_ metadataDescription: String) -> String? {
         get {
             switch library {

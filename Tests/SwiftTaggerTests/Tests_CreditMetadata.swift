@@ -1,6 +1,4 @@
 import XCTest
-import SwiftTaggerID3
-import SwiftTaggerMP4
 @testable import SwiftTagger
 
 @available(OSX 10.13, *)
