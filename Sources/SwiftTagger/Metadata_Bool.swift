@@ -12,14 +12,14 @@ enum MetadataID_Bool: CaseIterable {
     case compilation // bool 1
     case gaplessPlayback // bool 2
     case podcast // bool 3
-    case showWorkAndMovement // bool 4
+    case showWork // bool 4
     
     var metadataItem: MetadataItem {
         switch self {
             case .compilation: return .compilation
             case .gaplessPlayback: return .gaplessPlayback
             case .podcast: return .podcast
-            case .showWorkAndMovement: return .showWorkAndMovement
+            case .showWork: return .showWork
         }
     }
 }
@@ -65,16 +65,16 @@ extension AudioFile {
         }
     }
 
-    public var showWorkAndMovement: Bool? {
+    public var showWork: Bool? {
         get {
-            if let value = self.get(.showWorkAndMovement) {
+            if let value = self.get(.showWork) {
                 return value
             } else {
                 return nil
             }
         }
         set {
-            set(.showWorkAndMovement, boolValue: newValue)
+            set(.showWork, boolValue: newValue)
         }
     }
 }

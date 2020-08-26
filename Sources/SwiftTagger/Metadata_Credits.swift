@@ -10,55 +10,182 @@ import SwiftTaggerID3
 import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
-@available(OSX 10.13, *)
 extension AudioFile {
-    public mutating func addInvolvementCredit(_ role: InvolvedPersonCredits, person: String) {
+    
+    public mutating func addInvolvementCredit(_ role: InvolvementCredits, person: String) {
         switch library {
             case .mp4:
-                if let role = SwiftTaggerMP4.InvolvedPersonCredits(rawValue: role.rawValue) {
-                    mp4Tag.addInvolvementCredit(role, person: person)
+                switch role {
+                    case .arranger:
+                        if let existingString = self.arranger {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.arranger = newString
+                        } else {
+                            self.arranger = person
+                    }
+                    case .artDirection:
+                        if let existingString = self.artDirector {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.artDirector = newString
+                        } else {
+                            self.artDirector = person
+                    }
+                    case .composer:
+                        if let existingString = self.composer {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.composer = newString
+                        } else {
+                            self.composer = person
+                    }
+                    case .conductor:
+                        if let existingString = self.conductor {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.conductor = newString
+                        } else {
+                            self.conductor = person
+                    }
+                    case .director:
+                        if let existingString = self.director {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.director = newString
+                        } else {
+                            self.director = person
+                    }
+                    case .executiveProducer:
+                        if let existingString = self.executiveProducer {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.executiveProducer = newString
+                        } else {
+                            self.executiveProducer = person
+                    }
+                    case .lyricist:
+                        if let existingString = self.lyricist {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.lyricist = newString
+                        } else {
+                            self.lyricist = person
+                    }
+                    case .producer:
+                        if let existingString = self.producer {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.producer = newString
+                        } else {
+                            self.producer = person
+                    }
+                    case .publisher:
+                        if let existingString = self.publisher {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.publisher = newString
+                        } else {
+                            self.publisher = person
+                    }
+                    case .songwriter:
+                        if let existingString = self.songwriter {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.songwriter = newString
+                        } else {
+                            self.songwriter = person
+                    }
+                    case .soundEngineer:
+                        if let existingString = self.soundEngineer {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.soundEngineer = newString
+                        } else {
+                            self.soundEngineer = person
+                    }
+                    case .writer:
+                        if let existingString = self.writer {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.writer = newString
+                        } else {
+                            self.writer = person
+                    }
+                    default:
+                        if let existingString = self[role.rawValue] {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self[role.rawValue] = newString
+                        } else {
+                            self[role.rawValue] = person
+                    }
             }
             case .id3:
-                if let role = SwiftTaggerID3.InvolvedPersonCredits(rawValue: role.rawValue) {
-                    id3Tag.addInvolvementCredit(role: role, person: person)
-            }
+                id3Tag.addInvolvementCredit(role: role, person: person)
         }
     }
-    public mutating func addPerformanceCredit(_ role: MusicianAndPerformerCredits, person: String) {
+    
+    public mutating func addPerformanceCredit(_ role: PerformanceCredits, person: String) {
         switch library {
             case .mp4:
-                if let role = SwiftTaggerMP4.MusicianAndPerformerCredits(rawValue: role.rawValue) {
-                    mp4Tag.addPerformanceCredit(role, person: person)
+                switch role {
+                    case .artist:
+                        if let existingString = self.artist {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.artist = newString
+                        } else {
+                            self.artist = person
+                    }
+                    case .narrator:
+                        if let existingString = self.narrator {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.narrator = newString
+                        } else {
+                            self.narrator = person
+                    }
+                    case .soloist:
+                        if let existingString = self.soloist {
+                            let newString = checkAndMergeCreditStrings(existingCredit: existingString, newCredit: person)
+                            self.soloist = newString
+                        } else {
+                            self.soloist = person
+                    }
+                    default:
+                        if let existingArray = self.performers {
+                            let newArray = checkAndMergeCreditArrays(existingCredit: existingArray, newCredit: person.toArray)
+                            self.performers = newArray
+                        } else {
+                            self.performers = person.toArray
+                    }
             }
             case .id3:
-                if let role = SwiftTaggerID3.MusicianAndPerformerCredits(rawValue: role.rawValue) {
-                    id3Tag.addPerformanceCredit(role: role, person: person)
-            }
+                id3Tag.addPerformanceCredit(role: role, person: person)
         }
     }
 
 
-    public mutating func removeInvolvementCredit(_ role: InvolvedPersonCredits) {
+    public mutating func removeInvolvementCredit(_ role: InvolvementCredits) {
         switch library {
             case .id3:
-                if let role = SwiftTaggerID3.InvolvedPersonCredits(rawValue: role.rawValue) {
-                    id3Tag.removeInvolvementCredit(role: role)
-            }
+                id3Tag.removeInvolvementCredit(role: role)
             case .mp4:
-                if let role = SwiftTaggerMP4.InvolvedPersonCredits(rawValue: role.rawValue) {
-                    mp4Tag.removeInvolvementCredit(role)
+                switch role {
+                    case .arranger: self.arranger = nil
+                    case .artDirection: self.artDirector = nil
+                    case .composer: self.composer = nil
+                    case .conductor: self.conductor = nil
+                    case .director: self.director = nil
+                    case .executiveProducer: self.executiveProducer = nil
+                    case .lyricist: self.lyricist = nil
+                    case .producer: self.producer = nil
+                    case .publisher: self.publisher = nil
+                    case .songwriter: self.songwriter = nil
+                    case .soundEngineer: self.soundEngineer = nil
+                    case .writer: self.writer = nil
+                    default: self[role.rawValue] = nil
             }
         }
     }
-    public mutating func removePerformanceCredit(_ role: MusicianAndPerformerCredits) {
+    
+    public mutating func removePerformanceCredit(_ role: PerformanceCredits) {
         switch library {
             case .id3:
-                if let role = SwiftTaggerID3.MusicianAndPerformerCredits(rawValue: role.rawValue) {
-                    id3Tag.removePerformanceCredit(role: role)
-            }
+                id3Tag.removePerformanceCredit(role: role)
             case .mp4:
-                if let role = SwiftTaggerMP4.MusicianAndPerformerCredits(rawValue: role.rawValue) {
-                    mp4Tag.removePerformanceCredit(role)
+                switch role {
+                    case .artist: self.artist = nil
+                    case .narrator: self.narrator = nil
+                    case .performer: self.performers = nil
+                    case .soloist: self.soloist = nil
+                    default: self[role.rawValue] = nil
             }
         }
     }
@@ -68,7 +195,9 @@ extension AudioFile {
             case .id3:
                 id3Tag.clearInvolvementCreditList()
             case .mp4:
-                mp4Tag.clearInvolvementCreditList()
+                for credit in InvolvementCredits.allCases {
+                    removeInvolvementCredit(credit)
+            }
         }
     }
     public mutating func clearPerformanceCreditList() {
@@ -76,106 +205,62 @@ extension AudioFile {
             case .id3:
                 id3Tag.clearPerformanceCreditList()
             case .mp4:
-                mp4Tag.clearPerformanceCreditList()
+                for credit in PerformanceCredits.allCases {
+                    removePerformanceCredit(credit)
+            }
         }
     }
 
-    public var involvementCreditsList: [ InvolvedPersonCredits : [String]] {
+    /// ID3 ONLY. A similar atom does not exist for MP4
+    public var involvementCreditsList: [ InvolvementCredits : [String]] {
         get {
-            var outputDictionary = [ InvolvedPersonCredits : [String]]()
             switch library {
                 case .id3:
-                    for (key, value) in id3Tag.involvementCreditsList {
-                        if let credit = InvolvedPersonCredits(id3Credit: key) {
-                            outputDictionary[credit] = value
-                        }
-                }
+                    return id3Tag.involvementCreditsList
                 case .mp4:
-                    for (key, value) in mp4Tag.involvementCreditsList {
-                        if let credit = InvolvedPersonCredits(mp4Credit: key) {
-                            outputDictionary[credit] = value
-                        }
-                }
+                    return [:]
             }
-            return outputDictionary
         }
         set {
             switch library {
                 case .id3:
                     if !newValue.isEmpty {
-                        for (key, value) in newValue {
-                            if let credit = SwiftTaggerID3.InvolvedPersonCredits(rawValue: key.rawValue) {
-                                id3Tag.involvementCreditsList[credit] = value
-                            }
-                        }
+                        id3Tag.involvementCreditsList = newValue
                     } else {
                         id3Tag.clearInvolvementCreditList()
                 }
                 case .mp4:
                     if !newValue.isEmpty {
                         for (key, value) in newValue {
-                            if let credit = SwiftTaggerMP4.InvolvedPersonCredits(rawValue: key.rawValue) {
-                                mp4Tag.involvementCreditsList[credit] = value
-                                let valueString = value.joined(separator: ";")
-                                switch credit {
-                                    case .arranger:
-                                        self.arranger = valueString
-                                    case .artDirection:
-                                        self.artDirector = valueString
-                                    case .composer:
-                                        self.composer = valueString
-                                    case .conductor:
-                                        self.conductor = valueString
-                                    case .director:
-                                        self.director = valueString
-                                    case .executiveProducer:
-                                        self.executiveProducer = valueString
-                                    case .lyricist:
-                                        self.lyricist = valueString
-                                    case .producer:
-                                        self.producer = valueString
-                                    case .publisher:
-                                        self.publisher = valueString
-                                    case .soundEngineer:
-                                        self.soundEngineer = valueString
-                                    case .writer:
-                                        self.writer = valueString
-                                    default: break
-                                }
-                            }
+                            let valueString = value.toString
+                            self.addInvolvementCredit(key, person: valueString)
                         }
                     } else {
-                        mp4Tag.clearInvolvementCreditList()
+                        clearInvolvementCreditList()
                 }
             }
         }
     }
     
-    public var performanceCreditsList: [ MusicianAndPerformerCredits : [String]] {
+    public var performanceCreditsList: [ PerformanceCredits : [String]] {
         get {
-            var outputDictionary = [ MusicianAndPerformerCredits : [String]]()
             switch library {
                 case .id3:
-                    for (key, value) in id3Tag.performanceCreditsList {
-                        if let credit = MusicianAndPerformerCredits(id3Credit: key) {
-                            outputDictionary[credit] = value
-                        }
-                    }
+                    return id3Tag.performanceCreditsList
                 case .mp4:
-                    for (key, value) in mp4Tag.performanceCreditsList {
-                        if let credit = MusicianAndPerformerCredits(mp4Credit: key) {
-                            outputDictionary[credit] = value
-                        }
+                    if let performers = self.performers {
+                        return [.performer: performers]
+                    } else {
+                        return [:]
                 }
             }
-            return outputDictionary
         }
         set {
             switch library {
                 case .id3:
                     if !newValue.isEmpty {
                         for (key, value) in newValue {
-                            if let credit = SwiftTaggerID3.MusicianAndPerformerCredits(rawValue: key.rawValue) {
+                            if let credit = PerformanceCredits(rawValue: key.rawValue) {
                                 id3Tag.performanceCreditsList[credit] = value
                             }
                         }
@@ -185,26 +270,35 @@ extension AudioFile {
                 case .mp4:
                     if !newValue.isEmpty {
                         for (key, value) in newValue {
-                            if let credit = SwiftTaggerMP4.MusicianAndPerformerCredits(rawValue: key.rawValue) {
-                                mp4Tag.performanceCreditsList[credit] = value
-                                let valueString = value.joined(separator: ";")
-                                switch credit {
-                                    case .artist:
-                                        self.artist = valueString
-                                    case .soloist:
-                                        self.soloist = valueString
-                                    case .narrator:
-                                        self.narrator = valueString
-                                    case .performer:
-                                        self.performers = value
-                                    default: break
-                                }
-                            }
+                            let valueString = value.toString
+                            self.addPerformanceCredit(key, person: valueString)
                         }
                     } else {
-                        mp4Tag.clearPerformanceCreditList()
+                        clearPerformanceCreditList()
                 }
             }
         }
+    }
+    
+    private func checkAndMergeCreditStrings(existingCredit: String, newCredit: String) -> String {
+        let newCreditArray = newCredit.toArray
+        var existingCreditArray = existingCredit.toArray
+        for credit in newCreditArray {
+            if !existingCreditArray.contains(credit) {
+                existingCreditArray.append(credit)
+            }
+        }
+        let newString = existingCreditArray.toString
+        return newString
+    }
+    
+    private func checkAndMergeCreditArrays(existingCredit: [String], newCredit: [String]) -> [String] {
+        var newArray = existingCredit
+        for credit in newCredit {
+            if !newArray.contains(credit) {
+                newArray.append(credit)
+            }
+        }
+        return newArray
     }
 }

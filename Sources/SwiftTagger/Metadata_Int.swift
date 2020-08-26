@@ -126,35 +126,50 @@ extension AudioFile {
         }
     }
     
-    public var genreID: Int? {
+    public var genreID: (mp4Genre: Genres?, id3Genre: GenreType?) {
         get {
-            if let value = self.get(.genreID) {
-                return value
-            } else {
-                return nil
+            switch library {
+                case .mp4:
+                    if let genre = mp4Tag.genreID {
+                        return (genre, nil)
+                    } else {
+                        return (nil, nil)
+                }
+                case .id3:
+                    if let genre = id3Tag.genre.genreCategory {
+                        return (nil, genre)
+                    } else {
+                        return (nil, nil)
+                }
             }
         }
         set {
-            set(.genreID, intValue: newValue)
+            if newValue != (nil, nil) {
+                switch library {
+                    case .mp4:
+                        if let genre = newValue.mp4Genre {
+                            mp4Tag.genreID = genre
+                        } else {
+                            mp4Tag.genreID = nil
+                    }
+                    case .id3:
+                        if let genre = newValue.id3Genre {
+                            id3Tag.genre.genreCategory = genre
+                        } else {
+                            id3Tag.genre.genreCategory = nil
+                    }
+                }
+            } else {
+                switch library {
+                    case .mp4:
+                        mp4Tag.genreID = nil
+                    case .id3:
+                        id3Tag.genre.genreCategory = nil
+                }
+            }
         }
     }
     
-    public mutating func setMp4GenreID(genre: SwiftTaggerMP4.Genres?) {
-        if let id = genre?.rawValue {
-            self.genreID = id
-        } else {
-            self.genreID = nil
-        }
-    }
-    
-    public mutating func setID3GenreID(genre: SwiftTaggerID3.GenreType?) {
-        if let id = genre?.code {
-            self.genreID = id
-        } else {
-            self.genreID = nil
-        }
-    }
-
     public var length: Int? {
         get {
             if let value = self.get(.length) {

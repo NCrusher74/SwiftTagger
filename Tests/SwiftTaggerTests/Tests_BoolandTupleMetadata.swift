@@ -11,22 +11,23 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertEqual(read.compilation, true)
         XCTAssertEqual(read.gaplessPlayback, true)
         XCTAssertEqual(read.podcast, true)
-        XCTAssertEqual(read.showWorkAndMovement, true)
+        XCTAssertEqual(read.showWork, true)
         
         var write = try AudioFile(location: mp4NoMeta)
         write.compilation = true
         write.gaplessPlayback = true
         write.podcast = true
-        write.showWorkAndMovement = true
-        
-        let outputUrl = try localDirectory(fileName: "testMp4-Bool", fileExtension: "m4a")
+        write.showWork = true
+
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-Bool.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Bool", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
         XCTAssertEqual(newFile.compilation, true)
         XCTAssertEqual(newFile.gaplessPlayback, true)
         XCTAssertEqual(newFile.podcast, true)
-        XCTAssertEqual(newFile.showWorkAndMovement, true)
+        XCTAssertEqual(newFile.showWork, true)
     }
     
     func testReadWriteID3BoolMetadata() throws {
@@ -34,15 +35,16 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertEqual(read.compilation, true)
         XCTAssertEqual(read.gaplessPlayback, true)
         XCTAssertNil(read.podcast)
-        XCTAssertNil(read.showWorkAndMovement)
+        XCTAssertNil(read.showWork)
         
         var write = try AudioFile(location: mp3NoMeta)
         write.compilation = true
         write.gaplessPlayback = true
         write.podcast = true
-        write.showWorkAndMovement = true
+        write.showWork = true
         
-        let outputUrl = try localDirectory(fileName: "testMp3-Bool", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp3-Bool.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Bool", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -50,7 +52,7 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertEqual(newFile.gaplessPlayback, true)
         XCTAssertEqual(newFile.playlistDelay, 0)
         XCTAssertNil(newFile.podcast)
-        XCTAssertEqual(newFile.showWorkAndMovement, true)
+        XCTAssertEqual(newFile.showWork, true)
     }
 
     func testMp4BoolMetadataRemoval() throws {
@@ -58,22 +60,23 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertEqual(read.compilation, true)
         XCTAssertEqual(read.gaplessPlayback, true)
         XCTAssertEqual(read.podcast, true)
-        XCTAssertEqual(read.showWorkAndMovement, true)
+        XCTAssertEqual(read.showWork, true)
         
         var write = try AudioFile(location: mp4Meta)
         write.compilation = nil
         write.gaplessPlayback = nil
         write.podcast = nil
-        write.showWorkAndMovement = nil
+        write.showWork = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp4-Bool-Removal", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-BoolRemoval.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Bool-Removal", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
         XCTAssertNil(newFile.compilation)
         XCTAssertNil(newFile.gaplessPlayback)
         XCTAssertNil(newFile.podcast)
-        XCTAssertNil(newFile.showWorkAndMovement)
+        XCTAssertNil(newFile.showWork)
     }
     
     func testID3BoolMetadataRemoval() throws {
@@ -81,15 +84,16 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertEqual(read.compilation, true)
         XCTAssertEqual(read.gaplessPlayback, true)
         XCTAssertNil(read.podcast)
-        XCTAssertNil(read.showWorkAndMovement)
+        XCTAssertNil(read.showWork)
         
         var write = try AudioFile(location: mp3v24)
         write.compilation = nil
         write.gaplessPlayback = nil
         write.podcast = nil
-        write.showWorkAndMovement = nil
+        write.showWork = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp3-Bool-Removal", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp43-BoolRemoval.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Bool-Removal", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -97,7 +101,7 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertNil(newFile.gaplessPlayback)
         XCTAssertNil(newFile.playlistDelay)
         XCTAssertNil(newFile.podcast)
-        XCTAssertNil(newFile.showWorkAndMovement)
+        XCTAssertNil(newFile.showWork)
     }
 
     func testReadWriteMp4TupleMetadata() throws {
@@ -113,7 +117,8 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         write.trackNumber.track = 5
         write.trackNumber.totalTracks = 6
         
-        let outputUrl = try localDirectory(fileName: "testMp4-Tuple", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-Tuple.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Tuple", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -136,7 +141,8 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         write.trackNumber.track = 5
         write.trackNumber.totalTracks = 6
 
-        let outputUrl = try localDirectory(fileName: "testMp3-Tuple", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp3-Tuple.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Tuple", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -159,7 +165,8 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         write.trackNumber.track = nil
         write.trackNumber.totalTracks = nil
 
-        let outputUrl = try localDirectory(fileName: "testMp4-Tuple-Removal", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-TupleRemove.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Tuple-Removal", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -182,7 +189,8 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         write.trackNumber.track = nil
         write.trackNumber.totalTracks = nil
 
-        let outputUrl = try localDirectory(fileName: "testMp3-Tuple-Removal", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp3-TupleRemove.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Tuple-Removal", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)

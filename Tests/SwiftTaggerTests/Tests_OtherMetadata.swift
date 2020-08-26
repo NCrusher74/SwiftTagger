@@ -54,6 +54,8 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         write.contentRating = .clean
         write.keySignature = .aFlatMajor
         write.language.mp4Language = .English_United_States
+        write.contentType = .audiobook
+        write.predefinedGenre.mp4Genre = .appStore
 
         let outputUrl = try localDirectory(fileName: "testMp4-ratings", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
@@ -64,6 +66,8 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
         XCTAssertEqual(output.keySignature, .aFlatMajor)
         XCTAssertEqual(output.language.mp4Language, .English_United_States)
+        XCTAssertEqual(output.contentType, .audiobook)
+        XCTAssertEqual(output.predefinedGenre.mp4Genre, .appStore)
     }
 
     func testContentRatingAndAdvisoryID3() throws {
@@ -73,6 +77,8 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         write.contentRating = .clean
         write.keySignature = .aFlatMajor
         write.language.id3Languages = [.eng, .und]
+        write.contentType = .audiobook
+        write.predefinedGenre.id3Genre = .Abstract
 
         let outputUrl = try localDirectory(fileName: "testMP3-ratings", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
@@ -83,6 +89,8 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
         XCTAssertEqual(output.keySignature, .aFlatMajor)
         XCTAssertEqual(output.language.id3Languages, [.eng, .und])
+        XCTAssertEqual(output.contentType, .audiobook)
+        XCTAssertEqual(output.predefinedGenre.id3Genre, .Abstract)
     }
 
     

@@ -16,12 +16,12 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         components.day = 23
         let date = calendar.date(from: components)
         
-        XCTAssertEqual(read.encodingDate, date)
+        XCTAssertNil(read.encodingDate)
         XCTAssertNil(read.originalReleaseDate)
         XCTAssertEqual(read.purchaseDate, date)
         XCTAssertEqual(read.recordingDate, date)
         XCTAssertEqual(read.releaseDate, date)
-        XCTAssertEqual(read.taggingDate, date)
+        XCTAssertNil(read.taggingDate)
         XCTAssertEqual(read.year, 1979)
         
         var newComponents = components
@@ -41,7 +41,8 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         write.taggingDate = newDate
         write.year = newComponents.year
 
-        let outputUrl = try localDirectory(fileName: "testMp4-Date", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-Date.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Date", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
 
         let newFile = try AudioFile(location: outputUrl)
@@ -88,7 +89,8 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         write.releaseDate = newDate
         write.taggingDate = newDate
 
-        let outputUrl = try localDirectory(fileName: "testMp3-Date", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp43-Date.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Date", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -110,12 +112,12 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         let date = calendar.date(from: components)
 
         let read = try AudioFile(location: mp4Meta)
-        XCTAssertEqual(read.encodingDate, date)
+        XCTAssertNil(read.encodingDate)
         XCTAssertNil(read.originalReleaseDate)
         XCTAssertEqual(read.purchaseDate, date)
         XCTAssertEqual(read.recordingDate, date)
         XCTAssertEqual(read.releaseDate, date)
-        XCTAssertEqual(read.taggingDate, date)
+        XCTAssertNil(read.taggingDate)
         XCTAssertEqual(read.year, 1979)
 
         var write = try AudioFile(location: mp4Meta)
@@ -126,7 +128,8 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         write.releaseDate = nil
         write.taggingDate = nil
 
-        let outputUrl = try localDirectory(fileName: "testMp4-Date-Removal", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-DateRemoval.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Date-Removal", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -164,15 +167,17 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         write.releaseDate = nil
         write.taggingDate = nil
 
-        let outputUrl = try localDirectory(fileName: "testMp3-Date-Removal", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp3-DateRemoval.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Date-Removal", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
+        // a passing test in this case will actually be Date.distantPast, because when there's no frame for the date, SwiftTaggerID3 uses Date.distantPast as a fallback for the date values
         let newFile = try AudioFile(location: outputUrl)
-        XCTAssertNil(newFile.encodingDate)
-        XCTAssertNil(newFile.originalReleaseDate)
+        XCTAssertEqual(newFile.encodingDate, Date.distantPast)
+        XCTAssertEqual(newFile.originalReleaseDate, Date.distantPast)
         XCTAssertNil(newFile.purchaseDate)
-        XCTAssertNil(newFile.recordingDate)
-        XCTAssertNil(newFile.releaseDate)
-        XCTAssertNil(newFile.taggingDate)
+        XCTAssertEqual(newFile.recordingDate, Date.distantPast)
+        XCTAssertEqual(newFile.releaseDate, Date.distantPast)
+        XCTAssertEqual(newFile.taggingDate, Date.distantPast)
     }
 }

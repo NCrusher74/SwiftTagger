@@ -8,6 +8,7 @@
 import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
+import SwiftMp4MetadataParser
 
 @available(OSX 10.13, *)
 public enum MetadataItem: CaseIterable {
@@ -113,7 +114,7 @@ public enum MetadataItem: CaseIterable {
     case releaseDate // date 6
     case requirements
     case sellerID
-    case showWorkAndMovement // bool 4
+    case showWork // bool 4
     case soundEngineer // other 15
     case softwareVersion
     case soloist // other 16
@@ -145,7 +146,7 @@ public enum MetadataItem: CaseIterable {
     case year // date 9
     
     // MARK: - ID3 Frame Keys
-    var id3Key: SwiftTaggerID3.FrameKey {
+    var id3Key: FrameKey {
         switch self {
             case .acknowledgment:
                 return .userDefinedText(description: "Acknowledgment")
@@ -164,7 +165,7 @@ public enum MetadataItem: CaseIterable {
             case .arranger:
                 return .arranger
             case .arrangerKeywords:
-                return .userDefinedText(description: "Arranger Keywords")
+                return .userDefinedText(description: "ArrangerKeywords")
             case .artDirector:
                 return .involvedPeopleList
             case .artist:
@@ -172,7 +173,7 @@ public enum MetadataItem: CaseIterable {
             case .artistID:
                 return .userDefinedText(description: "ArtistID")
             case .artistKeywords:
-                return .userDefinedText(description: "Artist Keywords")
+                return .userDefinedText(description: "ArtistKeywords")
             case .artistSort:
                 return .artistSort
             case .artistWebpage:
@@ -193,7 +194,7 @@ public enum MetadataItem: CaseIterable {
             case .composerID:
                 return .userDefinedText(description: "ComposerID")
             case .composerKeywords:
-                return .userDefinedText(description: "Composer Keywords")
+                return .userDefinedText(description: "ComposerKeywords")
             case .composerSort:
                 return .composerSort
             case .conductor:
@@ -201,9 +202,9 @@ public enum MetadataItem: CaseIterable {
             case .conductorID:
                 return .userDefinedText(description: "ConductorID")
             case .contentAdvisory:
-                return .userDefinedText(description: "Content Advisory")
+                return .userDefinedText(description: "ContentAdvisory")
             case .contentRating:
-                return .userDefinedText(description: "Content Rating")
+                return .userDefinedText(description: "ContentRating")
             case .copyright:
                 return .copyright
             case .copyrightWebpage:
@@ -224,13 +225,13 @@ public enum MetadataItem: CaseIterable {
             case .encodingTime:
                 return .encodingTime
             case .encodingTool:
-                return .userDefinedText(description: "Encoding Tool")
+                return .userDefinedText(description: "EncodingTool")
             case .executiveProducer:
                 return .involvedPeopleList
             case .fileType:
                 return .fileType
             case .filmMakerWebpage:
-                return .userDefinedWebpage(description: "FilmMaker Webpage")
+                return .userDefinedWebpage(description: "FilmMakerWebpage")
             // MARK: - G-L
             case .gaplessPlayback:
                 return .playlistDelay
@@ -255,9 +256,9 @@ public enum MetadataItem: CaseIterable {
             case .length:
                 return .length
             case .linerNotes:
-                return .comments(description: "Liner Notes")
+                return .comments(description: "LinerNotes")
             case .longDescription:
-                return .comments(description: "Long Description")
+                return .comments(description: "LongDescription")
             case .lyricist:
                 return .lyricist
             case .lyrics:
@@ -311,19 +312,19 @@ public enum MetadataItem: CaseIterable {
             case .podcastKeywords:
                 return .podcastKeywords
             case .predefinedGenre:
-                return .userDefinedText(description: "Predefined Genre")
+                return .userDefinedText(description: "PredefinedGenre")
             case .producedNotice:
                 return .producedNotice
             case .producer:
                 return .involvedPeopleList
             case .producerKeywords:
-                return .userDefinedText(description: "Producer Keywords")
+                return .userDefinedText(description: "ProducerKeywords")
             case .publisher:
                 return .publisher
             case .publisherWebpage:
                 return .publisherWebpage
             case .purchaseDate:
-                return .userDefinedText(description: "Purchase Date")
+                return .userDefinedText(description: "PurchaseDate")
             // MARK: - R-S
             case .radioStation:
                 return .radioStation
@@ -332,44 +333,44 @@ public enum MetadataItem: CaseIterable {
             case .radioStationWebpage:
                 return .radioStationWebpage
             case .recordCompany:
-                return .userDefinedText(description: "Record Company")
+                return .userDefinedText(description: "RecordCompany")
             case .recordingDate:
                 return .recordingDate
             case .recordingCopyright:
-                return .userDefinedText(description: "Recording Copyright")
+                return .userDefinedText(description: "RecordingCopyright")
             case .releaseDate:
                 return .releaseTime
             case .requirements:
                 return .userDefinedText(description: "Requirements")
             case .sellerID:
                 return .userDefinedText(description: "Seller")
-            case .showWorkAndMovement:
-                return .userDefinedText(description: "Show Work And Movement")
+            case .showWork:
+                return .userDefinedText(description: "ShowWork")
             case .soundEngineer:
                 return .involvedPeopleList
             case .softwareVersion:
-                return .userDefinedText(description: "Software Version")
+                return .userDefinedText(description: "SoftwareVersion")
             case .soloist:
                 return .musicianCreditsList
             case .songDescription:
-                return .comments(description: "Song Description")
+                return .comments(description: "SongDescription")
             case .songwriter:
                 return .userDefinedText(description: "Songwriter")
             case .songwriterKeywords:
-                return .userDefinedText(description: "Songwriter Keywords")
+                return .userDefinedText(description: "SongwriterKeywords")
             case .sourceCredit:
-                return .userDefinedText(description: "Source Credit")
+                return .userDefinedText(description: "SourceCredit")
             case .subtitle:
                 return .subtitle
             case .subtitleKeywords:
-                return .userDefinedText(description: "Subtitle Keywords")
+                return .userDefinedText(description: "SubtitleKeywords")
             // MARK: - T-Z
             case .taggingTime:
                 return .taggingTime
             case .title:
                 return .title
             case .titleKeywords:
-                return .userDefinedText(description: "Title Keywords")
+                return .userDefinedText(description: "TitleKeywords")
             case .titleSort:
                 return .titleSort
             case .thanks:
@@ -379,19 +380,19 @@ public enum MetadataItem: CaseIterable {
             case .trackSubtitle:
                 return .setSubtitle
             case .tvEpisodeNumber:
-                return .userDefinedWebpage(description: "Episode Number")
+                return .userDefinedWebpage(description: "EpisodeNumber")
             case .tvEpisodeTitle:
-                return .userDefinedText(description: "Episode Name")
+                return .userDefinedText(description: "EpisodeName")
             case .tvNetwork:
                 return .userDefinedText(description: "Network")
             case .tvSeason:
                 return .userDefinedText(description: "Season")
             case .tvShow:
-                return .userDefinedText(description: "Series Name")
+                return .userDefinedText(description: "SeriesName")
             case .tvShowDescription:
-                return .comments(description: "Series Description")
+                return .comments(description: "SeriesDescription")
             case .tvShowSort:
-                return .userDefinedText(description: "Series Sort")
+                return .userDefinedText(description: "SeriesSort")
             case .website:
                 return .userDefinedWebpage(description: "Webpage")
             case .work:
@@ -424,7 +425,7 @@ public enum MetadataItem: CaseIterable {
     }
     
     // MARK: - MP4 Atom Identifiers
-    var mp4Key: SwiftTaggerMP4.AtomIdentifier {
+    var mp4Key: AtomIdentifier {
         switch self {
             case .acknowledgment:
                 return .acknowledgment
@@ -622,7 +623,7 @@ public enum MetadataItem: CaseIterable {
                 return .requirements
             case .sellerID:
                 return .sellerID
-            case .showWorkAndMovement:
+            case .showWork:
                 return .showWorkAndMovement
             case .soundEngineer:
                 return .soundEngineer
@@ -685,8 +686,8 @@ public enum MetadataItem: CaseIterable {
     }
     
     // MARK: Init From AtomID
-    private static let mp4KeyToMetadataMapping: [SwiftTaggerMP4.AtomIdentifier : MetadataItem] = {
-        var mapping = [SwiftTaggerMP4.AtomIdentifier : MetadataItem]()
+    private static let mp4KeyToMetadataMapping: [AtomIdentifier : MetadataItem] = {
+        var mapping = [AtomIdentifier : MetadataItem]()
         for item in MetadataItem.allCases {
             let mp4Key = item.mp4Key
             mapping[mp4Key] = item
@@ -694,7 +695,7 @@ public enum MetadataItem: CaseIterable {
         return mapping
     }()
     
-    init?(from mp4Key: SwiftTaggerMP4.AtomIdentifier) {
+    init?(from mp4Key: AtomIdentifier) {
         if let metadata = MetadataItem.mp4KeyToMetadataMapping[mp4Key] {
             self = metadata
         } else {
@@ -707,20 +708,16 @@ public enum MetadataItem: CaseIterable {
 enum MetadataID_Other: CaseIterable {
     case contentRating
     case contentAdvisory
-    case fileType
-    case mediaType
-    case initialKey
-    case languages
-    case predefinedGenre
     case coverArt
+    case initialKey
     case involvedPeopleList
+    case languages
     case musicianCreditsList
+    case predefinedGenre
     case unknown
     
     var metadataItem: MetadataItem {
         switch self {
-            case .fileType: return .fileType
-            case .mediaType: return .mediaType
             case .predefinedGenre: return .predefinedGenre
             case .contentAdvisory: return .contentAdvisory
             case .contentRating: return .contentRating

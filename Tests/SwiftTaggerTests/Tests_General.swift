@@ -14,13 +14,6 @@ final class SwiftTaggerTests: XCTestCase {
         let subdata = data.subdata(in: range)
         print(subdata.hexadecimal())
         
-        // 0 0 0 2c
-        // 79 72 72 63
-        // 0 0 0 24
-        // 64 61 74 61
-        // 0 0 0 1
-        // 0 0 0 0
-        // 31 39 37 39 2d 31 31 2d 32 33 54 30 30 3a 30 30 3a 30 30 5a
     }
     
     func testCompletion() throws {

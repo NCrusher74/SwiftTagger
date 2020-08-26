@@ -44,13 +44,25 @@ extension AudioFile {
     
     // MARK: - Date
     func get(_ dateMetadataID: MetadataID_Date) -> Date? {
+        let formatter = ISO8601DateFormatter()
+        let calendar = Calendar.init(identifier: .iso8601)
+        let timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+        formatter.timeZone = timeZone
         switch library {
             case .mp4:
                 switch dateMetadataID {
                     case .encodingTime:
-                        return mp4Tag.encodingTime
+                        if let string = mp4Tag["EncodingTime"] {
+                            return formatter.date(from: string)
+                        } else {
+                            return nil
+                    }
                     case .originalReleaseTime:
-                        return mp4Tag.originalReleaseTime
+                        if let string = mp4Tag["OriginalReleaseDate"] {
+                            return formatter.date(from: string)
+                        } else {
+                            return nil
+                    }
                     case .purchaseDate:
                         return mp4Tag.purchaseDate
                     case .recordingDate:
@@ -58,21 +70,21 @@ extension AudioFile {
                     case .releaseDate:
                         return mp4Tag.releaseDate
                     case .taggingTime:
-                        return mp4Tag.taggingTime
+                        if let string = mp4Tag["TaggingTime"] {
+                            return formatter.date(from: string)
+                        } else {
+                            return nil
+                    }
                     case .year:
                         return mp4Tag.year
             }
             case .id3:
-                let formatter = ISO8601DateFormatter()
-                let calendar = Calendar.init(identifier: .iso8601)
-                let timeZone = TimeZone(secondsFromGMT: 0) ?? .current
-                formatter.timeZone = timeZone
+                var dateComponents = DateComponents()
+                dateComponents.calendar = calendar
+                dateComponents.timeZone = timeZone
                 switch dateMetadataID {
                     case .encodingTime:
                         let components = id3Tag.encodingDateTime
-                            var dateComponents = DateComponents()
-                            dateComponents.calendar = calendar
-                            dateComponents.timeZone = timeZone
                             dateComponents.year = components.year
                             dateComponents.month = components.month
                             dateComponents.day = components.day
@@ -81,9 +93,6 @@ extension AudioFile {
                             return dateComponents.date
                     case .originalReleaseTime:
                         let components = id3Tag.originalReleaseTime
-                            var dateComponents = DateComponents()
-                            dateComponents.calendar = calendar
-                            dateComponents.timeZone = timeZone
                             dateComponents.year = components.year
                             dateComponents.month = components.month
                             dateComponents.day = components.day
@@ -91,7 +100,7 @@ extension AudioFile {
                             dateComponents.minute = components.minute
                             return dateComponents.date
                     case .purchaseDate:
-                        if let string = id3Tag["Purchase Date"] {
+                        if let string = id3Tag["PurchaseDate"] {
                             let date = formatter.date(from: string) ?? Date.distantPast
                             return date
                         } else {
@@ -99,9 +108,6 @@ extension AudioFile {
                     }
                     case .recordingDate:
                         let components = id3Tag.recordingDateTime
-                            var dateComponents = DateComponents()
-                            dateComponents.calendar = calendar
-                            dateComponents.timeZone = timeZone
                             dateComponents.year = components.year
                             dateComponents.month = components.month
                             dateComponents.day = components.day
@@ -110,9 +116,6 @@ extension AudioFile {
                             return dateComponents.date
                     case .releaseDate:
                         let components = id3Tag.releaseDateTime
-                            var dateComponents = DateComponents()
-                            dateComponents.calendar = calendar
-                            dateComponents.timeZone = timeZone
                             dateComponents.year = components.year
                             dateComponents.month = components.month
                             dateComponents.day = components.day
@@ -121,9 +124,6 @@ extension AudioFile {
                             return dateComponents.date
                     case .taggingTime:
                         let components = id3Tag.taggingDateTime
-                            var dateComponents = DateComponents()
-                            dateComponents.calendar = calendar
-                            dateComponents.timeZone = timeZone
                             dateComponents.year = components.year
                             dateComponents.month = components.month
                             dateComponents.day = components.day
@@ -132,9 +132,8 @@ extension AudioFile {
                             return dateComponents.date
                     case .year:
                         if let int = id3Tag.year {
-                            var components = DateComponents()
-                            components.year = int
-                            let date = calendar.date(from: components)
+                            dateComponents.year = int
+                            let date = calendar.date(from: dateComponents)
                             return date
                         } else {
                             return nil
@@ -155,9 +154,9 @@ extension AudioFile {
                 case .mp4:
                     switch dateMetadataID {
                         case .encodingTime:
-                            mp4Tag.encodingTime = date
+                            mp4Tag["EncodingTime"] = formatter.string(from: date)
                         case .originalReleaseTime:
-                            mp4Tag.originalReleaseTime = date
+                            mp4Tag["OriginalReleaseDate"] = formatter.string(from: date)
                         case .purchaseDate:
                             mp4Tag.purchaseDate = date
                         case .recordingDate:
@@ -165,7 +164,7 @@ extension AudioFile {
                         case .releaseDate:
                             mp4Tag.releaseDate = date
                         case .taggingTime:
-                            mp4Tag.taggingTime = date
+                            mp4Tag["TaggingTime"] = formatter.string(from: date)
                         case .year:
                             mp4Tag.year = date
                 }
@@ -185,7 +184,7 @@ extension AudioFile {
                             id3Tag.originalReleaseTime.minute = components.minute
                         case .purchaseDate:
                             let string = formatter.string(from: date)
-                            id3Tag["Purchase Date"] = string
+                            id3Tag["PurchaseDate"] = string
                         case .recordingDate:
                             id3Tag.recordingDateTime.year = components.year
                             id3Tag.recordingDateTime.month = components.month
@@ -213,9 +212,9 @@ extension AudioFile {
                 case .mp4:
                     switch dateMetadataID {
                         case .encodingTime:
-                            mp4Tag.encodingTime = nil
+                            mp4Tag["EncodingTime"] = nil
                         case .originalReleaseTime:
-                            mp4Tag.originalReleaseTime = nil
+                            mp4Tag["OriginalReleaseDate"] = nil
                         case .purchaseDate:
                             mp4Tag.purchaseDate = nil
                         case .recordingDate:
@@ -223,7 +222,7 @@ extension AudioFile {
                         case .releaseDate:
                             mp4Tag.releaseDate = nil
                         case .taggingTime:
-                            mp4Tag.taggingTime = nil
+                            mp4Tag["TaggingTime"] = nil
                         case .year:
                             mp4Tag.year = nil
                 }
@@ -234,7 +233,7 @@ extension AudioFile {
                         case .originalReleaseTime:
                             id3Tag.originalReleaseTime = (nil, nil, nil, nil, nil)
                         case .purchaseDate:
-                            id3Tag["Purchase Date"] = nil
+                            id3Tag["PurchaseDate"] = nil
                         case .recordingDate:
                             id3Tag.recordingDateTime = (nil, nil, nil, nil, nil)
                         case .releaseDate:
@@ -320,131 +319,51 @@ extension AudioFile {
             case .mp4:
                 switch stringArrayMetadataID {
                     case .arrangerKeywords:
-                        if let keywords = mp4Tag.arrangerKeywords {
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return mp4Tag.arrangerKeywords
                     case .artistKeywords:
-                        if let keywords = mp4Tag.artistKeywords {
-                            return keywords
-                        }  else {
-                            return nil
-                    }
+                        return mp4Tag.artistKeywords
                     case .composerKeywords:
-                        if let keywords = mp4Tag.composerKeywords {
-                            return keywords
-                        }  else {
-                            return nil
-                    }
+                        return mp4Tag.composerKeywords
                     case .podcastKeywords:
-                        if let keywords = mp4Tag.podcastKeywords {
-                            return keywords
-                        }  else {
-                            return nil
-                    }
+                        return mp4Tag.podcastKeywords
                     case .producerKeywords:
-                        if let keywords = mp4Tag.producerKeywords {
-                            return keywords
-                        }  else {
-                            return nil
-                    }
+                        return mp4Tag.producerKeywords
                     case .songwriterKeywords:
-                        if let keywords = mp4Tag.songwriterKeywords {
-                            return keywords
-                        }  else {
-                            return nil
-                    }
+                        return mp4Tag.songwriterKeywords
                     case .subtitleKeywords:
-                        if let keywords = mp4Tag.subtitleKeywords {
-                            return keywords
-                        }  else {
-                            return nil
-                    }
+                        return mp4Tag.subtitleKeywords
                     case .titleKeywords:
-                        if let keywords = mp4Tag.titleKeywords {
-                            return keywords
-                        }  else {
-                            return nil
-                    }
+                        return mp4Tag.titleKeywords
                     case .performers:
-                        if let array = mp4Tag.performers {
-                            return array
-                        } else {
-                            return nil
-                    }
+                        return mp4Tag.performers
             }
             case .id3:
                 switch stringArrayMetadataID {
                     case .arrangerKeywords:
-                        if let string = id3Tag["arrangerKeywords"] {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag["ArrangerKeywords"]?.toArray
                     case .artistKeywords:
-                        if let string = id3Tag["artistKeywords"] {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag["ArtistKeywords"]?.toArray
                     case .composerKeywords:
-                        if let string = id3Tag["composerKeywords"] {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag["ComposerKeywords"]?.toArray
                     case .podcastKeywords:
-                        if let string = id3Tag.podcastKeywords {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag.podcastKeywords?.toArray
                     case .producerKeywords:
-                        if let string = id3Tag["producerKeywords"] {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag["ProducerKeywords"]?.toArray
                     case .songwriterKeywords:
-                        if let string = id3Tag["songwriterKeywords"] {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag["SongwriterKeywords"]?.toArray
                     case .subtitleKeywords:
-                        if let string = id3Tag["subtitleKeywords"] {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag["SubtitleKeywords"]?.toArray
                     case .titleKeywords:
-                        if let string = id3Tag["titleKeywords"] {
-                            let keywords: [String] = string.components(separatedBy: ";")
-                            return keywords
-                        } else {
-                            return nil
-                    }
+                        return id3Tag["TitleKeywords"]?.toArray
                     case .performers:
-                        if let string = id3Tag["performers"] {
-                            let array: [String] = string.components(separatedBy: ";")
-                            return array
-                        } else {
-                            return nil
-                    }
+                        return id3Tag.performanceCreditsList[.performer]
             }
         }
     }
     
     mutating func set(_ stringArrayMetadataID: MetadataID_StringArray, arrayValue: [String]?) {
         if let array = arrayValue, !array.isEmpty {
+            let string = array.toString
             switch library {
                 case .mp4:
                     switch stringArrayMetadataID {
@@ -470,32 +389,23 @@ extension AudioFile {
                 case .id3:
                     switch stringArrayMetadataID {
                         case .arrangerKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag["arrangerKeywords"] = string
+                            id3Tag["ArrangerKeywords"] = string
                         case .artistKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag["artistKeywords"] = string
+                            id3Tag["ArtistKeywords"] = string
                         case .composerKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag["composerKeywords"] = string
+                            id3Tag["ComposerKeywords"] = string
                         case .podcastKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag.podcastKeywords = string
+                            id3Tag.podcastKeywords = string
                         case .producerKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag["producerKeywords"] = string
+                            id3Tag["ProducerKeywords"] = string
                         case .songwriterKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag["songwriterKeywords"] = string
+                            id3Tag["SongwriterKeywords"] = string
                         case .subtitleKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag["subtitleKeywords"] = string
+                            id3Tag["SubtitleKeywords"] = string
                         case .titleKeywords:
-                                let string = array.joined(separator: ";")
-                                id3Tag["titleKeywords"] = string
+                            id3Tag["TitleKeywords"] = string
                         case .performers:
-                                let string = array.joined(separator: ";")
-                                id3Tag["performers"] = string
+                            id3Tag.performanceCreditsList[.performer] = array
                 }
             }
         } else {
@@ -524,23 +434,22 @@ extension AudioFile {
                 case .id3:
                     switch stringArrayMetadataID {
                         case .arrangerKeywords:
-                            id3Tag["arrangerKeywords"] = nil
+                            id3Tag["ArrangerKeywords"] = nil
                         case .artistKeywords:
-                            id3Tag["artistKeywords"] = nil
+                            id3Tag["ArtistKeywords"] = nil
                         case .composerKeywords:
-                            id3Tag["composerKeywords"] = nil
+                            id3Tag["ComposerKeywords"] = nil
                         case .podcastKeywords:
                             id3Tag.podcastKeywords = nil
                         case .producerKeywords:
-                            id3Tag["producerKeywords"] = nil
+                            id3Tag["ProducerKeywords"] = nil
                         case .songwriterKeywords:
-                            id3Tag["songwriterKeywords"] = nil
+                            id3Tag["SongwriterKeywords"] = nil
                         case .subtitleKeywords:
-                            id3Tag["subtitleKeywords"] = nil
+                            id3Tag["SubtitleKeywords"] = nil
                         case .titleKeywords:
-                            id3Tag["titleKeywords"] = nil
-                        case .performers:
-                        id3Tag["performers"] = nil
+                            id3Tag["TitleKeywords"] = nil
+                        case .performers: id3Tag.performanceCreditsList[.performer] = nil
                 }
             }
         }
@@ -557,7 +466,7 @@ extension AudioFile {
                         return mp4Tag.gaplessPlayback
                     case .podcast:
                         return mp4Tag.podcast
-                    case .showWorkAndMovement:
+                    case .showWork:
                         return mp4Tag.showWorkAndMovement
             }
             case .id3:
@@ -577,8 +486,8 @@ extension AudioFile {
                     case .podcast:
                         print("WARNING: SwiftTagger does not set the podcast frame for ID3 tags, as iTunes will not play a file with this frame set.")
                         return nil
-                    case .showWorkAndMovement:
-                        if let string = id3Tag["showWorkAndMovement"] {
+                    case .showWork:
+                        if let string = id3Tag["ShowWork"] {
                             switch string.lowercased() {
                                 case "true", "t", "yes", "y", "1":
                                     return true
@@ -605,7 +514,7 @@ extension AudioFile {
                             mp4Tag.gaplessPlayback = bool
                         case .podcast:
                             mp4Tag.podcast = bool
-                        case .showWorkAndMovement:
+                        case .showWork:
                             mp4Tag.showWorkAndMovement = bool
                 }
                 case .id3:
@@ -621,11 +530,11 @@ extension AudioFile {
                         case .podcast:
                             print("WARNING: SwiftTagger does not set the podcast frame for ID3 tags, as iTunes will not play a file with this frame set.")
                             return
-                        case .showWorkAndMovement:
+                        case .showWork:
                             if bool == true {
-                                id3Tag["showWorkAndMovement"] = "true"
+                                id3Tag["ShowWork"] = "true"
                             } else {
-                                id3Tag["showWorkAndMovement"] = "false"
+                                id3Tag["ShowWork"] = "false"
                         }
                 }
             }
@@ -639,7 +548,7 @@ extension AudioFile {
                             mp4Tag.gaplessPlayback = nil
                         case .podcast:
                             mp4Tag.podcast = nil
-                        case .showWorkAndMovement:
+                        case .showWork:
                             mp4Tag.showWorkAndMovement = nil
                 }
                 case .id3:
@@ -654,8 +563,8 @@ extension AudioFile {
                         }
                         case .podcast:
                             return
-                        case .showWorkAndMovement:
-                            id3Tag["showWorkAndMovement"] = nil
+                        case .showWork:
+                            id3Tag["ShowWork"] = nil
                 }
             }
         }
@@ -698,6 +607,8 @@ extension AudioFile {
                                 return 1
                             } else if bool == false {
                                 return 0
+                            } else {
+                                return nil
                             }
                         } else {
                             return nil
@@ -706,17 +617,57 @@ extension AudioFile {
             case .id3:
                 switch intMetadataID {
                     case .albumID:
-                        return Int(id3Tag["albumID"] ?? "")
+                        if let string = id3Tag["AlbumID"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .appleStoreCountryID:
-                        return Int(id3Tag["appleStoreCountryID"] ?? "")
+                        if let string = id3Tag["AppleStoreCountryID"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .artistID:
-                        return Int(id3Tag["artistID"] ?? "")
+                        if let string = id3Tag["ArtistID"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .bpm:
                         return id3Tag.bpm
                     case .composerID:
-                        return Int(id3Tag["composerID"] ?? "")
+                        if let string = id3Tag["ComposerID"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .conductorID:
-                        return Int(id3Tag["conductorID"] ?? "")
+                        if let string = id3Tag["ConductorID"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .genreID:
                         return id3Tag.genre.genreCategory?.code
                     case .length:
@@ -726,15 +677,39 @@ extension AudioFile {
                     case .movementNumber:
                         return id3Tag.movementNumber
                     case .playlistID:
-                        return Int(id3Tag["playlistID"] ?? "")
+                        if let string = id3Tag["PlaylistID"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .tvEpisodeNumber:
-                        return Int(id3Tag["tvEpisodeNumber"] ?? "")
+                        if let string = id3Tag["TVEpisodeNumber"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .tvSeason:
-                        return Int(id3Tag["tvSeason"] ?? "")
+                        if let string = id3Tag["TVSeason"] {
+                            if let int = Int(string) {
+                                return int
+                            } else {
+                                return nil
+                            }
+                        } else {
+                            return nil
+                    }
                     case .playlistDelay:
                         return id3Tag.playlistDelay
             }
-        }; return nil
+        }
     }
     
     mutating func set(_ intMetadataID: MetadataID_Int, intValue: Int?) {
@@ -778,17 +753,17 @@ extension AudioFile {
                 case .id3:
                     switch intMetadataID {
                         case .albumID:
-                            id3Tag["albumID"] = String(int)
+                            id3Tag["AlbumID"] = String(int)
                         case .appleStoreCountryID:
-                            id3Tag["appleStoreCountryID"] = String(int)
+                            id3Tag["AppleStoreCountryID"] = String(int)
                         case .artistID:
-                            id3Tag["artistID"] = String(int)
+                            id3Tag["ArtistID"] = String(int)
                         case .bpm:
                             id3Tag.bpm = int
                         case .composerID:
-                            id3Tag["composerID"] = String(int)
+                            id3Tag["ComposerID"] = String(int)
                         case.conductorID:
-                            id3Tag["conductorID"] = String(int)
+                            id3Tag["ConductorID"] = String(int)
                         case .genreID:
                             id3Tag.genre.genreCategory = SwiftTaggerID3.GenreType(code: int)
                         case .length:
@@ -798,11 +773,11 @@ extension AudioFile {
                         case .movementNumber:
                             id3Tag.movementNumber = int
                         case .playlistID:
-                            id3Tag["playlistID"] = String(int)
+                            id3Tag["PlaylistID"] = String(int)
                         case .tvEpisodeNumber:
-                            id3Tag["tvEpisodeNumber"] = String(int)
+                            id3Tag["TVEpisodeNumber"] = String(int)
                         case .tvSeason:
-                            id3Tag["tvSeason"] = String(int)
+                            id3Tag["TVSeason"] = String(int)
                         case .playlistDelay:
                             id3Tag.playlistDelay = int
                 }
@@ -843,17 +818,17 @@ extension AudioFile {
                 case .id3:
                     switch intMetadataID {
                         case .albumID:
-                            id3Tag["albumID"] = nil
+                            id3Tag["AlbumID"] = nil
                         case .appleStoreCountryID:
-                            id3Tag["appleStoreCountryID"] = nil
+                            id3Tag["AppleStoreCountryID"] = nil
                         case .artistID:
-                            id3Tag["artistID"] = nil
+                            id3Tag["ArtistID"] = nil
                         case .bpm:
                             id3Tag.bpm = nil
                         case .composerID:
-                            id3Tag["composerID"] = nil
+                            id3Tag["ComposerID"] = nil
                         case.conductorID:
-                            id3Tag["conductorID"] = nil
+                            id3Tag["ConductorID"] = nil
                         case .genreID:
                             id3Tag.genre.genreCategory = nil
                         case .length:
@@ -863,11 +838,11 @@ extension AudioFile {
                         case .movementNumber:
                             id3Tag.movementNumber = nil
                         case .playlistID:
-                            id3Tag["playlistID"] = nil
+                            id3Tag["PlaylistID"] = nil
                         case .tvEpisodeNumber:
-                            id3Tag["tvEpisodeNumber"] = nil
+                            id3Tag["TVEpisodeNumber"] = nil
                         case .tvSeason:
-                            id3Tag["tvSeason"] = nil
+                            id3Tag["TVSeason"] = nil
                         case .playlistDelay:
                             id3Tag.playlistDelay = nil
                 }
@@ -889,17 +864,17 @@ extension AudioFile {
                     case .artist: return mp4Tag.artist
                     case .artistSort: return mp4Tag.artistSort
                     case .artistWebpage: return mp4Tag.artistUrl
-                    case .audioFileWebpage: return mp4Tag.audioFileWebpage
-                    case .audioSourceWebpage: return mp4Tag.audioSourceWebpage
+                    case .audioFileWebpage: return mp4Tag["AudioFileWebpage"]
+                    case .audioSourceWebpage: return mp4Tag["AudioSourceWebpage"]
                     case .comment: return mp4Tag.comment
                     case .composer: return mp4Tag.composer
                     case .composerSort: return mp4Tag.composerSort
                     case .conductor: return mp4Tag.conductor
                     case .copyright: return mp4Tag.copyright
-                    case .copyrightWebpage: return mp4Tag.copyrightWebpage
+                    case .copyrightWebpage: return mp4Tag["CopyrightWebpage"]
                     case .description: return mp4Tag.description
                     case .encodedBy: return mp4Tag.encodedBy
-                    case .encodingSettings: return mp4Tag.encodingSettings
+                    case .encodingSettings: return mp4Tag["EncodingSettings"]
                     case .encodingTool: return mp4Tag.encodingTool
                     case .filmMakerWebpage: return mp4Tag.filmMakerUrl
                     case .genre: return mp4Tag.customGenre
@@ -911,25 +886,25 @@ extension AudioFile {
                     case .longDescription: return mp4Tag.longDescription
                     case .lyricist: return mp4Tag.lyricist
                     case .lyrics: return mp4Tag.lyrics
-                    case .mood: return mp4Tag.mood
+                    case .mood: return mp4Tag["Mood"]
                     case .movementName: return mp4Tag.movementName
                     case .narrator: return mp4Tag.narrator
-                    case .originalAlbum: return mp4Tag.originalAlbum
+                    case .originalAlbum: return mp4Tag["OriginalAlbum"]
                     case .originalArtist: return mp4Tag.originalArtist
-                    case .originalFilename: return mp4Tag.originalFilename
-                    case .originalLyricist: return mp4Tag.originalLyricist
+                    case .originalFilename: return mp4Tag["OriginalFilename"]
+                    case .originalLyricist: return mp4Tag["OriginalLyricist"]
                     case .owner: return mp4Tag.owner
-                    case .paymentWebpage: return mp4Tag.paymentWebpage
+                    case .paymentWebpage: return mp4Tag["PaymentWebpage"]
                     case .podcastCategory: return mp4Tag.category
-                    case .podcastDescription: return mp4Tag["Podcast Description"]
+                    case .podcastDescription: return mp4Tag["PodcastDescription"]
                     case .podcastFeed: return mp4Tag.podcastUrl
                     case .podcastID: return mp4Tag.podcastID
-                    case .producedNotice: return mp4Tag.producedNotice
+                    case .producedNotice: return mp4Tag["ProducedNotice"]
                     case .publisher: return mp4Tag.publisher
                     case .publisherWebpage: return mp4Tag.publisherUrl
-                    case .radioStation: return mp4Tag.radioStation
-                    case .radioStationOwner: return mp4Tag.radioStationOwner
-                    case .radioStationWebpage: return mp4Tag.radioStationWebpage
+                    case .radioStation: return mp4Tag["RadioStation"]
+                    case .radioStationOwner: return mp4Tag["RadioStationOwner"]
+                    case .radioStationWebpage: return mp4Tag["RadioStationWebpage"]
                     case .recordCompany: return mp4Tag.recordCompany
                     case .recordingCopyright: return mp4Tag.recordingCopyright
                     case .requirements: return mp4Tag.requirements
@@ -980,15 +955,15 @@ extension AudioFile {
                     case .description: return id3Tag["Description", .und]
                     case .encodedBy: return id3Tag.encodedBy
                     case .encodingSettings: return id3Tag.encodingSettings
-                    case .encodingTool: return id3Tag["Encoding Tool"]
-                    case .filmMakerWebpage: return id3Tag["Filmmaker Webpage"]
+                    case .encodingTool: return id3Tag["EncodingTool"]
+                    case .filmMakerWebpage: return id3Tag["FilmmakerWebpage"]
                     case .genre: return id3Tag.genre.genre
                     case .grouping: return id3Tag.grouping
                     case .information: return id3Tag["Information"]
                     case .isrc: return id3Tag.isrc
                     case .label: return id3Tag.label
-                    case .linerNotes: return id3Tag["Liner Notes", .und]
-                    case .longDescription: return id3Tag["Long Description", .und]
+                    case .linerNotes: return id3Tag["LinerNotes", .und]
+                    case .longDescription: return id3Tag["LongDescription", .und]
                     case .lyricist: return id3Tag.lyricist
                     case .lyrics: return id3Tag[lyrics: "Lyrics", .und]
                     case .mood: return id3Tag.mood
@@ -1011,32 +986,40 @@ extension AudioFile {
                     case .radioStationOwner: return id3Tag.radioStationOwner
                     case .radioStationWebpage: return id3Tag.radioStationWebpage
                     case .recordCompany: return id3Tag.recordCompany
-                    case .recordingCopyright: return id3Tag["Recording Copyright"]
+                    case .recordingCopyright: return id3Tag["RecordingCopyright"]
                     case .requirements: return id3Tag["Requirements"]
-                    case .sellerID: return id3Tag["Seller ID"]
-                    case .softwareVersion: return id3Tag["Software Version"]
-                    case .songDescription: return id3Tag["Song Description", .und]
-                    case .songwriter: return id3Tag["Songwriter"]
-                    case .sourceCredit: return id3Tag["Source Credit"]
+                    case .sellerID: return id3Tag["SellerID"]
+                    case .softwareVersion: return id3Tag["SoftwareVersion"]
+                    case .songDescription: return id3Tag["SongDescription", .und]
+                    case .songwriter:
+                        return id3Tag.involvementCreditsList[.songwriter]?.toString
+                    case .sourceCredit: return id3Tag["SourceCredit"]
                     case .subtitle: return id3Tag.subtitle
                     case .thanks: return id3Tag["Thanks"]
                     case .title: return id3Tag.title
                     case .titleSort: return id3Tag.titleSort
                     case .trackSubtitle: return id3Tag.setSubtitle
-                    case .tvEpisodeTitle: return id3Tag["TV Episode Title"]
+                    case .tvEpisodeTitle: return id3Tag["TVEpisodeTitle"]
                     case .tvNetwork: return id3Tag["Network"]
-                    case .tvShow: return id3Tag["TV Show"]
-                    case .tvShowDescription: return id3Tag["TV Show Description", .und]
-                    case .tvShowSort: return id3Tag["TV Show Sort"]
+                    case .tvShow: return id3Tag["TVShow"]
+                    case .tvShowDescription: return id3Tag["TVShowDescription", .und]
+                    case .tvShowSort: return id3Tag["TVShowSort"]
                     case .website: return id3Tag[userDefinedUrl: "Website"]
                     case .work: return id3Tag.contentGroup
-                    case .writer: return id3Tag["Writer"]
-                    case .artDirector: return id3Tag["Art Director"]
-                    case .director: return id3Tag["Director"]
-                    case .executiveProducer: return id3Tag["Executive Producer"]
-                    case .producer: return id3Tag["Producer"]
-                    case .soloist: return id3Tag["Soloist"]
-                    case .soundEngineer: return id3Tag["Sound Engineer"]
+                    case .writer:
+                        return id3Tag.involvementCreditsList[.writer]?.toString
+                    case .artDirector:
+                        return id3Tag.involvementCreditsList[.artDirection]?.toString
+                    case .director:
+                        return id3Tag.involvementCreditsList[.director]?.toString
+                    case .executiveProducer:
+                        return id3Tag.involvementCreditsList[.executiveProducer]?.toString
+                    case .producer:
+                        return id3Tag.involvementCreditsList[.producer]?.toString
+                    case .soloist:
+                        return id3Tag.performanceCreditsList[.soloist]?.toString
+                    case .soundEngineer:
+                        return id3Tag.involvementCreditsList[.soundEngineer]?.toString
             }
         }
     }
@@ -1065,9 +1048,9 @@ extension AudioFile {
                         case .artistWebpage:
                             self.mp4Tag.artistUrl = string
                         case .audioFileWebpage:
-                            self.mp4Tag.audioFileWebpage = string
+                            self.mp4Tag["AudioFileWebpage"] = string
                         case .audioSourceWebpage:
-                            self.mp4Tag.audioSourceWebpage = string
+                            self.mp4Tag["AudioSourceWebpage"] = string
                         case .comment:
                             self.mp4Tag.comment = string
                         case .composer:
@@ -1079,13 +1062,13 @@ extension AudioFile {
                         case .copyright:
                             self.mp4Tag.copyright = string
                         case .copyrightWebpage:
-                            self.mp4Tag.copyrightWebpage = string
+                            self.mp4Tag["CopyrightWebpage"] = string
                         case .description:
                             self.mp4Tag.description = string
                         case .encodedBy:
                             self.mp4Tag.encodedBy = string
                         case .encodingSettings:
-                            self.mp4Tag.encodingSettings = string
+                            self.mp4Tag["EncodingSettings"] = string
                         case .encodingTool:
                             self.mp4Tag.encodingTool = string
                         case .filmMakerWebpage:
@@ -1109,43 +1092,43 @@ extension AudioFile {
                         case .lyrics:
                             self.mp4Tag.lyrics = string
                         case .mood:
-                            self.mp4Tag.mood = string
+                            self.mp4Tag["Mood"] = string
                         case .movementName:
                             self.mp4Tag.movementName = string
                         case .narrator:
                             self.mp4Tag.narrator = string
                         case .originalAlbum:
-                            self.mp4Tag.originalAlbum = string
+                            self.mp4Tag["OriginalAlbum"] = string
                         case .originalArtist:
                             self.mp4Tag.originalArtist = string
                         case .originalFilename:
-                            self.mp4Tag.originalFilename = string
+                            self.mp4Tag["OriginalFilename"] = string
                         case .originalLyricist:
-                            self.mp4Tag.originalLyricist = string
+                            self.mp4Tag["OriginalLyricist"] = string
                         case .owner:
                             self.mp4Tag.owner = string
                         case .paymentWebpage:
-                            self.mp4Tag.paymentWebpage = string
+                            self.mp4Tag["PaymentWebpage"] = string
                         case .podcastCategory:
                             self.mp4Tag.category = string
                         case .podcastDescription:
-                            self.mp4Tag["Podcast Description"] = string
+                            self.mp4Tag["PodcastDescription"] = string
                         case .podcastFeed:
                             self.mp4Tag.podcastUrl = string
                         case .podcastID:
                             self.mp4Tag.podcastID = string
                         case .producedNotice:
-                            self.mp4Tag.producedNotice = string
+                            self.mp4Tag["ProducedNotice"] = string
                         case .publisher:
                             self.mp4Tag.publisher = string
                         case .publisherWebpage:
                             self.mp4Tag.publisherUrl = string
                         case .radioStation:
-                            self.mp4Tag.radioStation = string
+                            self.mp4Tag["RadioStation"] = string
                         case .radioStationOwner:
-                            self.mp4Tag.radioStationOwner = string
+                            self.mp4Tag["RadioStationOwner"] = string
                         case .radioStationWebpage:
-                            self.mp4Tag.radioStationWebpage = string
+                            self.mp4Tag["RadioStationWebpage"] = string
                         case .recordCompany:
                             self.mp4Tag.recordCompany = string
                         case .recordingCopyright:
@@ -1244,9 +1227,9 @@ extension AudioFile {
                         case .encodingSettings:
                             self.id3Tag.encodingSettings = string
                         case .encodingTool:
-                            self.id3Tag["Encoding Tool"] = string
+                            self.id3Tag["EncodingTool"] = string
                         case .filmMakerWebpage:
-                            self.id3Tag["Filmmaker Webpage"] = string
+                            self.id3Tag["FilmmakerWebpage"] = string
                         case .genre:
                             self.id3Tag.genre.genre = string
                         case .grouping:
@@ -1258,9 +1241,9 @@ extension AudioFile {
                         case .label:
                             self.id3Tag.label = string
                         case .linerNotes:
-                            self.id3Tag["Liner Notes", .und] = string
+                            self.id3Tag["LinerNotes", .und] = string
                         case .longDescription:
-                            self.id3Tag["Long Description", .und] = string
+                            self.id3Tag["LongDescription", .und] = string
                         case .lyrics:
                             self.id3Tag[lyrics: "Lyrics", .und] = string
                         case .lyricist:
@@ -1306,19 +1289,19 @@ extension AudioFile {
                         case .recordCompany:
                             self.id3Tag.recordCompany = string
                         case .recordingCopyright:
-                            self.id3Tag["Recording Copyright"] = string
+                            self.id3Tag["RecordingCopyright"] = string
                         case .requirements:
                             self.id3Tag["Requirements"] = string
                         case .sellerID:
-                            self.id3Tag["Seller ID"] = string
+                            self.id3Tag["SellerID"] = string
                         case .softwareVersion:
-                            self.id3Tag["Software Version"] = string
+                            self.id3Tag["SoftwareVersion"] = string
                         case .songDescription:
-                            self.id3Tag["Song Description", .und] = string
+                            self.id3Tag["SongDescription", .und] = string
                         case .songwriter:
-                            self.id3Tag["Songwriter"] = string
+                            self.involvementCreditsList[.songwriter] = string.toArray
                         case .sourceCredit:
-                            self.id3Tag["Source Credit"] = string
+                            self.id3Tag["SourceCredit"] = string
                         case .subtitle:
                             self.id3Tag.subtitle = string
                         case .title:
@@ -1330,33 +1313,33 @@ extension AudioFile {
                         case .trackSubtitle:
                             self.id3Tag.setSubtitle = string
                         case .tvEpisodeTitle:
-                            self.id3Tag["TV Episode Title"] = string
+                            self.id3Tag["TVEpisodeTitle"] = string
                         case .tvNetwork:
                             self.id3Tag["Network"] = string
                         case .tvShow:
-                            self.id3Tag["TV Show"] = string
+                            self.id3Tag["TVShow"] = string
                         case .tvShowDescription:
-                            self.id3Tag["TV Show Description", .und] = string
+                            self.id3Tag["TVShowDescription", .und] = string
                         case .tvShowSort:
-                            self.id3Tag["TV Show Sort"] = string
+                            self.id3Tag["TVShowSort"] = string
                         case .website:
                             self.id3Tag[userDefinedUrl: "Website"] = string
                         case .work:
                             self.id3Tag.contentGroup = string
                         case .writer:
-                            self.id3Tag["Writer"] = string
+                            self.id3Tag.involvementCreditsList[.writer] = string.toArray
                         case .artDirector:
-                            self.id3Tag["Art Director"] = string
+                            self.id3Tag.involvementCreditsList[.artDirection] = string.toArray
                         case .director:
-                            self.id3Tag["Director"] = string
+                            self.id3Tag.involvementCreditsList[.director] = string.toArray
                         case .executiveProducer:
-                            self.id3Tag["Executive Producer"] = string
+                            self.id3Tag.involvementCreditsList[.executiveProducer] = string.toArray
                         case .producer:
-                            self.id3Tag["Producer"] = string
+                            self.id3Tag.involvementCreditsList[.producer] = string.toArray
                         case .soloist:
-                            self.id3Tag["Soloist"] = string
+                            self.id3Tag.performanceCreditsList[.soloist] = string.toArray
                         case .soundEngineer:
-                            self.id3Tag["Sound Engineer"] = string
+                            self.id3Tag.involvementCreditsList[.soundEngineer] = string.toArray
                 }
             }
         } else {
@@ -1382,9 +1365,9 @@ extension AudioFile {
                         case .artistWebpage:
                             self.mp4Tag.artistUrl = nil
                         case .audioFileWebpage:
-                            self.mp4Tag.audioFileWebpage = nil
+                            self.mp4Tag["AudioFileWebpage"] = nil
                         case .audioSourceWebpage:
-                            self.mp4Tag.audioSourceWebpage = nil
+                            self.mp4Tag["AudioSourceWebpage"] = nil
                         case .comment:
                             self.mp4Tag.comment = nil
                         case .composer:
@@ -1396,13 +1379,13 @@ extension AudioFile {
                         case .copyright:
                             self.mp4Tag.copyright = nil
                         case .copyrightWebpage:
-                            self.mp4Tag.copyrightWebpage = nil
+                            self.mp4Tag["CopyrightWebpage"] = nil
                         case .description:
                             self.mp4Tag.description = nil
                         case .encodedBy:
                             self.mp4Tag.encodedBy = nil
                         case .encodingSettings:
-                            self.mp4Tag.encodingSettings = nil
+                            self.mp4Tag["EncodingSettings"] = nil
                         case .encodingTool:
                             self.mp4Tag.encodingTool = nil
                         case .filmMakerWebpage:
@@ -1426,43 +1409,43 @@ extension AudioFile {
                         case .lyrics:
                             self.mp4Tag.lyrics = nil
                         case .mood:
-                            self.mp4Tag.mood = nil
+                            self.mp4Tag["Mood"] = nil
                         case .movementName:
                             self.mp4Tag.movementName = nil
                         case .narrator:
                             self.mp4Tag.narrator = nil
                         case .originalAlbum:
-                            self.mp4Tag.originalAlbum = nil
+                            self.mp4Tag["OriginalAlbum"] = nil
                         case .originalArtist:
                             self.mp4Tag.originalArtist = nil
                         case .originalFilename:
-                            self.mp4Tag.originalFilename = nil
+                            self.mp4Tag["OriginalFilename"] = nil
                         case .originalLyricist:
-                            self.mp4Tag.originalLyricist = nil
+                            self.mp4Tag["OriginalLyricist"] = nil
                         case .owner:
                             self.mp4Tag.owner = nil
                         case .paymentWebpage:
-                            self.mp4Tag.paymentWebpage = nil
+                            self.mp4Tag["PaymentWebpage"] = nil
                         case .podcastCategory:
                             self.mp4Tag.category = nil
                         case .podcastDescription:
-                            self.mp4Tag["Podcast Description"] = nil
+                            self.mp4Tag["PodcastDescription"] = nil
                         case .podcastFeed:
                             self.mp4Tag.podcastUrl = nil
                         case .podcastID:
                             self.mp4Tag.podcastID = nil
                         case .producedNotice:
-                            self.mp4Tag.producedNotice = nil
+                            self.mp4Tag["ProducedNotice"] = nil
                         case .publisher:
                             self.mp4Tag.publisher = nil
                         case .publisherWebpage:
                             self.mp4Tag.publisherUrl = nil
                         case .radioStation:
-                            self.mp4Tag.radioStation = nil
+                            self.mp4Tag["RadioStation"] = nil
                         case .radioStationOwner:
-                            self.mp4Tag.radioStationOwner = nil
+                            self.mp4Tag["RadioStationOwner"] = nil
                         case .radioStationWebpage:
-                            self.mp4Tag.radioStationWebpage = nil
+                            self.mp4Tag["RadioStationWebpage"] = nil
                         case .recordCompany:
                             self.mp4Tag.recordCompany = nil
                         case .recordingCopyright:
@@ -1561,9 +1544,9 @@ extension AudioFile {
                         case .encodingSettings:
                             self.id3Tag.encodingSettings = nil
                         case .encodingTool:
-                            self.id3Tag["Encoding Tool"] = nil
+                            self.id3Tag["EncodingTool"] = nil
                         case .filmMakerWebpage:
-                            self.id3Tag["Filmmaker Webpage"] = nil
+                            self.id3Tag["FilmmakerWebpage"] = nil
                         case .genre:
                             self.id3Tag.genre.genre = nil
                         case .grouping:
@@ -1575,9 +1558,9 @@ extension AudioFile {
                         case .label:
                             self.id3Tag.label = nil
                         case .linerNotes:
-                            self.id3Tag["Liner Notes", .und] = nil
+                            self.id3Tag["LinerNotes", .und] = nil
                         case .longDescription:
-                            self.id3Tag["Long Description", .und] = nil
+                            self.id3Tag["LongDescription", .und] = nil
                         case .lyrics:
                             self.id3Tag[lyrics: "Lyrics", .und] = nil
                         case .lyricist:
@@ -1623,19 +1606,19 @@ extension AudioFile {
                         case .recordCompany:
                             self.id3Tag.recordCompany = nil
                         case .recordingCopyright:
-                            self.id3Tag["Recording Copyright"] = nil
+                            self.id3Tag["RecordingCopyright"] = nil
                         case .requirements:
                             self.id3Tag["Requirements"] = nil
                         case .sellerID:
-                            self.id3Tag["Seller ID"] = nil
+                            self.id3Tag["SellerID"] = nil
                         case .softwareVersion:
-                            self.id3Tag["Software Version"] = nil
+                            self.id3Tag["SoftwareVersion"] = nil
                         case .songDescription:
-                            self.id3Tag["Song Description", .und] = nil
+                            self.id3Tag["SongDescription", .und] = nil
                         case .songwriter:
-                            self.id3Tag["Songwriter"] = nil
+                            self.id3Tag.involvementCreditsList[.songwriter] = nil
                         case .sourceCredit:
-                            self.id3Tag["Source Credit"] = nil
+                            self.id3Tag["SourceCredit"] = nil
                         case .subtitle:
                             self.id3Tag.subtitle = nil
                         case .title:
@@ -1647,33 +1630,33 @@ extension AudioFile {
                         case .trackSubtitle:
                             self.id3Tag.setSubtitle = nil
                         case .tvEpisodeTitle:
-                            self.id3Tag["TV Episode Title"] = nil
+                            self.id3Tag["TVEpisodeTitle"] = nil
                         case .tvNetwork:
                             self.id3Tag["Network"] = nil
                         case .tvShow:
-                            self.id3Tag["TV Show"] = nil
+                            self.id3Tag["TVShow"] = nil
                         case .tvShowDescription:
-                            self.id3Tag["TV Show Description", .und] = nil
+                            self.id3Tag["TVShowDescription", .und] = nil
                         case .tvShowSort:
-                            self.id3Tag["TV Show Sort"] = nil
+                            self.id3Tag["TVShowSort"] = nil
                         case .website:
                             self.id3Tag[userDefinedUrl: "Website"] = nil
                         case .work:
                             self.id3Tag.contentGroup = nil
                         case .writer:
-                            self.id3Tag["Writer"] = nil
+                            self.id3Tag.involvementCreditsList[.writer] = nil
                         case .artDirector:
-                        self.id3Tag["Art Director"] = nil
+                            self.id3Tag.involvementCreditsList[.artDirection] = nil
                         case .director:
-                        self.id3Tag["Director"] = nil
+                            self.id3Tag.involvementCreditsList[.director] = nil
                         case .executiveProducer:
-                        self.id3Tag["Executive Producer"] = nil
+                            self.id3Tag.involvementCreditsList[.executiveProducer] = nil
                         case .producer:
-                        self.id3Tag["Producer"] = nil
+                            self.id3Tag.involvementCreditsList[.producer] = nil
                         case .soloist:
-                        self.id3Tag["Soloist"] = nil
+                            self.id3Tag.performanceCreditsList[.soloist] = nil
                         case .soundEngineer:
-                        self.id3Tag["Sound Engineer"] = nil
+                            self.id3Tag.involvementCreditsList[.soundEngineer] = nil
                 }
             }
         }

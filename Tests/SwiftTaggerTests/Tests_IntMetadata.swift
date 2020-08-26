@@ -14,7 +14,8 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertEqual(read.bpm, 99)
         XCTAssertEqual(read.composerID, 345678)
         XCTAssertEqual(read.conductorID, 456789)
-        XCTAssertEqual(read.genreID, 50000024)
+        XCTAssertEqual(read.genreID.mp4Genre, .audiobooks)
+        XCTAssertNil(read.genreID.id3Genre)
         XCTAssertEqual(read.length, 5016)
         XCTAssertEqual(read.movementCount, 9)
         XCTAssertEqual(read.movementNumber, 8)
@@ -29,14 +30,15 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         write.bpm = 98
         write.composerID = 987654
         write.conductorID = 098765
-        write.setMp4GenreID(genre: .audiobooks)
+        write.genreID.mp4Genre = .audiobooksNews
         write.movementCount = 6
         write.movementNumber = 5
         write.playlistID = 109876
         write.tvEpisodeNumber = 5
         write.tvSeason = 4
 
-        let outputUrl = try localDirectory(fileName: "testMp4-Int", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-Int.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Int", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -46,7 +48,8 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertEqual(newFile.bpm, 98)
         XCTAssertEqual(newFile.composerID, 987654)
         XCTAssertEqual(newFile.conductorID, 098765)
-        XCTAssertEqual(newFile.genreID, 50000024)
+        XCTAssertEqual(newFile.genreID.mp4Genre, .audiobooksNews)
+        XCTAssertNil(newFile.genreID.id3Genre)
         XCTAssertEqual(newFile.movementCount, 6)
         XCTAssertEqual(newFile.movementNumber, 5)
         XCTAssertEqual(newFile.playlistID, 109876)
@@ -62,7 +65,8 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertEqual(read.bpm, 99)
         XCTAssertNil(read.composerID)
         XCTAssertNil(read.conductorID)
-        XCTAssertEqual(read.genreID, 0)
+        XCTAssertEqual(read.genreID.id3Genre, GenreType.Blues)
+        XCTAssertNil(read.genreID.mp4Genre)
         XCTAssertEqual(read.length, 9767)
         XCTAssertEqual(read.movementCount, 6)
         XCTAssertEqual(read.movementNumber, 5)
@@ -77,14 +81,15 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         write.bpm = 98
         write.composerID = 987654
         write.conductorID = 543210
-        write.setID3GenreID(genre: .Audiobook)
+        write.genreID.id3Genre = .Audiobook
         write.movementCount = 6
         write.movementNumber = 5
         write.playlistID = 109876
         write.tvEpisodeNumber = 5
         write.tvSeason = 4
         
-        let outputUrl = try localDirectory(fileName: "testMp3-Int", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp3-Int.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Int", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -94,7 +99,8 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertEqual(newFile.bpm, 98)
         XCTAssertEqual(newFile.composerID, 987654)
         XCTAssertEqual(newFile.conductorID, 543210)
-        XCTAssertEqual(newFile.genreID, 183)
+        XCTAssertEqual(newFile.genreID.id3Genre, .Audiobook)
+        XCTAssertNil(newFile.genreID.mp4Genre)
         XCTAssertEqual(newFile.movementCount, 6)
         XCTAssertEqual(newFile.movementNumber, 5)
         XCTAssertEqual(newFile.playlistID, 109876)
@@ -110,7 +116,7 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertEqual(read.bpm, 99)
         XCTAssertEqual(read.composerID, 345678)
         XCTAssertEqual(read.conductorID, 456789)
-        XCTAssertEqual(read.genreID, 50000024)
+        XCTAssertEqual(read.genreID.mp4Genre, .audiobooks)
         XCTAssertEqual(read.length, 5016)
         XCTAssertEqual(read.movementCount, 9)
         XCTAssertEqual(read.movementNumber, 8)
@@ -125,14 +131,15 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         write.bpm = nil
         write.composerID = nil
         write.conductorID = nil
-        write.genreID = nil
+        write.genreID.mp4Genre = nil
         write.movementCount = nil
         write.movementNumber = nil
         write.playlistID = nil
         write.tvEpisodeNumber = nil
         write.tvSeason = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp4-Int-Removal", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-IntRemoval.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Int-Removal", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -142,7 +149,8 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertNil(newFile.bpm)
         XCTAssertNil(newFile.composerID)
         XCTAssertNil(newFile.conductorID)
-        XCTAssertNil(newFile.genreID)
+        XCTAssertNil(newFile.genreID.id3Genre)
+        XCTAssertNil(newFile.genreID.mp4Genre)
         XCTAssertNil(newFile.movementCount)
         XCTAssertNil(newFile.movementNumber)
         XCTAssertNil(newFile.playlistID)
@@ -158,7 +166,7 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertEqual(read.bpm, 99)
         XCTAssertNil(read.composerID)
         XCTAssertNil(read.conductorID)
-        XCTAssertEqual(read.genreID, 0)
+        XCTAssertEqual(read.genreID.id3Genre, .Blues)
         XCTAssertEqual(read.length, 9767)
         XCTAssertEqual(read.movementCount, 6)
         XCTAssertEqual(read.movementNumber, 5)
@@ -173,14 +181,15 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         write.bpm = nil
         write.composerID = nil
         write.conductorID = nil
-        write.setID3GenreID(genre: nil)
+        write.genreID.id3Genre = nil
         write.movementCount = nil
         write.movementNumber = nil
         write.playlistID = nil
         write.tvEpisodeNumber = nil
         write.tvSeason = nil
         
-        let outputUrl = try localDirectory(fileName: "testMp3-Int-Removal", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp3-IntRemoval.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Int-Removal", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -190,7 +199,8 @@ final class SwiftTaggerTests_IntMetadata: XCTestCase {
         XCTAssertNil(newFile.bpm)
         XCTAssertNil(newFile.composerID)
         XCTAssertNil(newFile.conductorID)
-        XCTAssertNil(newFile.genreID)
+        XCTAssertNil(newFile.genreID.mp4Genre)
+        XCTAssertNil(newFile.genreID.id3Genre)
         XCTAssertNil(newFile.movementCount)
         XCTAssertNil(newFile.movementNumber)
         XCTAssertNil(newFile.playlistID)

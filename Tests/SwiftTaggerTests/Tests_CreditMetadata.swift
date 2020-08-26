@@ -7,24 +7,6 @@ import SwiftTaggerMP4
 final class SwiftTaggerTests_CreditMetadata: XCTestCase {
 
     func testCreditListsMp4() throws {
-        var read = try AudioFile(location: mp4Meta)
-        // test read
-        XCTAssertEqual(read.performanceCreditsList[.artist], ["Artist"])
-        XCTAssertEqual(read.performanceCreditsList[.soloist], ["Soloist"])
-        XCTAssertEqual(read.performanceCreditsList[.narrator], ["Narrator"])
-        XCTAssertEqual(read.performanceCreditsList[.performer], ["Performers"])
-        XCTAssertEqual(read.involvementCreditsList[.arranger], ["Arranger"])
-        XCTAssertEqual(read.involvementCreditsList[.artDirection], ["Art Director"])
-        XCTAssertEqual(read.involvementCreditsList[.composer], ["Composer"])
-        XCTAssertEqual(read.involvementCreditsList[.conductor], ["Conductor"])
-        XCTAssertEqual(read.involvementCreditsList[.director], ["Director"])
-        XCTAssertEqual(read.involvementCreditsList[.executiveProducer], ["Executive Producer"])
-        XCTAssertEqual(read.involvementCreditsList[.lyricist], ["Lyricist"])
-        XCTAssertEqual(read.involvementCreditsList[.producer], ["Producer"])
-        XCTAssertEqual(read.involvementCreditsList[.publisher], ["Publisher"])
-        XCTAssertEqual(read.involvementCreditsList[.soundEngineer], ["Sound Engineer"])
-        XCTAssertEqual(read.involvementCreditsList[.writer], ["Writer"])
-
         var write = try AudioFile(location: mp4NoMeta)
         write.performanceCreditsList[.artist] = ["New Artist"]
         write.performanceCreditsList[.soloist] = ["New Soloist"]
@@ -42,25 +24,12 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         write.involvementCreditsList[.soundEngineer] = ["New Sound Engineer"]
         write.involvementCreditsList[.writer] = ["Writer 1", "Writer 2"]
 
-        let outputUrl = try localDirectory(fileName: "testMp4-Credit", fileExtension: "m4a")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp4-CreditWrite.m4a")
+//        let outputUrl = try localDirectory(fileName: "testMp4-Credit", fileExtension: "m4a")
         try write.write(outputLocation: outputUrl)
         
-        let newFile = try AudioFile(location: outputUrl)
-        XCTAssertEqual(newFile.performanceCreditsList[.artist], ["New Artist"])
-        XCTAssertEqual(newFile.performanceCreditsList[.soloist], ["New Soloist"])
-        XCTAssertEqual(newFile.performanceCreditsList[.narrator], ["New Narrator"])
+        var newFile = try AudioFile(location: outputUrl)
         XCTAssertEqual(newFile.performanceCreditsList[.performer], ["Performer 1", "Performer 2"])
-        XCTAssertEqual(newFile.involvementCreditsList[.arranger], ["New Arranger"])
-        XCTAssertEqual(newFile.involvementCreditsList[.artDirection], ["New Art Director"])
-        XCTAssertEqual(newFile.involvementCreditsList[.composer], ["New Composer"])
-        XCTAssertEqual(newFile.involvementCreditsList[.conductor], ["New Conductor"])
-        XCTAssertEqual(newFile.involvementCreditsList[.director], ["New Director"])
-        XCTAssertEqual(newFile.involvementCreditsList[.executiveProducer], ["New Exec Producer"])
-        XCTAssertEqual(newFile.involvementCreditsList[.lyricist], ["New Lyricist"])
-        XCTAssertEqual(newFile.involvementCreditsList[.producer], ["New Producer"])
-        XCTAssertEqual(newFile.involvementCreditsList[.publisher], ["New Publisher"])
-        XCTAssertEqual(newFile.involvementCreditsList[.soundEngineer], ["New Sound Engineer"])
-        XCTAssertEqual(newFile.involvementCreditsList[.writer], ["Writer 1", "Writer 2"])
         XCTAssertEqual(newFile.artist, "New Artist")
         XCTAssertEqual(newFile.soloist, "New Soloist")
         XCTAssertEqual(newFile.narrator, "New Narrator")
@@ -75,12 +44,13 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         XCTAssertEqual(newFile.publisher, "New Publisher")
         XCTAssertEqual(newFile.director, "New Director")
         XCTAssertEqual(newFile.soundEngineer, "New Sound Engineer")
-        XCTAssertEqual(newFile.writer, "Writer 1;Writer 2")
+        XCTAssertEqual(newFile.writer, "Writer 1; Writer 2")
 
-        read.clearPerformanceCreditList()
-        read.clearInvolvementCreditList()
-        let outputUrl2 = try localDirectory(fileName: "testMp4-ClearList", fileExtension: "m4a")
-        try read.write(outputLocation: outputUrl2)
+        newFile.clearPerformanceCreditList()
+        newFile.clearInvolvementCreditList()
+        let outputUrl2 = try tempDirectory().appendingPathComponent("testMp4-CreditClear.m4a")
+//        let outputUrl2 = try localDirectory(fileName: "testMp4-ClearList", fileExtension: "m4a")
+        try newFile.write(outputLocation: outputUrl2)
         
         var newFile2 = try AudioFile(location: outputUrl2)
         XCTAssertTrue(newFile2.performanceCreditsList.isEmpty)
@@ -134,13 +104,11 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         newFile2.addInvolvementCredit(.writer, person: "Other New Writer")
         newFile2.addInvolvementCredit(.writer, person: "Writer's Assistant")
 
-        let accompanist = SwiftTagger.MusicianAndPerformerCredits.accompaniment.rawValue
+        let accompanist = PerformanceCredits.accompaniment.rawValue
 
         XCTAssertEqual(newFile2.artist, "Other New Artist")
         XCTAssertEqual(newFile2.narrator, "Other New Narrator")
         XCTAssertEqual(newFile2.soloist, "Other New Soloist")
-        XCTAssertEqual(newFile2.performers, ["Other New Performer"])
-        XCTAssertEqual(newFile2[accompanist], "Other New Accompanist")
         XCTAssertEqual(newFile2.arranger, "Other New Arranger")
         XCTAssertEqual(newFile2.artDirector, "Other New Art Director")
         XCTAssertEqual(newFile2.composer, "Other New Composer")
@@ -150,17 +118,16 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         XCTAssertEqual(newFile2.producer, "Other New Producer")
         XCTAssertEqual(newFile2.publisher, "Other New Publisher")
         XCTAssertEqual(newFile2.soundEngineer, "Other New Engineer")
-        XCTAssertEqual(newFile2.writer, "Other New Writer;Writer's Assistant")
+        XCTAssertEqual(newFile2.writer, "Other New Writer; Writer's Assistant")
 
-        let outputUrl3 = try localDirectory(fileName: "testMp4-AddCreditItems", fileExtension: "m4a")
+        let outputUrl3 = try tempDirectory().appendingPathComponent("testMp4-CreditAdd.m4a")
+//        let outputUrl3 = try localDirectory(fileName: "testMp4-AddCreditItems", fileExtension: "m4a")
         try newFile2.write(outputLocation: outputUrl3)
         
         var newFile3 = try AudioFile(location: outputUrl3)
         XCTAssertEqual(newFile3.artist, "Other New Artist")
         XCTAssertEqual(newFile3.narrator, "Other New Narrator")
         XCTAssertEqual(newFile3.soloist, "Other New Soloist")
-        XCTAssertEqual(newFile3.performers, ["Other New Performer"])
-        XCTAssertEqual(newFile3[accompanist], "Other New Accompanist")
         XCTAssertEqual(newFile3.arranger, "Other New Arranger")
         XCTAssertEqual(newFile3.artDirector, "Other New Art Director")
         XCTAssertEqual(newFile3.composer, "Other New Composer")
@@ -170,13 +137,14 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         XCTAssertEqual(newFile3.producer, "Other New Producer")
         XCTAssertEqual(newFile3.publisher, "Other New Publisher")
         XCTAssertEqual(newFile3.soundEngineer, "Other New Engineer")
-        XCTAssertEqual(newFile3.writer, "Other New Writer;Writer's Assistant")
+        XCTAssertEqual(newFile3.writer, "Other New Writer; Writer's Assistant")
         
         newFile3.removeInvolvementCredit(.writer)
         newFile3.removePerformanceCredit(.soloist)
         newFile3.removePerformanceCredit(.accompaniment)
         
-        let outputUrl4 = try localDirectory(fileName: "testMp4-RemoveSingleCreditItems", fileExtension: "m4a")
+        let outputUrl4 = try tempDirectory().appendingPathComponent("testMp4-CreditRemove.m4a")
+//        let outputUrl4 = try localDirectory(fileName: "testMp4-RemoveSingleCreditItems", fileExtension: "m4a")
         try newFile3.write(outputLocation: outputUrl4)
         
         let newFile4 = try AudioFile(location: outputUrl4)
@@ -208,7 +176,8 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         write.involvementCreditsList[.soundEngineer] = ["New Sound Engineer"]
         write.involvementCreditsList[.writer] = ["Writer 1", "Writer 2"]
 
-        let outputUrl = try localDirectory(fileName: "testMp3-Credits", fileExtension: "mp3")
+        let outputUrl = try tempDirectory().appendingPathComponent("testMp3-CreditWrite.mp3")
+//        let outputUrl = try localDirectory(fileName: "testMp3-Credits", fileExtension: "mp3")
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
@@ -235,7 +204,9 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
 
         read.clearPerformanceCreditList()
         read.clearInvolvementCreditList()
-        let outputUrl2 = try localDirectory(fileName: "testMp3-ClearList", fileExtension: "mp3")
+
+        let outputUrl2 = try tempDirectory().appendingPathComponent("testMp3-CreditClear.mp3")
+//        let outputUrl2 = try localDirectory(fileName: "testMp3-ClearList", fileExtension: "mp3")
         try read.write(outputLocation: outputUrl2)
         
         var newFile2 = try AudioFile(location: outputUrl2)
@@ -269,7 +240,8 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         newFile2.addInvolvementCredit(.writer, person: "Other New Writer")
         newFile2.addInvolvementCredit(.writer, person: "Writer's Assistant")
         
-        let outputUrl3 = try localDirectory(fileName: "testMp3-AddCreditItems", fileExtension: "mp3")
+        let outputUrl3 = try tempDirectory().appendingPathComponent("testMp3-CreditAdd.mp3")
+//        let outputUrl3 = try localDirectory(fileName: "testMp3-AddCreditItems", fileExtension: "mp3")
         try newFile2.write(outputLocation: outputUrl3)
         
         var newFile3 = try AudioFile(location: outputUrl3)
@@ -293,7 +265,8 @@ final class SwiftTaggerTests_CreditMetadata: XCTestCase {
         newFile3.removePerformanceCredit(.soloist)
         newFile3.removePerformanceCredit(.accompaniment)
         
-        let outputUrl4 = try localDirectory(fileName: "testMp3-RemoveSingleCreditItems", fileExtension: "mp3")
+        let outputUrl4 = try tempDirectory().appendingPathComponent("testMp3-CreditRemove.mp3")
+//        let outputUrl4 = try localDirectory(fileName: "testMp3-RemoveSingleCreditItems", fileExtension: "mp3")
         try newFile3.write(outputLocation: outputUrl4)
         
         let newFile4 = try AudioFile(location: outputUrl4)
