@@ -57,10 +57,10 @@ extension AudioFile {
             case .mp4:
                 try mp4Tag.removeCoverArt()
             case .id3:
-                if let image = try id3Tag.coverArt {
-                    try id3Tag.removeCoverImage()
+                if id3Tag.coverArt != nil {
+                    id3Tag.removeCoverImage()
                 } else {
-                    try id3Tag.removeAttachedPictureByType(.Other)
+                    id3Tag.removeAttachedPictureByType(.Other)
             }
         }
     }

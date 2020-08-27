@@ -217,7 +217,7 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         XCTAssertEqual(output.owner, "Owner")
         XCTAssertEqual(output.paymentWebpage, "Payment Webpage")
         XCTAssertEqual(output.playlistID, 67890123)
-        XCTAssertEqual(output.playlistDelay, 1)
+        XCTAssertNil(output.playlistDelay)
         XCTAssertEqual(output.podcast, true)
         XCTAssertEqual(output.podcastCategory, "Podcast Category")
         XCTAssertEqual(output.podcastDescription, "Podcast Description")

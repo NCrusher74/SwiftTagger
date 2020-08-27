@@ -556,11 +556,7 @@ extension AudioFile {
                         case .compilation:
                             id3Tag.compilation = nil
                         case .gaplessPlayback:
-                            if boolValue == true {
-                                id3Tag.playlistDelay = 0
-                            } else {
-                                return
-                        }
+                            id3Tag.playlistDelay = nil
                         case .podcast:
                             return
                         case .showWork:
