@@ -11,20 +11,20 @@ import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
 enum MetadataID_Int: CaseIterable {
-    case albumID // int 1
-    case appleStoreCountryID // int 2
-    case artistID // int 3
-    case bpm // int 4
-    case composerID // int 5
-    case conductorID // int 6
-    case genreID // int 7
-    case length // int 8
-    case movementCount // int 9
-    case movementNumber // int 10
+    case albumID
+    case appleStoreCountryID
+    case artistID
+    case bpm
+    case composerID
+    case conductorID
+    case genreID
+    case length
+    case movementCount
+    case movementNumber
     case playlistDelay
-    case playlistID // int 11
-    case tvEpisodeNumber // int 12
-    case tvSeason // int 13
+    case playlistID
+    case tvEpisodeNumber
+    case tvSeason
     
     var metadataItem: MetadataItem {
         switch self {
@@ -48,6 +48,10 @@ enum MetadataID_Int: CaseIterable {
 
 @available(OSX 10.13, *)
 extension AudioFile {
+    
+    /// Accesses the MP4 `akID` atom.
+    ///
+    /// There is no equivalent frame for ID3, so this will create a `TXXX` freeform text frame with the description `AlbumID`
     public var albumID: Int? {
         get {
             if let value = self.get(.albumID) {
@@ -61,6 +65,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 `sfID` atom.
+    ///
+    /// There is no equivalent frame for ID3, so this will create a `TXXX` freeform text frame with the description `AppleCountryStoreID`
     public var appleStoreCountryID: Int? {
         get {
             if let value = self.get(.appleStoreCountryID) {
@@ -74,6 +81,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 `atID` atom.
+    ///
+    /// There is no equivalent frame for ID3, so this will create a `TXXX` freeform text frame with the description `ArtistID`
     public var artistID: Int? {
         get {
             if let value = self.get(.artistID) {
@@ -87,6 +97,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 `tmpo` atom, or the ID3 `TBPM` frame
     public var bpm: Int? {
         get {
             if let value = self.get(.bpm) {
@@ -100,6 +111,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 `cmID` atom.
+    ///
+    /// There is no equivalent frame for ID3, so this will create a `TXXX` freeform text frame with the description `ComposerID`
     public var composerID: Int? {
         get {
             if let value = self.get(.composerID) {
@@ -113,6 +127,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 `cnID` atom.
+    ///
+    /// There is no equivalent frame for ID3, so this will create a `TXXX` freeform text frame with the description `ConductorID`
     public var conductorID: Int? {
         get {
             if let value = self.get(.conductorID) {
@@ -126,6 +143,11 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 `genr` atom
+    ///
+    /// There is no equivalent frame in ID3, so this will set the `genreCategory` parameter of the ID3 `genre` frame.
+    ///
+    /// Setting this option will store a integer value representing the selected genre. Some apps may not recognize or display this format correctly.
     public var genreID: (mp4Genre: Genres?, id3Genre: GenreType?) {
         get {
             switch library {
@@ -170,6 +192,11 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 `TLEN` frame.
+    ///
+    /// There is no equivalent metadata atom for MP4, so this will return the value of the media duration stored in the `mvhd`.
+    ///
+    /// Since `SwiftTagger` does not handle editing the duration of the audio file, setting this to a different value is not recommended.
     public var length: Int? {
         get {
             if let value = self.get(.length) {
@@ -179,10 +206,12 @@ extension AudioFile {
             }
         }
         set {
-            return
+            /// this should prevent the value being changed
+            set(.length, intValue: self.length)
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}mvc` or the ID3 frame `MVCN`
     public var movementCount: Int? {
         get {
             if let value = self.get(.movementCount) {
@@ -196,6 +225,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}mvi` or the ID3 frame `MVCI`
     public var movementNumber: Int? {
         get {
             if let value = self.get(.movementNumber) {
@@ -209,6 +239,10 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `TDLY`
+    ///
+    /// Since there is no equivalent atom for MP4, setting this accessor to `0` will change the MP4 `gaplessPlayback` atom to `true`. Setting it to `1` will change `gaplessPlayback` to false.
+    /// This is the reverse of how such boolean-integer conversions are handled, however, since setting this value to `0` ensures gapless playback on the ID3 side, logically setting the playlist delay to `0` should equate to a `gaplessPlayback` value of `true`
     public var playlistDelay: Int? {
         get {
             switch library {
@@ -231,6 +265,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 `plID` atom.
+    ///
+    /// There is no equivalent frame for ID3, so this will create a `TXXX` freeform text frame with the description `PlaylistID`
     public var playlistID: Int? {
         get {
             if let value = self.get(.playlistID) {
@@ -244,6 +281,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `tves`
+    ///
+    /// There is no equivalent ID3 frame, so this accessor will create a freeform `TXXX` frame with the descriptor `TVEpisodeNumber`
     public var tvEpisodeNumber: Int? {
         get {
             if let value = self.get(.tvEpisodeNumber) {
@@ -257,6 +297,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `tvsn`
+    ///
+    /// There is no equivalent ID3 frame, so this accessor will create a freeform `TXXX` frame with the descriptor `TVSeason`
     public var tvSeason: Int? {
         get {
             if let value = self.get(.tvSeason) {

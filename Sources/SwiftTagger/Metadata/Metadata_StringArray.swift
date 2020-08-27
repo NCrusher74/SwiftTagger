@@ -36,6 +36,11 @@ enum MetadataID_StringArray: CaseIterable {
 
 @available(OSX 10.13, *)
 extension AudioFile {
+    /// Accesses the MP4 atom `\u{00A9}ark`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `ArrangerKeywords`
+    ///
+    /// This frame/atom will be written to file as a string with `; ` separating the elements of the array. i.e. "Keyword1; Keyword2; Keyword3"
     public var arrangerKeywords: [String]? {
         get {
             if let array = self.get(.arrangerKeywords) {
@@ -53,6 +58,11 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}prk`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `ArtistKeywords`
+    ///
+    /// This frame/atom will be written to file as a string with `; ` separating the elements of the array. i.e. "Keyword1; Keyword2; Keyword3"
     public var artistKeywords: [String]? {
         get {
             if let array = self.get(.artistKeywords) {
@@ -70,6 +80,11 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}cok`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `ComposerKeywords`
+    ///
+    /// This frame/atom will be written to file as a string with `; ` separating the elements of the array. i.e. "Keyword1; Keyword2; Keyword3"
     public var composerKeywords: [String]? {
         get {
             if let array = self.get(.composerKeywords) {
@@ -87,6 +102,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}prf`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set an entry in the `TMCL` (musician credit list) frame with the role `performer`
     public var performers: [String]? {
         get {
             if let array = self.get(.performers) {
@@ -103,6 +121,8 @@ extension AudioFile {
             }
         }
     }
+
+    /// Accesses the MP4 atom `keyw` or the ID3 frame `TKWD`
     public var podcastKeywords: [String]? {
         get {
             if let array = self.get(.podcastKeywords) {
@@ -120,6 +140,11 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}pdk`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `ProducerKeywords`
+    ///
+    /// This frame/atom will be written to file as a string with `; ` separating the elements of the array. i.e. "Keyword1; Keyword2; Keyword3"
     public var producerKeywords: [String]? {
         get {
             if let array = self.get(.producerKeywords) {
@@ -137,6 +162,11 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}swk`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `SongwriterKeywords`
+    ///
+    /// This frame/atom will be written to file as a string with `; ` separating the elements of the array. i.e. "Keyword1; Keyword2; Keyword3"
     public var songwriterKeywords: [String]? {
         get {
             if let array = self.get(.songwriterKeywords) {
@@ -154,6 +184,11 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}snk`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `SubtitleKeywords`
+    ///
+    /// This frame/atom will be written to file as a string with `; ` separating the elements of the array. i.e. "Keyword1; Keyword2; Keyword3"
     public var subtitleKeywords: [String]? {
         get {
             if let array = self.get(.subtitleKeywords) {
@@ -171,6 +206,11 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}nak`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `TitleKeywords`
+    ///
+    /// This frame/atom will be written to file as a string with `; ` separating the elements of the array. i.e. "Keyword1; Keyword2; Keyword3"
     public var titleKeywords: [String]? {
         get {
             if let array = self.get(.titleKeywords) {
@@ -187,5 +227,4 @@ extension AudioFile {
             }
         }
     }
-
 }

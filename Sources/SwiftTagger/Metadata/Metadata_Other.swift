@@ -12,6 +12,12 @@ import SwiftTaggerMP4
 
 @available(OSX 10.13, *)
 extension AudioFile {
+    
+    /// Retrieves the cover art image from the audiofile and returns an NSImage
+    ///
+    /// Because of the way the `attachedPicture` frame works in ID3, it's possible that this function will not return the correct image. This function checks for attached image frames with an `imageType` of `FrontCover`, and if that returns nil, it will check for an attached image frame with an image type of `Other` next, and then other image types.
+    ///
+    /// Because not everyone uses `imageType` as intended, this could mean the return is not a cover image, but the contents of another attached picture frame.
     public func getCoverArt() throws -> NSImage? {
         switch library {
             case .mp4:
@@ -19,7 +25,7 @@ extension AudioFile {
             case .id3:
                 if let image = id3Tag.coverArt {
                     return image
-                } else if let image = id3Tag.otherImage {
+                } else if let image = id3Tag.otherImages.first {
                     return image
                 } else {
                     return nil
@@ -27,6 +33,7 @@ extension AudioFile {
         }
     }
     
+    /// Adds the image from a local drive to the audio file as a cover image
     public mutating func setCoverArt(from url: URL) throws {
         switch library {
             case .mp4:
@@ -38,17 +45,30 @@ extension AudioFile {
         }
     }
     
+    /// Attempts to remove the cover art image from the audio file
+    ///
+    /// Because of the way the attached picture frame works in ID3, it can be difficult to isolate which image, of multiple potential images, is the cover image.
+    ///
+    /// This function attempts to remove images with an `imageType` of `FrontCover` first, then `Other`. If the attached image has a different image type, it may not be removed.
+    ///
+    /// If this function fails, attempt to use SwiftTaggerID3's `removeAttachedPictureByType(_:)` method directly.
     public mutating func removeCoverArt() throws {
         switch library {
             case .mp4:
                 try mp4Tag.removeCoverArt()
             case .id3:
-                id3Tag.removeAttachedPicture(withDescription: "Front Cover")
+                if let image = try id3Tag.coverArt {
+                    try id3Tag.removeCoverImage()
+                } else {
+                    try id3Tag.removeAttachedPictureByType(.Other)
+            }
         }
     }
     
     // MARK: - Content Rating
-    /// This is a tag that only exists for `MP4`. The `ID3` version is simply a user defined text (`TXXX`) frame.
+    /// Accesses the MP4 `rtng` atom.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will access a user defined text (`TXXX`) frame with the descriptor `Rating`.
     public var contentRating: ContentRating? {
         get {
             switch library {
@@ -86,6 +106,9 @@ extension AudioFile {
     }
     
     // MARK: - Content Advisory
+    /// Accesses the MP4 freeform atom `iTunEXTC`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will access a user defined text (`TXXX`) frame with the descriptor `ContentRating`.
     public var contentAdvisory: (rating: ContentAdvisory?, ratingNotes: String?) {
         get {
             switch library {
@@ -142,6 +165,9 @@ extension AudioFile {
     }
     
     // MARK: - Initial Key
+    /// Accesses the MP3 `TKEY` ("Initial Key") frame.
+    ///
+    /// There is no equivalent atom for MP4. Instead, this will get and set a freestom atom with the descriptor `Initial key`
     public var keySignature: KeySignature? {
         get {
             switch library {
@@ -179,6 +205,8 @@ extension AudioFile {
     }
     
     // MARK: - Language
+    /// Accesses the ID3 `TLAN` frame, or the MP4 `ELNG` (extended language) atom
+    ///
     /// ID3 (mp3 files) use `ISO-639-2` codes. MP4's `extendedLanguage` atom uses `ICULocaleCode`
     public var language: (id3Languages: [ISO6392Codes]?, mp4Language: LocaleCode?) {
         get {
@@ -216,6 +244,9 @@ extension AudioFile {
     }
     
     // MARK: - Stik
+    /// Accesses the MP4 `stik` atom.
+    ///
+    /// There is no equivalent for ID3. Instead, this will get and set a User-defined text (`TXXX`) frame with the descriptor `ContentType`
     public var contentType: Stik? {
         get {
             switch library {
@@ -254,6 +285,9 @@ extension AudioFile {
     }
     
     // MARK: PredefinedGenre
+    /// Accesses the ID3 `TCON` frame, or the MP4 `genr` atom.
+    ///
+    /// The ID3 `TCON` frame allows both custom and predefined genres. This will access the predefined genre, use the `customGenre` accessor for user-defined genres.
     public var predefinedGenre: (id3Genre: GenreID3?, mp4Genre: GenreMP4?) {
         get {
             switch library {

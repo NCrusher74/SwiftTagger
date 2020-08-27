@@ -12,6 +12,9 @@ import SwiftTaggerMP4
 @available(OSX 10.13, *)
 extension AudioFile {
     
+    /// Adds an entry to the ID3 `TIPL` frame.
+    ///
+    /// There is no equivalent atom for MP4, so if the specific role chosen alredy has a dedicated atom, it will edit that value. Otherwile, it will create a freeform atom with a description string of `role.rawValue`
     public mutating func addInvolvementCredit(_ role: InvolvementCredits, person: String) {
         switch library {
             case .mp4:
@@ -113,6 +116,9 @@ extension AudioFile {
         }
     }
     
+    /// Adds an entry to the ID3 `TMCL` frame.
+    ///
+    /// There is no equivalent MP4 atom, so if the specific role chosen alredy has a dedicated atom, it will edit that value. Otherwile, it will add the value to the `performers` atom.
     public mutating func addPerformanceCredit(_ role: PerformanceCredits, person: String) {
         switch library {
             case .mp4:
@@ -151,7 +157,9 @@ extension AudioFile {
         }
     }
 
-
+    /// Removes a specific role from the ID3 `TIPL` frame.
+    ///
+    /// There is no equivalent atom in MP4, so if the selected role has a dedicated atom, it will clear that value. Otherwise, it will check for a freeform atom with the description `role.rawValue` and will attempt to clear that.
     public mutating func removeInvolvementCredit(_ role: InvolvementCredits) {
         switch library {
             case .id3:
@@ -175,6 +183,9 @@ extension AudioFile {
         }
     }
     
+    /// Removes a specific role from the ID3 `TCML` frame.
+    ///
+    /// There is no equivalent atom in MP4, so if the selected role has a dedicated atom, it will clear that value. Otherwise, it will check for a freeform atom with the description `role.rawValue` and will attempt to clear that.
     public mutating func removePerformanceCredit(_ role: PerformanceCredits) {
         switch library {
             case .id3:
@@ -190,6 +201,9 @@ extension AudioFile {
         }
     }
 
+    /// Clears all entries from the ID3 `TIPL` frame.
+    ///
+    /// There is no equivalent frame for MP4, so using this function will clear all the dedicated atoms for non-performance roles, such as `arranger`, `composer`, etc.
     public mutating func clearInvolvementCreditList() {
         switch library {
             case .id3:
@@ -200,6 +214,10 @@ extension AudioFile {
             }
         }
     }
+    
+    /// Clears all entries from the ID3 `TCML` frame.
+    ///
+    /// There is no equivalent frame for MP4, so using this function will clear all the dedicated atoms for non-performance roles, such as `artist`, `soloist`, `performer`, etc.
     public mutating func clearPerformanceCreditList() {
         switch library {
             case .id3:
@@ -211,7 +229,9 @@ extension AudioFile {
         }
     }
 
-    /// ID3 ONLY. A similar atom does not exist for MP4
+    /// Accesses the ID3 `TIPL` frame (involved person credits list)
+    ///
+    /// ID3 ONLY. No equivalent atom exists for MP4.
     public var involvementCreditsList: [ InvolvementCredits : [String]] {
         get {
             switch library {
@@ -242,6 +262,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 `TMCL` frame (musician and performer credits list)
+    ///
+    /// ID3 ONLY. No equivalent atom exists for MP4.
     public var performanceCreditsList: [ PerformanceCredits : [String]] {
         get {
             switch library {
@@ -280,6 +303,7 @@ extension AudioFile {
         }
     }
     
+    /// Compares and merges two strings that contain lists of names
     private func checkAndMergeCreditStrings(existingCredit: String, newCredit: String) -> String {
         let newCreditArray = newCredit.toArray
         var existingCreditArray = existingCredit.toArray
@@ -292,6 +316,7 @@ extension AudioFile {
         return newString
     }
     
+    /// Compares and merges two arrays that contain lists of names
     private func checkAndMergeCreditArrays(existingCredit: [String], newCredit: [String]) -> [String] {
         var newArray = existingCredit
         for credit in newCredit {

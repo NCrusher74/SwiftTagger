@@ -10,12 +10,13 @@ import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
 
+/// A type representing an audio file stored locally
 @available(OSX 10.13, *)
 struct AudioFile {
     public init(location: URL) throws {
         self.location = location
+
         let validMp4Extensions = ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"]
-        
         if self.location.pathExtension.lowercased() == "mp3" {
             self.library = .id3
         } else if validMp4Extensions.contains(
@@ -39,6 +40,7 @@ struct AudioFile {
     }
     
     // MARK: - Write
+    /// Writes the media with edited metdata to a new file at the specified location
     public func write(outputLocation: URL) throws {
         switch library {
             case .mp4:

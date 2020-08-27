@@ -9,13 +9,13 @@ import Foundation
 
 @available(OSX 10.13, *)
 enum MetadataID_Date: CaseIterable {
-    case encodingTime // date 2
-    case originalReleaseTime // date 3
-    case purchaseDate // date 4
-    case recordingDate // date 5
-    case releaseDate // date 6
-    case taggingTime // date 7
-    case year // date 9
+    case encodingTime
+    case originalReleaseTime
+    case purchaseDate
+    case recordingDate
+    case releaseDate
+    case taggingTime
+    case year
     
     var metadataItem: MetadataItem {
         switch self {
@@ -32,6 +32,10 @@ enum MetadataID_Date: CaseIterable {
 
 @available(OSX 10.13, *)
 extension AudioFile {
+    
+    /// Gets and sets the ID3 `TDEN` frame
+    ///
+    /// No equivalent atom exists for MP4, so this will create a freeform atom with the descriptor `EncodingDate`. Not all apps will recognize this atom.
     public var encodingDate: Date? {
         get {
             get(.encodingTime)
@@ -41,6 +45,9 @@ extension AudioFile {
         }
     }
     
+    /// Gets and sets the ID3 `TDOR` frame
+    ///
+    /// No equivalent atom exists for MP4, so this will create a freeform atom with the descriptor `OriginalReleaseDate`. Not all apps will recognize this atom.
     public var originalReleaseDate: Date? {
         get {
             get(.originalReleaseTime)
@@ -50,6 +57,9 @@ extension AudioFile {
         }
     }
     
+    /// Gets and sets the MP4 `purd` atom
+    ///
+    /// No equivalent frame exists for ID3, so this will create a freeform text frame with the descriptor `PurchaseDate`. Not all apps will recognize this atom.
     public var purchaseDate: Date? {
         get {
             get(.purchaseDate)
@@ -59,6 +69,9 @@ extension AudioFile {
         }
     }
     
+    /// Gets and sets the MP4 `\u{00A9}day` atom or the ID3 `TDRC` frame
+    ///
+    /// Some apps may present this date as the `releaseDate` instead of `recordingDate`
     public var recordingDate: Date? {
         get {
             get(.recordingDate)
@@ -68,6 +81,9 @@ extension AudioFile {
         }
     }
 
+    /// Gets and sets the MP4 `rldt` atom or the ID3 `TDRL` frame
+    ///
+    /// Some apps may present`recordingDate` as `releaseDate` and won't recognize this frame.
     public var releaseDate: Date? {
         get {
             get(.releaseDate)
@@ -77,6 +93,9 @@ extension AudioFile {
         }
     }
     
+    /// Gets and sets the ID3 `TDTG` frame
+    ///
+    /// No equivalent atom exists for MP4, so this will create a freeform atom with the descriptor `TaggingDate`. Not all apps will recognize this atom.
     public var taggingDate: Date? {
         get {
             get(.taggingTime)
@@ -86,6 +105,10 @@ extension AudioFile {
         }
     }
 
+    /// Gets and sets the MP4 `yrrc` atom.
+    ///
+    /// This accessor will attempt to set the ID3 `TYER` frame, but since this frame is only valid for ID3 version 2.3, and `SwiftTagger` uses version 2.4 by default, `SwiftTaggerID3` will throw an error that the frame is invalid for the version being used.
+    /// To use this frame, chage the `tagVersion` version parameter in `ID3` portion the `write` function of `AudioFile`
     public var year: Int? {
         get {
             if let date = get(.year) {

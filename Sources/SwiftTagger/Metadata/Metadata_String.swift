@@ -180,6 +180,9 @@ enum MetadataID_String: CaseIterable { // 70 items
 @available(OSX 10.13, *)
 extension AudioFile {
     // MARK: - Accesors A
+    /// Accesses the MP4 `\u{00A9}cak` atom.
+    ///
+    /// There is no equivalent frame for ID3. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `Acknowledgment`
     public var acknowledgment: String? {
         get {
             if let value = self.get(.acknowledgment) {
@@ -193,6 +196,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}alb`, or the ID3 frame `TALB`
     public var album: String? {
         get {
             if let value = self.get(.album) {
@@ -206,6 +210,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `aART`, or the ID3 frame `TPE2`
     public var albumArtist: String? {
         get {
             if let value = self.get(.albumArtist) {
@@ -219,6 +224,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `soaaa`, or the ID3 frame `TSO2`
     public var albumArtistSort: String? {
         get {
             if let value = self.get(.albumArtistSort) {
@@ -232,6 +238,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `soal`, or the ID3 frame `TSOA`
     public var albumSort: String? {
         get {
             if let value = self.get(.albumSort) {
@@ -245,6 +252,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}arg`, or the ID3 frame `TPE4`
     public var arranger: String? {
         get {
             if let value = self.get(.arranger) {
@@ -258,6 +266,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}ard`
+    ///
+    /// There is no ID3 equivalent. Instead, this will get and set an entry in the `TIPL` (involved people list) frame with the role `artDirection`
     public var artDirector: String? {
         get {
             if let value = self.get(.artDirector) {
@@ -271,6 +282,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}ART`, or the ID3 frame `TPE1`
     public var artist: String? {
         get {
             if let value = self.get(.artist) {
@@ -284,6 +296,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `soar`, or the ID3 frame `TSOP`
     public var artistSort: String? {
         get {
             if let value = self.get(.artistSort) {
@@ -297,6 +310,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}prl`, or the ID3 frame `WOAR`
     public var artistWebpage: String? {
         get {
             if let value = self.get(.artistWebpage) {
@@ -310,6 +324,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the ID3 frame `WOAF`
+    ///
+    /// There is no MP4 equivalent. Instead this will get and set a freeform text atom with the descriptor `AudioFileWebpage`
     public var audioFileWebpage: String? {
         get {
             if let value = self.get(.audioFileWebpage) {
@@ -323,6 +340,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the ID3 frame `WOAS`
+    ///
+    /// There is no MP4 equivalent. Instead this will get and set a freeform text atom with the descriptor `AudioSourceWebpage`
     public var audioSourceWebpage: String? {
         get {
             if let value = self.get(.audioSourceWebpage) {
@@ -337,6 +357,9 @@ extension AudioFile {
     }
     
     // MARK: Accessors C
+    /// Accesses the MP4 atom `\u{00A9}cmt` or the ID3 frame `COMM`
+    ///
+    /// ID allows multiple comment frames, each with a different description and/or language. This one will have the descriptor `Comment` and the languge `.und`
     public var comment: String? {
         get {
             if let value = self.get(.comment) {
@@ -350,6 +373,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}com` or the ID3 frame `TCOM`
     public var composer: String? {
         get {
             if let value = self.get(.composer) {
@@ -363,6 +387,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `soco` or the ID3 frame `TSOC`
     public var composerSort: String? {
         get {
             if let value = self.get(.composerSort) {
@@ -376,6 +401,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}con` or the ID3 frame `TPE3`
     public var conductor: String? {
         get {
             if let value = self.get(.conductor) {
@@ -389,6 +415,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `cprt` or the ID3 frame `TCOP`
     public var copyright: String? {
         get {
             if let value = self.get(.copyright) {
@@ -402,6 +429,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `WCOP`
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform atom with the descriptor `CopyrightWebpage`
     public var copyrightWebpage: String? {
         get {
             if let value = self.get(.copyrightWebpage) {
@@ -416,6 +446,9 @@ extension AudioFile {
     }
     
     // MARK: - Accessors D-F
+    /// Accesses the MP4 atom `\u{00A9}des`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a `COMM` frame with the descriptor `Description` and language `.und`
     public var description: String? {
         get {
             if let value = self.get(.description) {
@@ -429,6 +462,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}dir`
+    ///
+    /// There is no ID3 equivalent. Instead, this will get and set an entry in the `TIPL` (involved people list) frame with the role `director`
     public var director: String? {
         get {
             if let value = self.get(.director) {
@@ -442,6 +478,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}enc` or the ID3 frame `TENC`
     public var encodedBy: String? {
         get {
             if let value = self.get(.encodedBy) {
@@ -455,6 +492,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `TSSE`
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform atom with the descriptor `EncodingSettings`
     public var encodingSettings: String? {
         get {
             if let value = self.get(.encodingSettings) {
@@ -468,6 +508,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}too`
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `EncodingTool`
     public var encodingTool: String? {
         get {
             if let value = self.get(.encodingTool) {
@@ -481,6 +524,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}xpd`
+    ///
+    /// There is no ID3 equivalent. Instead, this will get and set an entry in the `TIPL` (involved people list) frame with the role `executiveProducer`
     public var executiveProducer: String? {
         get {
             if let value = self.get(.executiveProducer) {
@@ -494,6 +540,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}mal`
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `FilmMakerWebpage`
     public var filmMakerWebpage: String? {
         get {
             if let value = self.get(.filmMakerWebpage) {
@@ -508,6 +557,7 @@ extension AudioFile {
     }
     
     // MARK: - Accessors G-L
+    /// Accesses the MP4 atom `\u{00A9}gen` or the custom genre property of the ID3 frame `TCON`
     public var genre: String? {
         get {
             if let value = self.get(.genre) {
@@ -521,6 +571,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}grp` or the ID3 frame `GRP1`
     public var grouping: String? {
         get {
             if let value = self.get(.grouping) {
@@ -534,6 +585,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}inf`
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `Information`
     public var information: String? {
         get {
             if let value = self.get(.information) {
@@ -547,6 +601,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}isr` or the ID3 frame `TSRC`
     public var isrc: String? {
         get {
             if let value = self.get(.isrc) {
@@ -560,6 +615,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}lab` or the ID3 frame `TPUB`
     public var label: String? {
         get {
             if let value = self.get(.label) {
@@ -573,6 +629,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}lnt`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a `COMM` frame with the descriptor `LinerNotes` and language `.und`
     public var linerNotes: String? {
         get {
             if let value = self.get(.linerNotes) {
@@ -586,6 +645,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `ldes`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a `COMM` frame with the descriptor `LongDescription` and language `.und`
     public var longDescription: String? {
         get {
             if let value = self.get(.longDescription) {
@@ -599,6 +661,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}aut` or the ID3 frame `TEXT`
     public var lyricist: String? {
         get {
             if let value = self.get(.lyricist) {
@@ -612,6 +675,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}lyr` or the ID3 frame `USLT` with the descriptor `lyrics` and the language `.und`
     public var lyrics: String? {
         get {
             if let value = self.get(.lyrics) {
@@ -626,6 +690,9 @@ extension AudioFile {
     }
 
     // MARK: - Accesors M-O
+    /// Accesses the ID3 frame `TMOO`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `Mood`
     public var mood: String? {
         get {
             if let value = self.get(.mood) {
@@ -639,6 +706,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}mvn` or the ID3 frame `MVNM`
     public var movement: String? {
         get {
             if let value = self.get(.movementName) {
@@ -652,6 +720,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}nrt`.
+    ///
+    /// There is no equivalent ID3 frame. Most audiobook apps seem to use the `composer` tag for narrator, so this will set the `TCOM` (composer) frame
     public var narrator: String? {
         get {
             if let value = self.get(.narrator) {
@@ -665,6 +736,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `TOAL`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `OriginalAlbum`
     public var originalAlbum: String? {
         get {
             if let value = self.get(.originalAlbum) {
@@ -678,6 +752,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}ope` or the ID3 frame `TOPE`
     public var originalArtist: String? {
         get {
             if let value = self.get(.originalArtist) {
@@ -691,6 +766,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `TOFN`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `OriginalFilename`
     public var originalFilename: String? {
         get {
             if let value = self.get(.originalFilename) {
@@ -704,6 +782,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `TOLY`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `OriginalLyricist`
     public var originalLyricist: String? {
         get {
             if let value = self.get(.originalLyricist) {
@@ -717,6 +798,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `ownr` or the ID3 frame `TOWN`
     public var owner: String? {
         get {
             if let value = self.get(.owner) {
@@ -730,6 +812,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `WPAY`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `PaymentWebpage`
     public var paymentWebpage: String? {
         get {
             if let value = self.get(.paymentWebpage) {
@@ -743,6 +828,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `catg` or the ID3 frame `TCAT`
     public var podcastCategory: String? {
         get {
             if let value = self.get(.podcastCategory) {
@@ -756,6 +842,9 @@ extension AudioFile {
         }
     }
  
+    /// Accesses the ID3 frame `TDES`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `PodcastDescription`
     public var podcastDescription: String? {
         get {
             if let value = self.get(.podcastDescription) {
@@ -769,6 +858,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `purl` or the ID3 frame `WFED`
     public var podcastFeed: String? {
         get {
             if let value = self.get(.podcastFeed) {
@@ -782,6 +872,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `egid` or the ID3 frame `TGID`
     public var podcastID: String? {
         get {
             if let value = self.get(.podcastID) {
@@ -795,6 +886,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the ID3 frame `TPRO`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `ProducedNotice`
     public var producedNotice: String? {
         get {
             if let value = self.get(.producedNotice) {
@@ -808,6 +902,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}prd`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set an entry in the `TIPL` (involved people list) frame with the role `producer`
     public var producer: String? {
         get {
             if let value = self.get(.producer) {
@@ -821,6 +918,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}pub` or the ID3 frame `TPUB`
     public var publisher: String? {
         get {
             if let value = self.get(.publisher) {
@@ -834,6 +932,7 @@ extension AudioFile {
         }
     }
    
+    /// Accesses the MP4 atom `\u{00A9}lal` or the ID3 frame `WPUB`
     public var publisherWebpage: String? {
         get {
             if let value = self.get(.publisherWebpage) {
@@ -848,6 +947,9 @@ extension AudioFile {
     }
     
     // MARK: - Accessors R-S
+    /// Accesses the ID3 frame `TRSN`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `RadioStation`
     public var radioStation: String? {
         get {
             if let value = self.get(.radioStation) {
@@ -861,6 +963,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the ID3 frame `TRSO`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `RadioStationOwner`
     public var radioStationOwner: String? {
         get {
             if let value = self.get(.radioStationOwner) {
@@ -874,6 +979,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the ID3 frame `WORS`.
+    ///
+    /// There is no equivalent MP4 atom. Instead, this will get and set a freeform text atom with the descriptor `RadioStationWebpage`
     public var radioStationWebpage: String? {
         get {
             if let value = self.get(.radioStationWebpage) {
@@ -887,6 +995,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}mak` or the ID3 frame `TPUB`
     public var recordCompany: String? {
         get {
             if let value = self.get(.recordCompany) {
@@ -900,6 +1009,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}phg` (phonogram rights).
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `RecordingCopyright`
     public var recordingCopyright: String? {
         get {
             if let value = self.get(.recordingCopyright) {
@@ -913,6 +1025,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}req`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `Requirements`
     public var requirements: String? {
         get {
             if let value = self.get(.requirements) {
@@ -926,6 +1041,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `xid `.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `SellerID`
     public var sellerID: String? {
         get {
             if let value = self.get(.sellerID) {
@@ -939,6 +1057,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}swr`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `SoftwareVersion`
     public var softwareVersion: String? {
         get {
             if let value = self.get(.softwareVersion) {
@@ -952,6 +1073,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}sol`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set an entry in the `TMCL` (musician credit list) frame with the role `soloist`
     public var soloist: String? {
         get {
             if let value = self.get(.soloist) {
@@ -964,6 +1088,10 @@ extension AudioFile {
             set(.soloist, stringValue: newValue)
         }
     }
+
+    /// Accesses the MP4 atom `desc`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a comment (`COMM`) frame with the descriptor `SongDescription` and language `.und`
     public var songDescription: String? {
         get {
             if let value = self.get(.songDescription) {
@@ -977,6 +1105,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}swf`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set an entry in the `TIPL` (involved people list) frame with the role `songwriter`
     public var songwriter: String? {
         get {
             if let value = self.get(.songwriter) {
@@ -990,6 +1121,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}sne`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set an entry in the `TIPL` (involved people list) frame with the role `soundEngineer`
     public var soundEngineer: String? {
         get {
             if let value = self.get(.soundEngineer) {
@@ -1003,6 +1137,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}src`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `SourceCredit`
     public var sourceCredit: String? {
         get {
             if let value = self.get(.sourceCredit) {
@@ -1016,6 +1153,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `\u{00A9}snm` or the ID3 frame `TIT3`
     public var subtitle: String? {
         get {
             if let value = self.get(.subtitle) {
@@ -1030,6 +1168,7 @@ extension AudioFile {
     }
     
     // MARK: - Accesors T-Z
+    /// Accesses the MP4 atom `\u{00A9}nam` or the ID3 frame `TIT2`
     public var title: String? {
         get {
             if let value = self.get(.title) {
@@ -1043,6 +1182,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `sonm` or the ID3 frame `TSOT`
     public var titleSort: String? {
         get {
             if let value = self.get(.titleSort) {
@@ -1056,6 +1196,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}thx`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `Thanks`
     public var thanks: String? {
         get {
             if let value = self.get(.thanks) {
@@ -1069,6 +1212,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}st3` (track subtitle) or the ID3 frame `TSST` (set subtitle)
     public var trackSubtitle: String? {
         get {
             if let value = self.get(.trackSubtitle) {
@@ -1082,6 +1226,9 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `tves`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `TVEpisodeTitle`
     public var tvEpisodeTitle: String? {
         get {
             if let value = self.get(.tvEpisodeTitle) {
@@ -1095,6 +1242,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `tvnn`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `TVNetwork`
     public var tvNetwork: String? {
         get {
             if let value = self.get(.tvNetwork) {
@@ -1108,6 +1258,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `tvsh`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `TVShow`
     public var tvShow: String? {
         get {
             if let value = self.get(.tvShow) {
@@ -1121,6 +1274,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `sdes`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a comment (`COMM`) frame with the descriptor `TVShowDescription` and language `.und`
     public var tvShowDescription: String? {
         get {
             if let value = self.get(.tvShowDescription) {
@@ -1134,6 +1290,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `sosn`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `TVShowSort`
     public var tvShowSort: String? {
         get {
             if let value = self.get(.tvShowSort) {
@@ -1147,6 +1306,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}url`
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined website (`WXXX`) frame with the descriptor `Website`
     public var website: String? {
         get {
             if let value = self.get(.website) {
@@ -1160,6 +1322,7 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}wrk` or the ID3 frame `TIT1` (content group)
     public var work: String? {
         get {
             if let value = self.get(.work) {
@@ -1173,6 +1336,9 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `\u{00A9}wrt`.
+    ///
+    /// There is no equivalent ID3 frame. Instead, this will get and set an entry in the `TIPL` (involved people list) frame with the role `writer`
     public var writer: String? {
         get {
             if let value = self.get(.writer) {
@@ -1186,7 +1352,7 @@ extension AudioFile {
         }
     }
     
-    /// Freeform metadata tag accessed by description
+    /// Accesses the MP4 freeform atom `----` or the ID3 user-defined text frame `TXXX`
     public subscript(_ metadataDescription: String) -> String? {
         get {
             switch library {

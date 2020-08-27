@@ -24,6 +24,7 @@ enum MetadataID_PartOfTotal: CaseIterable {
 
 @available(OSX 10.13, *)
 extension AudioFile {
+    /// Accesses the MP4 atom `disk` or the ID3 frame `TPOS`
     public var discNumber: (disc: Int?, totalDiscs: Int?) {
         get {
             get(.discNumber)
@@ -35,6 +36,7 @@ extension AudioFile {
         }
     }
     
+    /// Accesses the MP4 atom `trkn` or the ID3 frame `TRCK`
     public var trackNumber: (track: Int?, totalTracks: Int?) {
         get {
             get(.trackNumber)

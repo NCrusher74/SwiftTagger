@@ -556,8 +556,8 @@ extension AudioFile {
                         case .compilation:
                             id3Tag.compilation = nil
                         case .gaplessPlayback:
-                            if id3Tag.playlistDelay == 0 {
-                                id3Tag.playlistDelay = nil
+                            if boolValue == true {
+                                id3Tag.playlistDelay = 0
                             } else {
                                 return
                         }
@@ -602,17 +602,7 @@ extension AudioFile {
                     case .tvSeason:
                         return mp4Tag.tvSeason
                     case .playlistDelay:
-                        if let bool = mp4Tag.gaplessPlayback {
-                            if bool == true {
-                                return 1
-                            } else if bool == false {
-                                return 0
-                            } else {
-                                return nil
-                            }
-                        } else {
-                            return nil
-                    }
+                        return nil
             }
             case .id3:
                 switch intMetadataID {
@@ -744,9 +734,9 @@ extension AudioFile {
                         case .tvSeason:
                             mp4Tag.tvSeason = int
                         case .playlistDelay:
-                            if int == 1 {
+                            if int == 0 {
                                 mp4Tag.gaplessPlayback = true
-                            } else if int == 0 {
+                            } else if int == 1 {
                                 mp4Tag.gaplessPlayback = false
                         }
                 }
@@ -767,7 +757,7 @@ extension AudioFile {
                         case .genreID:
                             id3Tag.genre.genreCategory = GenreID3(code: int)
                         case .length:
-                            break
+                            id3Tag.length = self.length
                         case .movementCount:
                             id3Tag.totalMovements = int
                         case .movementNumber:
