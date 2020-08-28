@@ -10,20 +10,20 @@ import SwiftTaggerID3
 import SwiftTaggerMP4
 import SwiftMp4MetadataParser
 
-typealias KeySignature = SwiftTaggerID3.KeySignature
-typealias PerformanceCredits = SwiftTaggerID3.MusicianAndPerformerCredits
-typealias InvolvementCredits = SwiftTaggerID3.InvolvedPersonCredits
+public typealias KeySignature = SwiftTaggerID3.KeySignature
+public typealias PerformanceCredits = SwiftTaggerID3.MusicianAndPerformerCredits
+public typealias InvolvementCredits = SwiftTaggerID3.InvolvedPersonCredits
 
-typealias LocaleCode = ICULocaleCode
-typealias LanguageCode = ISO6392Codes
+public typealias LocaleCode = ICULocaleCode
+public typealias LanguageCode = ISO6392Codes
 
-typealias ContentRating = SwiftTaggerMP4.ContentRating
-typealias ContentAdvisory = SwiftTaggerMP4.ContentAdvisory
+public typealias ContentRating = SwiftTaggerMP4.ContentRating
+public typealias ContentAdvisory = SwiftTaggerMP4.ContentAdvisory
 
-typealias FileType = SwiftTaggerID3.FileType
-typealias FileTypeRefinement = SwiftTaggerID3.FileTypeRefinements
-typealias GenreID3 = SwiftTaggerID3.GenreType
-typealias MediaType = SwiftTaggerID3.MediaType
-typealias MediaTypeRefinement = SwiftTaggerID3.MediaTypeRefinements
+public typealias FileType = SwiftTaggerID3.FileType
+public typealias FileTypeRefinement = SwiftTaggerID3.FileTypeRefinements
+public typealias GenreID3 = SwiftTaggerID3.GenreType
+public typealias MediaType = SwiftTaggerID3.MediaType
+public typealias MediaTypeRefinement = SwiftTaggerID3.MediaTypeRefinements
 
-typealias GenreMP4 = SwiftTaggerMP4.Genres
+public typealias GenreMP4 = SwiftTaggerMP4.Genres
