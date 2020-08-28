@@ -13,23 +13,23 @@ Add dependency to your `package.swift` manifest:
 
 ```swift
 let package = Package(
-name: "MetadataEditor",
-dependencies: [
-.package(
-name: "SwiftTagger",
-url: "https://github.com/NCrusher74/SwiftTagger",
-from: Version(0.1.1)
-),
-],
-targets: [
-.target(
-name: "MetadataEditor",
-dependencies: [
-.product(name: "SwiftTaggerID3", package: "SwiftTagger"),
-.product(name: "SwiftTaggerMP4", package: "SwiftTagger"),
-]
-)
-]
+    name: "MetadataEditor",
+    dependencies: [
+        .package(
+            name: "SwiftTagger",
+            url: "https://github.com/NCrusher74/SwiftTagger",
+            from: "0.1.1"
+        ),
+    ],
+    targets: [
+        .target(
+            name: "MetadataEditor",
+                dependencies: [
+                    .product(name: "SwiftTaggerID3", package: "SwiftTagger"),
+                    .product(name: "SwiftTaggerMP4", package: "SwiftTagger"),
+                ]
+        )
+    ]
 )
 ```
 
