@@ -11,7 +11,7 @@ You can find `SwiftTaggerID3` [here:](https://github.com/NCrusher74/SwiftTaggerI
 
 Add dependency to your `package.swift` manifest:
 
-```
+```swift
 let package = Package(
 name: "MetadataEditor",
 dependencies: [
@@ -34,7 +34,7 @@ dependencies: [
 ```
 
 *Reading metadata*:
-```
+```swift
 let source = try AudioFile(location: file.url)
 
 print(source.album)
@@ -47,7 +47,7 @@ print(source.performanceCreditsList[.actor])
 ```
 
 *Editing metadata*:
-```
+```swift
 var source = try AudioFile(location: file.url)
 
 source.album = "New Album Title"
@@ -70,7 +70,7 @@ source[lyrics: "My Lyrics Description", .eng] = "New Lyrics in English"
 ```
 
 *Reading Chapter Data*:
-```
+```swift
 let source = try AudioFile(location: file.url)
 
 for chapter in source.chapterList {
@@ -87,7 +87,7 @@ for chapter in source.chapterList {
 ```
 
 *Editing Chapter Data*:
-```
+```swift
 var source = try AudioFile(location: file.url)
 
 try source.removeAllChapters()
@@ -103,7 +103,7 @@ source.addChapter(at: 95000, title: "Chapter 6")
 ```
 
 *Writing the new file*:
-```
+```swift
 var source = try AudioFile(location: file.url)
 
 source.album = "New Album Title"
