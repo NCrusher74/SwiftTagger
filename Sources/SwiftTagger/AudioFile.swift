@@ -12,7 +12,7 @@ import SwiftTaggerMP4
 
 /// A type representing an audio file stored locally
 @available(OSX 10.13, *)
-struct AudioFile {
+public struct AudioFile {
     public init(location: URL) throws {
         self.location = location
 
