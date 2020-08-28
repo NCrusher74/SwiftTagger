@@ -1380,4 +1380,49 @@ extension AudioFile {
             }
         }
     }
+    
+    public subscript(comment commentDescription: String, language: ISO6392Codes) -> String? {
+        get {
+            switch library {
+                case .mp4: return mp4Tag[commentDescription]
+                case .id3: return id3Tag[commentDescription, language]
+            }
+        }
+        set {
+            if let new = newValue {
+                switch library {
+                    case .mp4: mp4Tag[commentDescription] = new
+                    case .id3: id3Tag[commentDescription, language] = new
+                }
+            } else {
+                switch library {
+                    case .mp4: mp4Tag[commentDescription] = nil
+                    case .id3: id3Tag[commentDescription, language] = nil
+                }
+            }
+        }
+    }
+    
+    public subscript(lyrics lyricsDescription: String, language: ISO6392Codes) -> String? {
+        get {
+            switch library {
+                case .mp4: return mp4Tag[lyricsDescription]
+                case .id3: return id3Tag[lyrics: lyricsDescription, language]
+            }
+        }
+        set {
+            if let new = newValue {
+                switch library {
+                    case .mp4: mp4Tag[lyricsDescription] = new
+                    case .id3: id3Tag[lyrics: lyricsDescription, language] = new
+                }
+            } else {
+                switch library {
+                    case .mp4: mp4Tag[lyricsDescription] = nil
+                    case .id3: id3Tag[lyrics: lyricsDescription, language] = nil
+                }
+            }
+        }
+    }
+
 }
