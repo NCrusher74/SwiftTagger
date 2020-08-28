@@ -19,11 +19,7 @@ public typealias LanguageCode = ISO6392Codes
 
 public typealias ContentRating = SwiftTaggerMP4.ContentRating
 public typealias ContentAdvisory = SwiftTaggerMP4.ContentAdvisory
+public typealias ContentType = SwiftTaggerMP4.Stik
 
-public typealias FileType = SwiftTaggerID3.FileType
-public typealias FileTypeRefinement = SwiftTaggerID3.FileTypeRefinements
 public typealias GenreID3 = SwiftTaggerID3.GenreType
-public typealias MediaType = SwiftTaggerID3.MediaType
-public typealias MediaTypeRefinement = SwiftTaggerID3.MediaTypeRefinements
-
 public typealias GenreMP4 = SwiftTaggerMP4.Genres
