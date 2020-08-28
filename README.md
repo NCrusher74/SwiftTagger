@@ -256,7 +256,7 @@ try source.write(outputLocation: output.url)
 * `year`: (MP4 atom: `yrrc`) (for ID3, this frame doesn't exist in version 2.4)
 
 ### Limitations, spec-noncompliance, and known issues:
-`SwiftTagger` tries to stick pretty close to the requirements of the ID3 and MP4 documented specs, but there are a few places where it deviates, either because the spec is silly, or compliance would be more cumbersome to achieve can be justified by the author's needs, or compliance would make the usage of `SwiftTagger` too convoluted. These deviations are:
+`SwiftTagger` tries to stick pretty close to the requirements of the ID3 and MP4 documented specs, but there are a few places where it deviates, either because the spec is silly, or compliance would be more cumbersome to achieve than can be justified by the author's needs, or compliance would make the usage of `SwiftTagger` too convoluted. These deviations are:
 
 * `SwiftTagger` uses ID3 version 2.4 by default. If you require an earlier version, it is recommended that you use `SwiftTaggerID3`, which allows you to specify which version you wish to use.
 * The ID3 frames  `TMED` ("MediaType"), and `TFLT` ("File Type") are not implemented in `SwiftTagger`, as there is no equivalent for these tags in MP4 and these frames are very clumsy and difficult to implement. If you require these frames, they are available in `SwiftTaggerID3`.
@@ -267,7 +267,7 @@ try source.write(outputLocation: output.url)
        `file.discNumber.totalDiscs = nil`
        `file.discNumber = (nil, nil) // not a nil return even though the frame or atom is non-existant`
        This is done to guarantee that we will be able to create these atoms and frames when they don't exist, instead of having the accessor fail when a chained optional such as `file.discNumber?.disc` encounters a nil return.
-       When working with date frames in ID3, this "false positive" may take the form of a date return of `0001-01-01 00:00:00` (`Date.distantPast`) when the frame doesn't exist.
+       When working with date frames in ID3, this "false positive" may take the form of a date return of `0001-01-01 00:00:00` (aka `Date.distantPast`) when the frame doesn't exist.
 
 ### A note about compatibility
 Each tagging library or app handles things slightly differently. Some will parse values of a tag called "recording date" to a field called "release date". Each one has its own unique descriptor that it may recognize for a freeform `----` atom or `TXXX` frame fulfilling a certain purpose, while another app uses a different descriptor altogether.
