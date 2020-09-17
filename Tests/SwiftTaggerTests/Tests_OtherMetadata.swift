@@ -3,9 +3,9 @@ import XCTest
 
 @available(OSX 10.13, *)
 final class SwiftTaggerTests_OtherMetadata: XCTestCase {
-    func testGetCoverArtMp4() throws {
+    func testcoverArtMp4() throws {
         var read = try AudioFile(location: mp4Meta)
-        XCTAssertNotNil(try read.getCoverArt())
+        XCTAssertNotNil(read.coverArt)
         
         try read.removeCoverArt()
 
@@ -14,7 +14,7 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         try read.write(outputLocation: outputUrl)
         
         var newFile = try AudioFile(location: outputUrl)
-        XCTAssertNil(try newFile.getCoverArt())
+        XCTAssertNil(newFile.coverArt)
         
         let url = sampleCover
         try newFile.setCoverArt(from: url)
@@ -24,12 +24,12 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         try newFile.write(outputLocation: outputUrl2)
         
         let newFile2 = try AudioFile(location: outputUrl2)
-        XCTAssertNotNil(try newFile2.getCoverArt())
+        XCTAssertNotNil(newFile2.coverArt)
     }
     
-    func testGetCoverArtID3() throws {
+    func testcoverArtID3() throws {
         var read = try AudioFile(location: mp3Chaptered)
-        XCTAssertNotNil(try read.getCoverArt())
+        XCTAssertNotNil(read.coverArt)
         
         try read.removeCoverArt()
 
@@ -38,7 +38,7 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         try read.write(outputLocation: outputUrl)
         
         var newFile = try AudioFile(location: outputUrl)
-        XCTAssertNil(try newFile.getCoverArt())
+        XCTAssertNil(newFile.coverArt)
 
         let url = sampleCover
         try newFile.setCoverArt(from: url)
@@ -48,17 +48,17 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         try newFile.write(outputLocation: outputUrl2)
         
         let newFile2 = try AudioFile(location: outputUrl2)
-        XCTAssertNotNil(try newFile2.getCoverArt())
+        XCTAssertNotNil(newFile2.coverArt)
     }
     
     func testOtherMetadata() throws {
         var write = try AudioFile(location: mp4NoMeta)
-        write.contentAdvisory.rating = .us_Movie_Unrated
-        write.contentAdvisory.ratingNotes = "Notation"
-        write.contentRating = .clean
+        write.contentRating.rating = .us_Movie_Unrated
+        write.contentRating.ratingNotes = "Notation"
+        write.rating = .clean
         write.keySignature = .aFlatMajor
-        write.language.mp4Language = .English_United_States
-        write.contentType = .audiobook
+        write.language.mp4Language = .englishUnitedStates
+        write.mediaKind = .audiobook
         write.predefinedGenre.mp4Genre = .appStore
 
         let outputUrl = try tempDirectory().appendingPathComponent("testMp4-Other.m4a")
@@ -66,23 +66,23 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         try write.write(outputLocation: outputUrl)
         
         let output = try AudioFile(location: outputUrl)
-        XCTAssertEqual(output.contentRating, .clean)
-        XCTAssertEqual(output.contentAdvisory.rating, .us_Movie_Unrated)
-        XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
+        XCTAssertEqual(output.rating, .clean)
+        XCTAssertEqual(output.contentRating.rating, .us_Movie_Unrated)
+        XCTAssertEqual(output.contentRating.ratingNotes, "Notation")
         XCTAssertEqual(output.keySignature, .aFlatMajor)
-        XCTAssertEqual(output.language.mp4Language, .English_United_States)
-        XCTAssertEqual(output.contentType, .audiobook)
+        XCTAssertEqual(output.language.mp4Language, .englishUnitedStates)
+        XCTAssertEqual(output.mediaKind, .audiobook)
         XCTAssertEqual(output.predefinedGenre.mp4Genre, .appStore)
     }
 
     func testContentRatingAndAdvisoryID3() throws {
         var write = try AudioFile(location: mp3NoMeta)
-        write.contentAdvisory.rating = .us_Movie_Unrated
-        write.contentAdvisory.ratingNotes = "Notation"
-        write.contentRating = .clean
+        write.contentRating.rating = .us_Movie_Unrated
+        write.contentRating.ratingNotes = "Notation"
+        write.rating = .clean
         write.keySignature = .aFlatMajor
         write.language.id3Languages = [.eng, .und]
-        write.contentType = .audiobook
+        write.mediaKind = .audiobook
         write.predefinedGenre.id3Genre = .Abstract
 
         let outputUrl = try tempDirectory().appendingPathComponent("testMp3-Other.mp3")
@@ -90,12 +90,12 @@ final class SwiftTaggerTests_OtherMetadata: XCTestCase {
         try write.write(outputLocation: outputUrl)
         
         let output = try AudioFile(location: outputUrl)
-        XCTAssertEqual(output.contentRating, .clean)
-        XCTAssertEqual(output.contentAdvisory.rating, .us_Movie_Unrated)
-        XCTAssertEqual(output.contentAdvisory.ratingNotes, "Notation")
+        XCTAssertEqual(output.rating, .clean)
+        XCTAssertEqual(output.contentRating.rating, .us_Movie_Unrated)
+        XCTAssertEqual(output.contentRating.ratingNotes, "Notation")
         XCTAssertEqual(output.keySignature, .aFlatMajor)
         XCTAssertEqual(output.language.id3Languages, [.eng, .und])
-        XCTAssertEqual(output.contentType, .audiobook)
+        XCTAssertEqual(output.mediaKind, .audiobook)
         XCTAssertEqual(output.predefinedGenre.id3Genre, .Abstract)
     }
 

@@ -8,401 +8,276 @@
 import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
-import SwiftMp4MetadataParser
 
 @available(OSX 10.13, *)
-public enum MetadataItem: CaseIterable {
+public enum MetadataItem: String, CaseIterable {
     // MARK: A
     case acknowledgment
     case album
     case albumArtist
     case albumArtistSort
-    case albumID // int 1
+    case albumID
     case albumSort
-    case appleStoreCountryID // int 2
+    case appleStoreCountryID
     case arranger
-    case arrangerKeywords // array 1
-    case artDirector // other 1
+    case arrangerKeywords
+    case artDirector
     case artist
-    case artistID // int 3
-    case artistKeywords // array 2
+    case artistID
+    case artistKeywords
     case artistSort
     case artistWebpage
     case audioFileWebpage
     case audioSourceWebpage
     // MARK: - B-C
-    case bpm // int 4
+    case bpm
     case comment
-    case compilation // bool 1
+    case compilation
     case composer
-    case composerID // int 5
-    case composerKeywords // array 3
+    case composerID
+    case composerKeywords
     case composerSort
     case conductor
-    case conductorID // int 6
-    case contentAdvisory // other 2
-    case contentRating // other 14
+    case conductorID
+    case contentRating
     case copyright
     case copyrightWebpage
-    case coverArt // image 1
+    case coverArt
     // MARK: - D-F
     case description
-    case director // other 3
-    case discNumber // tuple 1
+    case director
+    case discNumber
     case encodedBy
     case encodingSettings
-    case encodingTime // date 2
+    case encodingTime
     case encodingTool
-    case executiveProducer // other 4
-    case fileType // other 5
-    case filmMakerWebpage
+    case executiveProducer
+    case fileType
     // MARK: - G-L
-    case gaplessPlayback // bool 2
+    case gaplessPlayback
     case genre
-    case genreID // int 7
+    case genreID
     case grouping
     case information
-    case initialKey // other 6
-    case involvedPeopleList // other 7
+    case initialKey
+    case involvedPeopleList
     case isrc
     case label
-    case languages // other 8
-    case length // int 8
+    case labelWebpage
+    case languages
+    case length
     case linerNotes
     case longDescription
     case lyricist
     case lyrics
     // MARK: - M-N
-    case mediaType // other 9
+    case mediaType
     case mood
     case movementName
-    case movementCount // int 9
-    case movementNumber // int 10
-    case musicianCreditsList // other 10
+    case movementCount
+    case movementNumber
+    case musicianCreditsList
     case narrator
     case originalAlbum
     case originalArtist
     case originalFilename
     case originalLyricist
-    case originalReleaseTime // date 3
+    case originalReleaseTime
     case owner
     // MARK: - P
     case paymentWebpage
-    case performers // other 11
+    case performers
     case playlistDelay
-    case playlistID // int 11
-    case podcast // bool 3
+    case playlistID
+    case podcast
     case podcastCategory
     case podcastDescription
     case podcastFeed
     case podcastID
-    case podcastKeywords // array 4
-    case predefinedGenre // other 12
+    case podcastKeywords
+    case predefinedGenre
     case producedNotice
-    case producer // other 13
-    case producerKeywords // array 5
+    case producer
+    case producerKeywords
     case publisher
     case publisherWebpage
-    case purchaseDate // date 4
+    case purchaseDate
     // MARK: - R-S
     case radioStation
     case radioStationOwner
     case radioStationWebpage
+    case rating
     case recordCompany
-    case recordingDate // date 5
+    case recordingDate
     case recordingCopyright
-    case releaseDate // date 6
+    case releaseDate
     case requirements
     case sellerID
-    case showWork // bool 4
-    case soundEngineer // other 15
+    case showWork
+    case soundEngineer
     case softwareVersion
-    case soloist // other 16
+    case soloist
     case songDescription
     case songwriter
-    case songwriterKeywords // array 6
+    case songwriterKeywords
     case sourceCredit
     case subtitle
-    case subtitleKeywords // array 7
+    case subtitleKeywords
     // MARK: - T-Z
-    case taggingTime // date 7
+    case taggingTime
     case title
-    case titleKeywords // array 8
+    case titleKeywords
     case titleSort
     case thanks
-    case trackNumber // tuple 2
+    case trackNumber
     case trackSubtitle
-    case tvEpisodeNumber // int 12
+    case tvEpisodeNumber
     case tvEpisodeTitle
     case tvNetwork
-    case tvSeason // int 13
+    case tvSeason
     case tvShow
     case tvShowDescription
     case tvShowSort
     case website
     case work
     case writer
-    case unknown // other 17
-    case year // date 9
+    case unknown
+    case year
     
     // MARK: - ID3 Frame Keys
     var id3Key: FrameKey {
         switch self {
-            case .acknowledgment:
-                return .userDefinedText(description: "Acknowledgment")
-            case .album:
-                return .album
-            case .albumArtist:
-                return .albumArtist
-            case .albumArtistSort:
-                return .albumArtistSort
-            case .albumID:
-                return .userDefinedText(description: "AlbumID")
-            case .albumSort:
-                return .albumSort
-            case .appleStoreCountryID:
-                return .userDefinedText(description: "AppleStoreCountryID")
-            case .arranger:
-                return .arranger
-            case .arrangerKeywords:
-                return .userDefinedText(description: "ArrangerKeywords")
-            case .artDirector:
-                return .involvedPeopleList
-            case .artist:
-                return .artist
-            case .artistID:
-                return .userDefinedText(description: "ArtistID")
-            case .artistKeywords:
-                return .userDefinedText(description: "ArtistKeywords")
-            case .artistSort:
-                return .artistSort
-            case .artistWebpage:
-                return .artistWebpage
-            case .audioFileWebpage:
-                return .audioFileWebpage
-            case .audioSourceWebpage:
-                return .audioSourceWebpage
+            case .acknowledgment: return .userDefinedText(description: "Acknowledgment")
+            case .album: return .album
+            case .albumArtist: return .albumArtist
+            case .albumArtistSort: return .albumArtistSort
+            case .albumID: return .userDefinedText(description: "AlbumID")
+            case .albumSort: return .albumSort
+            case .appleStoreCountryID: return .userDefinedText(description: "AppleStoreCountryID")
+            case .arranger: return .arranger
+            case .arrangerKeywords: return .userDefinedText(description: "ArrangerKeywords")
+            case .artDirector: return .involvedPeopleList
+            case .artist: return .artist
+            case .artistID: return .userDefinedText(description: "ArtistID")
+            case .artistKeywords: return .userDefinedText(description: "ArtistKeywords")
+            case .artistSort: return .artistSort
+            case .artistWebpage: return .artistWebpage
+            case .audioFileWebpage: return .audioFileWebpage
+            case .audioSourceWebpage: return .audioSourceWebpage
             // MARK: - B-C
-            case .bpm:
-                return .bpm
-            case .comment:
-                return .comments(description: "Comment")
-            case .compilation:
-                return .compilation
-            case .composer:
-                return .composer
-            case .composerID:
-                return .userDefinedText(description: "ComposerID")
-            case .composerKeywords:
-                return .userDefinedText(description: "ComposerKeywords")
-            case .composerSort:
-                return .composerSort
-            case .conductor:
-                return .conductor
-            case .conductorID:
-                return .userDefinedText(description: "ConductorID")
-            case .contentAdvisory:
-                return .userDefinedText(description: "ContentRating")
-            case .contentRating:
-                return .userDefinedText(description: "Rating")
-            case .copyright:
-                return .copyright
-            case .copyrightWebpage:
-                return .copyrightWebpage
-            case .coverArt:
-                return .attachedPicture(description: "Front Cover")
+            case .bpm: return .bpm
+            case .comment: return .comments(description: "Comment")
+            case .compilation: return .compilation
+            case .composer: return .composer
+            case .composerID: return .userDefinedText(description: "ComposerID")
+            case .composerKeywords: return .userDefinedText(description: "ComposerKeywords")
+            case .composerSort: return .composerSort
+            case .conductor: return .conductor
+            case .conductorID: return .userDefinedText(description: "ConductorID")
+            case .contentRating: return .userDefinedText(description: "ContentRating")
+            case .rating: return .userDefinedText(description: "Rating")
+            case .copyright: return .copyright
+            case .copyrightWebpage: return .copyrightWebpage
+            case .coverArt: return .attachedPicture(description: "Front Cover")
             // MARK: - D-F
-            case .description:
-                return .comments(description: "Description")
-            case .director:
-                return .involvedPeopleList
-            case .discNumber:
-                return .discNumber
-            case .encodedBy:
-                return .encodedBy
-            case .encodingSettings:
-                return .encodingSettings
-            case .encodingTime:
-                return .encodingTime
-            case .encodingTool:
-                return .userDefinedText(description: "EncodingTool")
-            case .executiveProducer:
-                return .involvedPeopleList
-            case .fileType:
-                return .fileType
-            case .filmMakerWebpage:
-                return .userDefinedWebpage(description: "FilmMakerWebpage")
+            case .description: return .comments(description: "Description")
+            case .director: return .involvedPeopleList
+            case .discNumber: return .discNumber
+            case .encodedBy: return .encodedBy
+            case .encodingSettings: return .encodingSettings
+            case .encodingTime: return .encodingTime
+            case .encodingTool: return .userDefinedText(description: "EncodingTool")
+            case .executiveProducer: return .involvedPeopleList
+            case .fileType: return .fileType
+            case .labelWebpage: return .userDefinedWebpage(description: "FilmMakerWebpage")
             // MARK: - G-L
-            case .gaplessPlayback:
-                return .playlistDelay
-            case .genre:
-                return .genre
-            case .genreID:
-                return .userDefinedText(description: "GenreID")
-            case .grouping:
-                return .grouping
-            case .information:
-                return .userDefinedText(description: "Information")
-            case .initialKey:
-                return .initialKey
-            case .involvedPeopleList:
-                return .involvedPeopleList
-            case .isrc:
-                return .isrc
-            case .label:
-                return .userDefinedText(description: "Label")
-            case .languages:
-                return .languages
-            case .length:
-                return .length
-            case .linerNotes:
-                return .comments(description: "LinerNotes")
-            case .longDescription:
-                return .comments(description: "LongDescription")
-            case .lyricist:
-                return .lyricist
-            case .lyrics:
-                return .unsynchronizedLyrics(description: "Lyrics")
+            case .gaplessPlayback: return .playlistDelay
+            case .genre: return .genre
+            case .genreID: return .userDefinedText(description: "GenreID")
+            case .grouping: return .grouping
+            case .information: return .userDefinedText(description: "Information")
+            case .initialKey: return .initialKey
+            case .involvedPeopleList: return .involvedPeopleList
+            case .isrc: return .isrc
+            case .label: return .userDefinedText(description: "Label")
+            case .languages: return .languages
+            case .length: return .length
+            case .linerNotes: return .comments(description: "LinerNotes")
+            case .longDescription: return .comments(description: "LongDescription")
+            case .lyricist: return .lyricist
+            case .lyrics: return .unsynchronizedLyrics(description: "Lyrics")
             // MARK: - M-N
-            case .mediaType:
-                return .userDefinedText(description: "ContentType")
-            case .mood:
-                return .mood
-            case .movementName:
-                return .movementName
-            case .movementCount:
-                return .movementCount
-            case .movementNumber:
-                return .movementNumber
-            case .musicianCreditsList:
-                return .musicianCreditsList
-            case .narrator:
-                return .userDefinedText(description: "Narrator")
-            case .originalAlbum:
-                return .originalAlbum
-            case .originalArtist:
-                return .originalArtist
-            case .originalFilename:
-                return .originalFilename
-            case .originalLyricist:
-                return .originalLyricist
-            case .originalReleaseTime:
-                return .originalReleaseTime
-            case .owner:
-                return .fileOwner
+            case .mediaType: return .userDefinedText(description: "ContentType")
+            case .mood: return .mood
+            case .movementName: return .movementName
+            case .movementCount: return .movementCount
+            case .movementNumber: return .movementNumber
+            case .musicianCreditsList: return .musicianCreditsList
+            case .narrator: return .userDefinedText(description: "Narrator")
+            case .originalAlbum: return .originalAlbum
+            case .originalArtist: return .originalArtist
+            case .originalFilename: return .originalFilename
+            case .originalLyricist: return .originalLyricist
+            case .originalReleaseTime: return .originalReleaseTime
+            case .owner: return .fileOwner
             // MARK: - P
-            case .paymentWebpage:
-                return .paymentWebpage
-            case .performers:
-                return .musicianCreditsList
-            case .playlistDelay:
-                return .playlistDelay
-            case .playlistID:
-                return .userDefinedWebpage(description: "PlaylistID")
-            case .podcast:
-                return .userDefinedText(description: "Podcast")
-            case .podcastCategory:
-                return .podcastCategory
-            case .podcastDescription:
-                return .podcastDescription
-            case .podcastFeed:
-                return .podcastFeedLink
-            case .podcastID:
-                return .podcastID
-            case .podcastKeywords:
-                return .podcastKeywords
-            case .predefinedGenre:
-                return .userDefinedText(description: "PredefinedGenre")
-            case .producedNotice:
-                return .producedNotice
-            case .producer:
-                return .involvedPeopleList
-            case .producerKeywords:
-                return .userDefinedText(description: "ProducerKeywords")
-            case .publisher:
-                return .publisher
-            case .publisherWebpage:
-                return .publisherWebpage
-            case .purchaseDate:
-                return .userDefinedText(description: "PurchaseDate")
+            case .paymentWebpage: return .paymentWebpage
+            case .performers: return .musicianCreditsList
+            case .playlistDelay: return .playlistDelay
+            case .playlistID: return .userDefinedWebpage(description: "PlaylistID")
+            case .podcast: return .userDefinedText(description: "Podcast")
+            case .podcastCategory: return .podcastCategory
+            case .podcastDescription: return .podcastDescription
+            case .podcastFeed: return .podcastFeedLink
+            case .podcastID: return .podcastID
+            case .podcastKeywords: return .podcastKeywords
+            case .predefinedGenre: return .userDefinedText(description: "PredefinedGenre")
+            case .producedNotice: return .producedNotice
+            case .producer: return .involvedPeopleList
+            case .producerKeywords: return .userDefinedText(description: "ProducerKeywords")
+            case .publisher: return .publisher
+            case .publisherWebpage: return .publisherWebpage
+            case .purchaseDate: return .userDefinedText(description: "PurchaseDate")
             // MARK: - R-S
-            case .radioStation:
-                return .radioStation
-            case .radioStationOwner:
-                return .radioStationOwner
-            case .radioStationWebpage:
-                return .radioStationWebpage
-            case .recordCompany:
-                return .userDefinedText(description: "RecordCompany")
-            case .recordingDate:
-                return .recordingDate
-            case .recordingCopyright:
-                return .userDefinedText(description: "RecordingCopyright")
-            case .releaseDate:
-                return .releaseTime
-            case .requirements:
-                return .userDefinedText(description: "Requirements")
-            case .sellerID:
-                return .userDefinedText(description: "SellerID")
-            case .showWork:
-                return .userDefinedText(description: "ShowWork")
-            case .soundEngineer:
-                return .involvedPeopleList
-            case .softwareVersion:
-                return .userDefinedText(description: "SoftwareVersion")
-            case .soloist:
-                return .musicianCreditsList
-            case .songDescription:
-                return .comments(description: "SongDescription")
-            case .songwriter:
-                return .userDefinedText(description: "Songwriter")
-            case .songwriterKeywords:
-                return .userDefinedText(description: "SongwriterKeywords")
-            case .sourceCredit:
-                return .userDefinedText(description: "SourceCredit")
-            case .subtitle:
-                return .subtitle
-            case .subtitleKeywords:
-                return .userDefinedText(description: "SubtitleKeywords")
+            case .radioStation: return .radioStation
+            case .radioStationOwner: return .radioStationOwner
+            case .radioStationWebpage: return .radioStationWebpage
+            case .recordCompany: return .userDefinedText(description: "RecordCompany")
+            case .recordingDate: return .recordingDate
+            case .recordingCopyright: return .userDefinedText(description: "RecordingCopyright")
+            case .releaseDate: return .releaseTime
+            case .requirements: return .userDefinedText(description: "Requirements")
+            case .sellerID: return .userDefinedText(description: "SellerID")
+            case .showWork: return .userDefinedText(description: "ShowWork")
+            case .soundEngineer: return .involvedPeopleList
+            case .softwareVersion: return .userDefinedText(description: "SoftwareVersion")
+            case .soloist: return .musicianCreditsList
+            case .songDescription: return .comments(description: "SongDescription")
+            case .songwriter: return .userDefinedText(description: "Songwriter")
+            case .songwriterKeywords: return .userDefinedText(description: "SongwriterKeywords")
+            case .sourceCredit: return .userDefinedText(description: "SourceCredit")
+            case .subtitle: return .subtitle
+            case .subtitleKeywords: return .userDefinedText(description: "SubtitleKeywords")
             // MARK: - T-Z
-            case .taggingTime:
-                return .taggingTime
-            case .title:
-                return .title
-            case .titleKeywords:
-                return .userDefinedText(description: "TitleKeywords")
-            case .titleSort:
-                return .titleSort
-            case .thanks:
-                return .userDefinedText(description: "Thanks")
-            case .trackNumber:
-                return .trackNumber
-            case .trackSubtitle:
-                return .setSubtitle
-            case .tvEpisodeNumber:
-                return .userDefinedWebpage(description: "TVEpisodeNumber")
-            case .tvEpisodeTitle:
-                return .userDefinedText(description: "TVEpisodeTitle")
-            case .tvNetwork:
-                return .userDefinedText(description: "TVNetwork")
-            case .tvSeason:
-                return .userDefinedText(description: "TVSeason")
-            case .tvShow:
-                return .userDefinedText(description: "TVShow")
-            case .tvShowDescription:
-                return .comments(description: "TVShowDescription")
-            case .tvShowSort:
-                return .userDefinedText(description: "TVShowSort")
-            case .website:
-                return .userDefinedWebpage(description: "Website")
-            case .work:
-                return .contentGroup
-            case .writer:
-                return .userDefinedText(description: "Writer")
-            case .unknown:
-                return .userDefinedText(description: "Unknown")
-            case .year:
-                return .year
+            case .taggingTime: return .taggingTime
+            case .title: return .title
+            case .titleKeywords: return .userDefinedText(description: "TitleKeywords")
+            case .titleSort: return .titleSort
+            case .thanks: return .userDefinedText(description: "Thanks")
+            case .trackNumber: return .trackNumber
+            case .trackSubtitle: return .setSubtitle
+            case .tvEpisodeNumber: return .userDefinedWebpage(description: "TVEpisodeNumber")
+            case .tvEpisodeTitle: return .userDefinedText(description: "TVEpisodeTitle")
+            case .tvNetwork: return .userDefinedText(description: "TVNetwork")
+            case .tvSeason: return .userDefinedText(description: "TVSeason")
+            case .tvShow: return .userDefinedText(description: "TVShow")
+            case .tvShowDescription: return .comments(description: "TVShowDescription")
+            case .tvShowSort: return .userDefinedText(description: "TVShowSort")
+            case .website: return .userDefinedWebpage(description: "Website")
+            case .work: return .contentGroup
+            case .writer: return .userDefinedText(description: "Writer")
+            case .unknown: return .userDefinedText(description: "Unknown")
+            case .year: return .year
         }
     }
     
@@ -425,279 +300,282 @@ public enum MetadataItem: CaseIterable {
     }
     
     // MARK: - MP4 Atom Identifiers
-    var mp4Key: AtomIdentifier {
+    var mp4StringKey: StringMetadataIdentifier? {
         switch self {
-            case .acknowledgment:
-                return .acknowledgment
-            case .album:
-                return .album
-            case .albumArtist:
-                return .albumArtist
-            case .albumArtistSort:
-                return .albumArtistSort
-            case .albumID:
-                return .albumID
-            case .albumSort:
-                return .albumSort
-            case .appleStoreCountryID:
-                return .appleStoreCountryID
-            case .arranger:
-                return .arranger
-            case .arrangerKeywords:
-                return .arrangerKeywords
-            case .artDirector:
-                return .artDirector
-            case .artist:
-                return .artist
-            case .artistID:
-                return .artistID
-            case .artistKeywords:
-                return .artistKeywords
-            case .artistSort:
-                return .artistSort
-            case .artistWebpage:
-                return .artistUrl
-            case .audioFileWebpage:
-                return .unknown
-            case .audioSourceWebpage:
-                return .unknown
+            case .acknowledgment: return .acknowledgment
+            case .album: return .album
+            case .albumArtist: return .albumArtist
+            case .albumArtistSort: return .albumArtistSort
+            case .albumSort: return .albumSort
+            case .arranger: return .arranger
+            case .arrangerKeywords: return .arrangerKeywords
+            case .artDirector: return .artDirector
+            case .artist: return .artist
+            case .artistKeywords: return .artistKeywords
+            case .artistSort: return .artistSort
+            case .artistWebpage: return .artistUrl
             // MARK: - B-C
-            case .bpm:
-                return .bpm
-            case .comment:
-                return .comment
-            case .compilation:
-                return .compilation
-            case .composer:
-                return .composer
-            case .composerID:
-                return .composerID
-            case .composerKeywords:
-                return .composerKeywords
-            case .composerSort:
-                return .composerSort
-            case .conductor:
-                return .conductor
-            case .conductorID:
-                return .conductorID
-            case .contentAdvisory:
-                return .unknown
-            case .contentRating:
-                return .rating
-            case .copyright:
-                return .copyright
-            case .copyrightWebpage:
-                return .unknown
-            case .coverArt:
-                return .coverArt
+            case .comment: return .comment
+            case .composer: return .composer
+            case .composerKeywords: return .composerKeywords
+            case .composerSort: return .composerSort
+            case .conductor: return .conductor
+            case .copyright: return .copyright
             // MARK: - D-F
-            case .description:
-                return .description
-            case .director:
-                return .director
-            case .discNumber:
-                return .discNumber
-            case .encodedBy:
-                return .encodedBy
-            case .encodingSettings:
-                return .unknown
-            case .encodingTime:
-                return .unknown
-            case .encodingTool:
-                return .encodingTool
-            case .executiveProducer:
-                return .executiveProducer
-            case .fileType:
-                return .format
-            case .filmMakerWebpage:
-                return .filmMakerUrl
+            case .description: return .description
+            case .director: return .director
+            case .encodedBy: return .encodedBy
+            case .encodingTool: return .encodingTool
+            case .executiveProducer: return .executiveProducer
+            case .fileType: return .format
             // MARK: - G-L
-            case .gaplessPlayback:
-                return .gaplessPlayback
-            case .genre:
-                return .customGenre
-            case .genreID:
-                return .genreID
-            case .grouping:
-                return .grouping
-            case .information:
-                return .information
-            case .initialKey:
-                return .unknown
-            case .involvedPeopleList:
-                return .unknown
-            case .isrc:
-                return .isrc
-            case .label:
-                return .label
-            case .languages:
-                return .unknown
-            case .length:
-                return .unknown
-            case .linerNotes:
-                return .linerNotes
-            case .longDescription:
-                return .longDescription
-            case .lyricist:
-                return .lyricist
-            case .lyrics:
-                return .lyrics
+            case .genre: return .customGenre
+            case .grouping: return .grouping
+            case .information: return .information
+            case .isrc: return .isrc
+            case .label: return .label
+            case .linerNotes: return .linerNotes
+            case .longDescription: return .longDescription
+            case .lyricist: return .lyricist
+            case .lyrics: return .lyrics
             // MARK: - M-N
-            case .mediaType:
-                return .mediaType
-            case .mood:
-                return .unknown
-            case .movementName:
-                return .movementName
-            case .movementCount:
-                return .movementCount
-            case .movementNumber:
-                return .movementNumber
-            case .musicianCreditsList:
-                return .unknown
-            case .narrator:
-                return .narrator
-            case .originalAlbum:
-                return .unknown
-            case .originalArtist:
-                return .originalArtist
-            case .originalFilename:
-                return .unknown
-            case .originalLyricist:
-                return .unknown
-            case .originalReleaseTime:
-                return .unknown
-            case .owner:
-                return .owner
+            case .movementName: return .movementName
+            case .narrator: return .narrator
+            case .originalArtist: return .originalArtist
+            case .owner: return .owner
             // MARK: - P
-            case .paymentWebpage:
-                return .unknown
-            case .performers:
-                return .performers
-            case .playlistDelay:
-                return .gaplessPlayback
-            case .playlistID:
-                return .playlistID
-            case .podcast:
-                return .podcast
-            case .podcastCategory:
-                return .category
-            case .podcastDescription:
-                return .unknown
-            case .podcastFeed:
-                return .podcastUrl
-            case .podcastID:
-                return .podcastID
-            case .podcastKeywords:
-                return .keywords
-            case .predefinedGenre:
-                return .predefinedGenre
-            case .producedNotice:
-                return .unknown
-            case .producer:
-                return .producer
-            case .producerKeywords:
-                return .producerKeywords
-            case .publisher:
-                return .publisher
-            case .publisherWebpage:
-                return .publisherUrl
-            case .purchaseDate:
-                return .purchaseDate
+            case .performers: return .performers
+            case .podcastCategory: return .category
+            case .podcastFeed: return .podcastUrl
+            case .podcastID: return .podcastID
+            case .podcastKeywords: return .keywords
+            case .predefinedGenre: return .predefinedGenre
+            case .producer: return .producer
+            case .producerKeywords: return .producerKeywords
+            case .publisher: return .publisher
+            case .publisherWebpage: return .recordCompanyUrl
+            case .purchaseDate: return .purchaseDate
             // MARK: - R-S
-            case .radioStation:
-                return .unknown
-            case .radioStationOwner:
-                return .unknown
-            case .radioStationWebpage:
-                return .unknown
-            case .recordCompany:
-                return .recordCompany
-            case .recordingDate:
-                return .recordingDate
-            case .recordingCopyright:
-                return .recordingCopyright
-            case .releaseDate:
-                return .releaseDate
-            case .requirements:
-                return .requirements
-            case .sellerID:
-                return .sellerID
-            case .showWork:
-                return .showWorkAndMovement
-            case .soundEngineer:
-                return .soundEngineer
-            case .softwareVersion:
-                return .softwareVersion
-            case .soloist:
-                return .soloist
-            case .songDescription:
-                return .songDescription
-            case .songwriter:
-                return .songwriter
-            case .songwriterKeywords:
-                return .songwriterKeywords
-            case .sourceCredit:
-                return .sourceCredit
-            case .subtitle:
-                return .subtitle
-            case .subtitleKeywords:
-                return .subtitleKeywords
+            case .recordCompany: return .recordCompany
+            case .recordingDate: return .recordingDate
+            case .recordingCopyright: return .recordingCopyright
+            case .releaseDate: return .releaseDate
+            case .requirements: return .requirements
+            case .sellerID: return .sellerID
+            case .soundEngineer: return .soundEngineer
+            case .softwareVersion: return .softwareVersion
+            case .soloist: return .soloist
+            case .songDescription: return .songDescription
+            case .songwriter: return .songwriter
+            case .songwriterKeywords: return .songwriterKeywords
+            case .sourceCredit: return .sourceCredit
+            case .subtitle: return .subtitle
+            case .subtitleKeywords: return .subtitleKeywords
             // MARK: - T-Z
-            case .taggingTime:
-                return .unknown
-            case .title:
-                return .title
-            case .titleKeywords:
-                return .titleKeywords
-            case .titleSort:
-                return .titleSort
-            case .thanks:
-                return .thanks
-            case .trackNumber:
-                return .trackNumber
-            case .trackSubtitle:
-                return .trackSubtitle
-            case .tvEpisodeNumber:
-                return .tvEpisodeNumber
-            case .tvEpisodeTitle:
-                return .tvEpisodeTitle
-            case .tvNetwork:
-                return .tvNetwork
-            case .tvSeason:
-                return .tvSeason
-            case .tvShow:
-                return .tvShow
-            case .tvShowDescription:
-                return .tvShowDescription
-            case .tvShowSort:
-                return .tvShowSort
-            case .website:
-                return .website
-            case .work:
-                return .workName
-            case .writer:
-                return .writer
-            case .unknown:
-                return .unknown
-            case .year:
-                return .recordingYear
+            case .title: return .title
+            case .titleKeywords: return .titleKeywords
+            case .titleSort: return .titleSort
+            case .thanks: return .thanks
+            case .trackSubtitle: return .trackSubtitle
+            case .tvEpisodeTitle: return .tvEpisodeTitle
+            case .tvNetwork: return .tvNetwork
+            case .tvShow: return .tvShow
+            case .tvShowDescription: return .tvShowDescription
+            case .tvShowSort: return .tvShowSort
+            case .website: return .website
+            case .work: return .workName
+            case .writer: return .writer
+            default: return nil
+        }
+    }
+    
+    var mp4IntegerKey: IntegerMetadataIdentifier? {
+        switch self {
+            case .albumID: return .albumID
+            case .appleStoreCountryID: return .appleStoreCountryID
+            case .artistID: return .artistID
+            case .bpm: return .bpm
+            case .compilation: return .compilation
+            case .composerID: return .composerID
+            case .conductorID: return .conductorID
+            case .gaplessPlayback: return .gaplessPlayback
+            case .genreID: return .genreID
+            case .mediaType: return .mediaKind
+            case .movementCount: return .movementCount
+            case .movementNumber: return .movementNumber
+            case .playlistID: return .playlistID
+            case .podcast: return .podcast
+            case .rating: return .rating
+            case .showWork: return .showWorkAndMovement
+            case .tvEpisodeNumber: return .tvEpisodeNumber
+            case .tvSeason: return .tvSeason
+            case .year: return .year
+            default: return nil
+        }
+    }
+    
+    var mp4KeyOther: String? {
+        switch self {
+            case .discNumber: return "disk"
+            case .trackNumber: return "trkn"
+            case .coverArt: return "covr"
+            case .audioFileWebpage, .audioSourceWebpage, .copyrightWebpage, .encodingSettings, .initialKey, .mood, .originalAlbum, .originalFilename, .originalLyricist, .originalReleaseTime, .paymentWebpage, .producedNotice, .radioStation, .radioStationOwner, .radioStationWebpage, .taggingTime, .unknown: return "----"
+            default: return nil
         }
     }
     
     // MARK: Init From AtomID
-    private static let mp4KeyToMetadataMapping: [AtomIdentifier : MetadataItem] = {
-        var mapping = [AtomIdentifier : MetadataItem]()
-        for item in MetadataItem.allCases {
-            let mp4Key = item.mp4Key
-            mapping[mp4Key] = item
+    private static let mp4StringIDToMetadataMapping: [StringMetadataIdentifier : MetadataItem] = {
+        var mapping = [StringMetadataIdentifier : MetadataItem]()
+        for item in [
+            MetadataItem.acknowledgment,
+            MetadataItem.album,
+            MetadataItem.albumArtist,
+            MetadataItem.albumArtistSort,
+            MetadataItem.albumSort,
+            MetadataItem.arranger,
+            MetadataItem.arrangerKeywords,
+            MetadataItem.artDirector,
+            MetadataItem.artist,
+            MetadataItem.artistKeywords,
+            MetadataItem.artistSort,
+            MetadataItem.artistWebpage,
+            MetadataItem.comment,
+            MetadataItem.composer,
+            MetadataItem.composerKeywords,
+            MetadataItem.composerSort,
+            MetadataItem.conductor,
+            MetadataItem.copyright,
+            MetadataItem.description,
+            MetadataItem.director,
+            MetadataItem.encodedBy,
+            MetadataItem.encodingTool,
+            MetadataItem.executiveProducer,
+            MetadataItem.fileType,
+            MetadataItem.genre,
+            MetadataItem.grouping,
+            MetadataItem.information,
+            MetadataItem.isrc,
+            MetadataItem.label,
+            MetadataItem.linerNotes,
+            MetadataItem.longDescription,
+            MetadataItem.lyricist,
+            MetadataItem.lyrics,
+            MetadataItem.movementName,
+            MetadataItem.narrator,
+            MetadataItem.originalArtist,
+            MetadataItem.owner,
+            MetadataItem.performers,
+            MetadataItem.podcastCategory,
+            MetadataItem.podcastFeed,
+            MetadataItem.podcastID,
+            MetadataItem.podcastKeywords,
+            MetadataItem.predefinedGenre,
+            MetadataItem.publisher,
+            MetadataItem.publisherWebpage,
+            MetadataItem.purchaseDate,
+            MetadataItem.recordCompany,
+            MetadataItem.recordingDate,
+            MetadataItem.recordingCopyright,
+            MetadataItem.releaseDate,
+            MetadataItem.requirements,
+            MetadataItem.sellerID,
+            MetadataItem.soundEngineer,
+            MetadataItem.softwareVersion,
+            MetadataItem.soloist,
+            MetadataItem.songDescription,
+            MetadataItem.songwriter,
+            MetadataItem.songwriterKeywords,
+            MetadataItem.sourceCredit,
+            MetadataItem.subtitle,
+            MetadataItem.subtitleKeywords,
+            MetadataItem.title,
+            MetadataItem.titleKeywords,
+            MetadataItem.titleSort,
+            MetadataItem.thanks,
+            MetadataItem.trackSubtitle,
+            MetadataItem.tvEpisodeTitle,
+            MetadataItem.tvNetwork,
+            MetadataItem.tvShow,
+            MetadataItem.tvShowDescription,
+            MetadataItem.tvShowSort,
+            MetadataItem.website,
+            MetadataItem.work,
+            MetadataItem.writer] {
+                if let mp4Key = item.mp4StringKey {
+                    mapping[mp4Key] = item
+                }
         }
         return mapping
     }()
-    
-    init?(from mp4Key: AtomIdentifier) {
-        if let metadata = MetadataItem.mp4KeyToMetadataMapping[mp4Key] {
-            self = metadata
+
+    // MARK: Init From AtomID
+    private static let mp4IntIDToMetadataMapping: [IntegerMetadataIdentifier : MetadataItem] = {
+        var mapping = [IntegerMetadataIdentifier : MetadataItem]()
+        for item in [
+            MetadataItem.albumID,
+            MetadataItem.appleStoreCountryID,
+            MetadataItem.artistID,
+            MetadataItem.bpm,
+            MetadataItem.compilation,
+            MetadataItem.composerID,
+            MetadataItem.conductorID,
+            MetadataItem.gaplessPlayback,
+            MetadataItem.genreID,
+            MetadataItem.mediaType,
+            MetadataItem.movementCount,
+            MetadataItem.movementNumber,
+            MetadataItem.playlistID,
+            MetadataItem.podcast,
+            MetadataItem.rating,
+            MetadataItem.showWork,
+            MetadataItem.tvEpisodeNumber,
+            MetadataItem.tvSeason,
+            MetadataItem.year] {
+                if let mp4Key = item.mp4IntegerKey {
+                    mapping[mp4Key] = item
+                }
+        }
+        return mapping
+    }()
+
+    private static let mp4OtherToMetadataMapping: [String: MetadataItem] = {
+        var mapping = [String: MetadataItem]()
+        for item in [
+            MetadataItem.audioFileWebpage,
+            MetadataItem.audioSourceWebpage,
+            MetadataItem.coverArt,
+            MetadataItem.discNumber,
+            MetadataItem.copyrightWebpage,
+            MetadataItem.encodingSettings,
+            MetadataItem.initialKey,
+            MetadataItem.mood,
+            MetadataItem.originalAlbum,
+            MetadataItem.originalFilename,
+            MetadataItem.originalLyricist,
+            MetadataItem.originalReleaseTime,
+            MetadataItem.paymentWebpage,
+            MetadataItem.producedNotice,
+            MetadataItem.radioStation,
+            MetadataItem.radioStationOwner,
+            MetadataItem.taggingTime,
+            MetadataItem.trackNumber,
+            MetadataItem.unknown] {
+                if let mp4Key = item.mp4KeyOther {
+                    mapping[mp4Key] = item
+                }
+        }
+        return mapping
+    }()
+
+    init?(from mp4ID: String) {
+        if let stringID = StringMetadataIdentifier(rawValue: mp4ID), MetadataItem.mp4StringIDToMetadataMapping[stringID] != nil {
+            self = MetadataItem.mp4StringIDToMetadataMapping[stringID]!
+        } else if let intID = IntegerMetadataIdentifier(rawValue: mp4ID),
+            MetadataItem.mp4IntIDToMetadataMapping[intID] != nil {
+            self = MetadataItem.mp4IntIDToMetadataMapping[intID]!
+        } else if let metadata = MetadataItem.mp4OtherToMetadataMapping[mp4ID] {
+                self = metadata
         } else {
             return nil
         }

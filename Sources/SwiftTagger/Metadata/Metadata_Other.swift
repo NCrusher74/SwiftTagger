@@ -9,6 +9,7 @@ import Foundation
 import Cocoa
 import SwiftTaggerID3
 import SwiftTaggerMP4
+import SwiftLanguageAndLocaleCodes
 
 @available(OSX 10.13, *)
 extension AudioFile {
@@ -18,10 +19,10 @@ extension AudioFile {
     /// Because of the way the `attachedPicture` frame works in ID3, it's possible that this function will not return the correct image. This function checks for attached image frames with an `imageType` of `FrontCover`, and if that returns nil, it will check for an attached image frame with an image type of `Other` next, and then other image types.
     ///
     /// Because not everyone uses `imageType` as intended, this could mean the return is not a cover image, but the contents of another attached picture frame.
-    public func getCoverArt() throws -> NSImage? {
+    public var coverArt: NSImage? {
         switch library {
             case .mp4:
-                return try mp4Tag.getCoverArt()
+                return mp4Tag.coverArt
             case .id3:
                 if let image = id3Tag.coverArt {
                     return image
@@ -37,7 +38,7 @@ extension AudioFile {
     public mutating func setCoverArt(from url: URL) throws {
         switch library {
             case .mp4:
-                try mp4Tag.setCoverArt(url: url)
+                try mp4Tag.setCoverArt(location: url)
             case .id3:
                 try id3Tag.set(imageType: .FrontCover,
                                imageDescription: "Front Cover",
@@ -69,14 +70,14 @@ extension AudioFile {
     /// Accesses the MP4 `rtng` atom.
     ///
     /// There is no equivalent ID3 frame. Instead, this will access a user defined text (`TXXX`) frame with the descriptor `Rating`.
-    public var contentRating: ContentRating? {
+    public var rating: Rating? {
         get {
             switch library {
                 case .mp4:
                     return mp4Tag.rating
                 case .id3:
                     if let string = id3Tag["Rating"] {
-                        if let rating = ContentRating(stringValue: string) {
+                        if let rating = Rating(stringValue: string) {
                             return rating
                         } else {
                             return nil
@@ -109,55 +110,50 @@ extension AudioFile {
     /// Accesses the MP4 freeform atom `iTunEXTC`.
     ///
     /// There is no equivalent ID3 frame. Instead, this will access a user defined text (`TXXX`) frame with the descriptor `ContentRating`.
-    public var contentAdvisory: (rating: ContentAdvisory?, ratingNotes: String?) {
+    public var contentRating: (rating: ContentRating, ratingNotes: String?) {
         get {
             switch library {
                 case .mp4:
-                    if let ratingString = mp4Tag.contentAdvisory.rating {
-                        if let note = mp4Tag.contentAdvisory.ratingNotes {
-                            return (ratingString, note)
-                        } else {
-                            return (ratingString, nil)
-                        }
+                    if mp4Tag.contentRating != (.none, nil) {
+                        return (mp4Tag.contentRating.contentRating, mp4Tag.contentRating.ratingNotes)
                     } else {
-                        return (nil, nil)
+                        return (.none, nil)
                 }
                 case .id3:
                     if let string = id3Tag["ContentRating"] {
                         let components: [String] = string.components(separatedBy: "|")
                         if components.count == 3 {
-                            if let rating = ContentAdvisory(rawValue: string) {
+                            if let rating = ContentRating(rawValue: string) {
                                 return (rating, nil)
                             } else {
-                                return (nil, nil)
+                                return (.none, nil)
                             }
                         } else {
                             let ratingComponentsString = components[0 ..< 3].joined(separator: "|") + "|"
                             let note = components.last
-                            if let rating = ContentAdvisory(rawValue: ratingComponentsString) {
+                            if let rating = ContentRating(rawValue: ratingComponentsString) {
                                 return (rating, note)
                             } else {
-                                return (nil, nil)
+                                return (.none, nil)
                             }
                         }
                     } else {
-                        return (nil, nil)
+                        return (.none, nil)
                 }
             }
         }
         set {
-            if newValue != (nil, nil) && newValue.rating != ContentAdvisory.none {
+            if newValue != (.none, nil) {
                 switch library {
                     case .mp4:
-                        mp4Tag.contentAdvisory = newValue
+                        mp4Tag.contentRating = (newValue.rating, newValue.ratingNotes)
                     case .id3:
-                        if let rating = newValue.rating {
-                            let string = rating.rawValue
-                            if let note = newValue.ratingNotes {
-                                id3Tag["ContentRating"] = string + note
-                            } else {
-                                id3Tag["ContentRating"] = string
-                            }
+                        let rating = newValue.rating
+                        let string = rating.rawValue
+                        if let note = newValue.ratingNotes {
+                            id3Tag["ContentRating"] = string + note
+                        } else {
+                            id3Tag["ContentRating"] = string
                     }
                 }
             }
@@ -208,15 +204,11 @@ extension AudioFile {
     /// Accesses the ID3 `TLAN` frame, or the MP4 `ELNG` (extended language) atom
     ///
     /// ID3 (mp3 files) use `ISO-639-2` codes. MP4's `extendedLanguage` atom uses `ICULocaleCode`
-    public var language: (id3Languages: [ISO6392Codes]?, mp4Language: LocaleCode?) {
+    public var language: (id3Languages: [ISO6392Code]?, mp4Language: ICULocaleCode?) {
         get {
             switch library {
                 case .mp4:
-                    if let language = mp4Tag.language {
-                        return (nil, language)
-                    } else {
-                        return (nil, nil)
-                }
+                    return (nil, mp4Tag.language)
                 case .id3:
                     if let languages = id3Tag.languages {
                         return (languages, nil)
@@ -231,7 +223,7 @@ extension AudioFile {
                     if let language = newValue.mp4Language {
                         mp4Tag.language = language
                     } else {
-                        mp4Tag.language = nil
+                        mp4Tag.language = .unspecified
                 }
                 case .id3:
                         if let languages = newValue.id3Languages {
@@ -247,11 +239,11 @@ extension AudioFile {
     /// Accesses the MP4 `stik` atom.
     ///
     /// There is no equivalent for ID3. Instead, this will get and set a User-defined text (`TXXX`) frame with the descriptor `ContentType`
-    public var contentType: Stik? {
+    public var mediaKind: Stik? {
         get {
             switch library {
                 case .mp4:
-                    return mp4Tag.mediaContent
+                    return mp4Tag.mediaKind
                 case .id3:
                     if let string = id3Tag["ContentType"] {
                         if let stik = Stik(stringValue: string) {
@@ -268,7 +260,7 @@ extension AudioFile {
             if let new = newValue {
                 switch library {
                     case .mp4:
-                        mp4Tag.mediaContent = new
+                        mp4Tag.mediaKind = new
                     case .id3:
                         let string = new.stringValue
                         id3Tag["ContentType"] = string
@@ -276,7 +268,7 @@ extension AudioFile {
             } else {
                 switch library {
                     case .mp4:
-                        mp4Tag.mediaContent = nil
+                        mp4Tag.mediaKind = nil
                     case .id3:
                         id3Tag["ContentType"] = nil
                 }

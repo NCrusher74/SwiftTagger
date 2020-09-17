@@ -59,7 +59,7 @@ func localDirectory(fileName: String, fileExtension: String) throws -> URL {
 @available(OSX 10.12, *)
 func tempDirectory() throws -> URL {
     let tempDirectory = FileManager.default.temporaryDirectory
-        .appendingPathComponent("SwiftParserTemp",
+        .appendingPathComponent("SwiftTaggerTemp",
                                 isDirectory: true)
     try FileManager.default.createDirectory(
         at: tempDirectory,

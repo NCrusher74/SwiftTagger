@@ -25,6 +25,7 @@ enum MetadataID_Int: CaseIterable {
     case playlistID
     case tvEpisodeNumber
     case tvSeason
+    case year
     
     var metadataItem: MetadataItem {
         switch self {
@@ -42,6 +43,7 @@ enum MetadataID_Int: CaseIterable {
             case .playlistID: return .playlistID
             case .tvEpisodeNumber: return .tvEpisodeNumber
             case .tvSeason: return .tvSeason
+            case .year: return .year
         }
     }
 }
@@ -148,7 +150,7 @@ extension AudioFile {
     /// There is no equivalent frame in ID3, so this will set the `genreCategory` parameter of the ID3 `genre` frame.
     ///
     /// Setting this option will store a integer value representing the selected genre. Some apps may not recognize or display this format correctly.
-    public var genreID: (mp4Genre: Genres?, id3Genre: GenreType?) {
+    public var genreID: (mp4Genre: Genre?, id3Genre: GenreType?) {
         get {
             switch library {
                 case .mp4:
@@ -206,6 +208,7 @@ extension AudioFile {
             }
         }
         set {
+            _ = newValue
             /// this should prevent the value being changed
             set(.length, intValue: self.length)
         }
@@ -313,4 +316,17 @@ extension AudioFile {
         }
     }
 
+    /// Accesses the MP4 atom `yrrc` or the id3 frame `TYER`
+    public var year: Int? {
+        get {
+            if let value = self.get(.year) {
+                return value
+            } else {
+                return nil
+            }
+        }
+        set {
+            set(.year, intValue: newValue)
+        }
+    }
 }

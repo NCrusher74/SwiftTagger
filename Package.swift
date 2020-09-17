@@ -14,7 +14,7 @@ let package = Package(
         .package(
             name: "SwiftTaggerMP4",
             url: "https://github.com/NCrusher74/SwiftTaggerMP4",
-            from: "0.1.0"),
+            from: "0.1.1"),
         .package(
             name: "SwiftTaggerID3",
             url: "https://github.com/NCrusher74/SwiftTaggerID3",

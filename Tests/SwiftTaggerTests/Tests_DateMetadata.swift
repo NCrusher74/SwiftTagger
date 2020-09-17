@@ -9,9 +9,9 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         var components = DateComponents()
         var calendar = Calendar(identifier: .iso8601)
         calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
-        components.year = 1979
-        components.month = 11
-        components.day = 23
+        components.year = 1995
+        components.month = 06
+        components.day = 17
         let date = calendar.date(from: components)
         
         XCTAssertNil(read.encodingDate)
@@ -20,7 +20,7 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         XCTAssertEqual(read.recordingDate, date)
         XCTAssertEqual(read.releaseDate, date)
         XCTAssertNil(read.taggingDate)
-        XCTAssertEqual(read.year, 1979)
+        XCTAssertEqual(read.year, 1992)
         
         var newComponents = components
         newComponents.year = 1988
@@ -104,9 +104,9 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         var components = DateComponents()
         var calendar = Calendar(identifier: .iso8601)
         calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
-        components.year = 1979
-        components.month = 11
-        components.day = 23
+        components.year = 1995
+        components.month = 06
+        components.day = 17
         let date = calendar.date(from: components)
 
         let read = try AudioFile(location: mp4Meta)
@@ -116,7 +116,7 @@ final class SwiftTaggerTests_Bool_Date_Metadata: XCTestCase {
         XCTAssertEqual(read.recordingDate, date)
         XCTAssertEqual(read.releaseDate, date)
         XCTAssertNil(read.taggingDate)
-        XCTAssertEqual(read.year, 1979)
+        XCTAssertEqual(read.year, 1992)
 
         var write = try AudioFile(location: mp4Meta)
         write.encodingDate = nil

@@ -5,8 +5,6 @@ SwiftTagger combines the `SwiftTaggerMP4` and `SwiftTaggerID3` libraries into a 
 You can find `SwiftTaggerMP4` [here:](https://github.com/NCrusher74/SwiftTaggerMP4)
 You can find `SwiftTaggerID3` [here:](https://github.com/NCrusher74/SwiftTaggerID3)
 
-`SwiftTaggerMP4` is built upon `SwiftMp4MetadataParser`, which can be found [here:](https://github.com/NCrusher74/SwiftMp4MetadataParser)
-
 ## Usage
 
 Add dependency to your `package.swift` manifest:

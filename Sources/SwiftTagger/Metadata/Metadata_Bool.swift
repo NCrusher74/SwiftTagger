@@ -21,7 +21,7 @@ enum MetadataID_Bool: CaseIterable {
             case .podcast: return .podcast
             case .showWork: return .showWork
         }
-    }
+    }    
 }
 
 @available(OSX 10.13, *)

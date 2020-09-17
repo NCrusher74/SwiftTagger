@@ -27,6 +27,31 @@ final class SwiftTaggerTests_Chaptering: XCTestCase {
         XCTAssertEqual(source.chapterList[5].title, "Chapter 6")
     }
     
+    func testWriteMetaOnChapteredFile() throws {
+        var source = try AudioFile(location: mp4Chaptered)
+        source.title = "New Title"
+        source.artist = "New Artist"
+        
+        let outputUrl = try localDirectory(fileName: "testMp4-MetaOnChaptered", fileExtension: "m4a")
+        try source.write(outputLocation: outputUrl)
+        
+        let output = try AudioFile(location: outputUrl)
+        XCTAssertEqual(output.title, "New Title")
+        XCTAssertEqual(output.artist, "New Artist")
+        XCTAssertEqual(output.chapterList[0].startTime, 0)
+        XCTAssertEqual(output.chapterList[0].title, "Chapter 1")
+        XCTAssertEqual(output.chapterList[1].startTime, 600)
+        XCTAssertEqual(output.chapterList[1].title, "Chapter 2")
+        XCTAssertEqual(output.chapterList[2].startTime, 1300)
+        XCTAssertEqual(output.chapterList[2].title, "Chapter 3")
+        XCTAssertEqual(output.chapterList[3].startTime, 2100)
+        XCTAssertEqual(output.chapterList[3].title, "Chapter 4")
+        XCTAssertEqual(output.chapterList[4].startTime, 3300)
+        XCTAssertEqual(output.chapterList[4].title, "Chapter 5")
+        XCTAssertEqual(output.chapterList[5].startTime, 4600)
+        XCTAssertEqual(output.chapterList[5].title, "Chapter 6")
+    }
+    
     func testID3ChapterList() throws {
         let source = try AudioFile(location: mp3Chaptered)
 

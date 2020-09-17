@@ -106,8 +106,8 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         let read = try AudioFile(location: mp4Meta)
         XCTAssertEqual(read.discNumber.disc, 2)
         XCTAssertEqual(read.discNumber.totalDiscs, 3)
-        XCTAssertEqual(read.trackNumber.track, 4)
-        XCTAssertEqual(read.trackNumber.totalTracks, 5)
+        XCTAssertEqual(read.trackNumber.track, 7)
+        XCTAssertEqual(read.trackNumber.totalTracks, 8)
 
         var write = try AudioFile(location: mp4NoMeta)
         write.discNumber.disc = 3
@@ -154,13 +154,13 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         let read = try AudioFile(location: mp4Meta)
         XCTAssertEqual(read.discNumber.disc, 2)
         XCTAssertEqual(read.discNumber.totalDiscs, 3)
-        XCTAssertEqual(read.trackNumber.track, 4)
-        XCTAssertEqual(read.trackNumber.totalTracks, 5)
+        XCTAssertEqual(read.trackNumber.track, 7)
+        XCTAssertEqual(read.trackNumber.totalTracks, 8)
 
         var write = try AudioFile(location: mp4Meta)
-        write.discNumber.disc = nil
+        write.discNumber.disc = 0
         write.discNumber.totalDiscs = nil
-        write.trackNumber.track = nil
+        write.trackNumber.track = 0
         write.trackNumber.totalTracks = nil
 
         let outputUrl = try tempDirectory().appendingPathComponent("testMp4-TupleRemove.m4a")
@@ -168,9 +168,9 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
-        XCTAssertNil(newFile.discNumber.disc)
+        XCTAssertEqual(newFile.discNumber.disc, 0)
         XCTAssertNil(newFile.discNumber.totalDiscs)
-        XCTAssertNil(newFile.trackNumber.track)
+        XCTAssertEqual(newFile.trackNumber.track, 0)
         XCTAssertNil(newFile.trackNumber.totalTracks)
      }
     
@@ -182,9 +182,9 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         XCTAssertEqual(read.trackNumber.totalTracks, 7)
 
         var write = try AudioFile(location: mp3v24)
-        write.discNumber.disc = nil
+        write.discNumber.disc = 0
         write.discNumber.totalDiscs = nil
-        write.trackNumber.track = nil
+        write.trackNumber.track = 0
         write.trackNumber.totalTracks = nil
 
         let outputUrl = try tempDirectory().appendingPathComponent("testMp3-TupleRemove.mp3")
@@ -192,9 +192,9 @@ final class SwiftTaggerTests_Bool_Tuple_Metadata: XCTestCase {
         try write.write(outputLocation: outputUrl)
         
         let newFile = try AudioFile(location: outputUrl)
-        XCTAssertNil(newFile.discNumber.disc)
+        XCTAssertEqual(newFile.discNumber.disc, 0)
         XCTAssertNil(newFile.discNumber.totalDiscs)
-        XCTAssertNil(newFile.trackNumber.track)
+        XCTAssertEqual(newFile.trackNumber.track, 0)
         XCTAssertNil(newFile.trackNumber.totalTracks)
     }
 }

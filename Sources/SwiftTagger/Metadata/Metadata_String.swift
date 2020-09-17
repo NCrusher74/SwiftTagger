@@ -4,7 +4,7 @@
 //
 //  Created by Nolaine Crusher on 8/15/20.
 //
-import SwiftTaggerID3
+import SwiftLanguageAndLocaleCodes
 
 @available(OSX 10.13, *)
 enum MetadataID_String: CaseIterable { // 70 items
@@ -35,7 +35,7 @@ enum MetadataID_String: CaseIterable { // 70 items
     case encodingSettings
     case encodingTool
     case executiveProducer
-    case filmMakerWebpage
+    case labelWebpage
     // MARK: - G-L
     case genre
     case grouping
@@ -117,7 +117,7 @@ enum MetadataID_String: CaseIterable { // 70 items
             case .encodedBy: return .encodedBy
             case .encodingSettings: return .encodingSettings
             case .encodingTool: return .encodingTool
-            case .filmMakerWebpage: return .filmMakerWebpage
+            case .labelWebpage: return .labelWebpage
             case .genre: return .genre
             case .grouping: return .grouping
             case .information: return .information
@@ -545,14 +545,14 @@ extension AudioFile {
     /// There is no equivalent ID3 frame. Instead, this will get and set a user-defined text (`TXXX`) frame with the descriptor `FilmMakerWebpage`
     public var filmMakerWebpage: String? {
         get {
-            if let value = self.get(.filmMakerWebpage) {
+            if let value = self.get(.labelWebpage) {
                 return value
             } else {
                 return nil
             }
         }
         set {
-            set(.filmMakerWebpage, stringValue: newValue)
+            set(.labelWebpage, stringValue: newValue)
         }
     }
     
@@ -1381,7 +1381,7 @@ extension AudioFile {
         }
     }
     
-    public subscript(comment commentDescription: String, language: ISO6392Codes) -> String? {
+    public subscript(comment commentDescription: String, language: ISO6392Code) -> String? {
         get {
             switch library {
                 case .mp4: return mp4Tag[commentDescription]
@@ -1403,7 +1403,7 @@ extension AudioFile {
         }
     }
     
-    public subscript(lyrics lyricsDescription: String, language: ISO6392Codes) -> String? {
+    public subscript(lyrics lyricsDescription: String, language: ISO6392Code) -> String? {
         get {
             switch library {
                 case .mp4: return mp4Tag[lyricsDescription]

@@ -15,7 +15,6 @@ enum MetadataID_Date: CaseIterable {
     case recordingDate
     case releaseDate
     case taggingTime
-    case year
     
     var metadataItem: MetadataItem {
         switch self {
@@ -25,7 +24,6 @@ enum MetadataID_Date: CaseIterable {
             case .recordingDate: return .recordingDate
             case .releaseDate: return .releaseDate
             case .taggingTime: return .taggingTime
-            case .year: return .year
         }
     }
 }
@@ -104,28 +102,4 @@ extension AudioFile {
             set(.taggingTime, dateValue: newValue)
         }
     }
-
-    /// Gets and sets the MP4 `yrrc` atom.
-    ///
-    /// This accessor will attempt to set the ID3 `TYER` frame, but since this frame is only valid for ID3 version 2.3, and `SwiftTagger` uses version 2.4 by default, `SwiftTaggerID3` will throw an error that the frame is invalid for the version being used.
-    /// To use this frame, chage the `tagVersion` version parameter in `ID3` portion the `write` function of `AudioFile`
-    public var year: Int? {
-        get {
-            if let date = get(.year) {
-                let calendar = Calendar(identifier: .iso8601)
-                let int = calendar.component(.year, from: date)
-                return int
-            } else {
-                return nil
-            }
-        }
-        set {
-            let calendar = Calendar(identifier: .iso8601)
-            var components = DateComponents()
-            components.year = newValue
-            let date = calendar.date(from: components)
-            set(.year, dateValue: date)
-        }
-    }
-
 }

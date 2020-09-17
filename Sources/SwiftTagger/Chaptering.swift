@@ -12,7 +12,7 @@ extension AudioFile {
     public var chapterList: [(startTime: Int, title: String)] {
         switch library {
             case .mp4:
-                return mp4Tag.chapterList
+                return mp4Tag.listChapters()
             case .id3:
                 return id3Tag.chapterList
         }
@@ -22,7 +22,7 @@ extension AudioFile {
     public mutating func addChapter(at startTime: Int, title: String) {
         switch library {
             case .mp4:
-                mp4Tag.addChapter(at: startTime, title: title)
+                mp4Tag.addChapter(startTime: startTime, title: title)
             case .id3:
                 id3Tag.addChapter(at: startTime, title: title)
         }
@@ -32,7 +32,7 @@ extension AudioFile {
     public mutating func removeChapter(at startTime: Int) {
         switch library {
             case .mp4:
-                mp4Tag.removeChapter(at: startTime)
+                mp4Tag.removeChapter(startTime: startTime)
             case .id3:
                 id3Tag.removeChapter(at: startTime)
         }
@@ -42,7 +42,7 @@ extension AudioFile {
     public mutating func removeAllChapters() throws {
         switch library {
             case .mp4:
-                try mp4Tag.removeAllChapters()
+                mp4Tag.removeAllChapters()
             case .id3:
                 id3Tag.removeAllChapters()
         }

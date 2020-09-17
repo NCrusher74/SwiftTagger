@@ -45,10 +45,10 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         source.composerSort = "Composer Sort"
         source.conductor = "Conductor"
         source.conductorID = 56789012
-        source.contentAdvisory.rating = .au_Movie_G
-        source.contentAdvisory.ratingNotes = "Rating Notation"
-        source.contentRating = .explicit
-        source.contentType = .audiobook
+        source.contentRating.rating = .au_Movie_G
+        source.contentRating.ratingNotes = "Rating Notation"
+        source.rating = .explicit
+        source.mediaKind = .audiobook
         source.copyright = "Copyright"
         source.copyrightWebpage = "Copyright Webpage"
         source.description = "Description"
@@ -69,7 +69,7 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         source.isrc = "123456789012"
         source.keySignature = .bFlatMajor
         source.label = "Label"
-        source.language.mp4Language = .English
+        source.language.mp4Language = .english
         source.length = 9999
         source.linerNotes = "Liner Notes"
         source.longDescription = "Long Description"
@@ -145,7 +145,7 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         try source.write(outputLocation: outputUrl)
         let output = try AudioFile(location: outputUrl)
         
-        XCTAssertNotNil(output.getCoverArt)
+        XCTAssertNotNil(output.coverArt)
         XCTAssertEqual(output.acknowledgment, "Acknowledgement")
         XCTAssertEqual(output["Accounting"], "Accountant")
         XCTAssertEqual(output.performers, ["Accompanist", "Additional"])
@@ -174,10 +174,10 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         XCTAssertEqual(output.composerSort, "Composer Sort")
         XCTAssertEqual(output.conductor, "Conductor")
         XCTAssertEqual(output.conductorID, 56789012)
-        XCTAssertEqual(output.contentAdvisory.rating, .au_Movie_G)
-        XCTAssertEqual(output.contentAdvisory.ratingNotes, "Rating Notation")
-        XCTAssertEqual(output.contentRating, .explicit)
-        XCTAssertEqual(output.contentType, .audiobook)
+        XCTAssertEqual(output.contentRating.rating, .au_Movie_G)
+        XCTAssertEqual(output.contentRating.ratingNotes, "Rating Notation")
+        XCTAssertEqual(output.rating, .explicit)
+        XCTAssertEqual(output.mediaKind, .audiobook)
         XCTAssertEqual(output.copyright, "Copyright")
         XCTAssertEqual(output.copyrightWebpage, "Copyright Webpage")
         XCTAssertEqual(output.description, "Description")
@@ -198,7 +198,7 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         XCTAssertEqual(output.isrc, "123456789012")
         XCTAssertEqual(output.keySignature, .bFlatMajor)
         XCTAssertEqual(output.label, "Label")
-        XCTAssertEqual(output.language.mp4Language, .English)
+        XCTAssertEqual(output.language.mp4Language, .english)
         XCTAssertEqual(output.length, 5016)
         XCTAssertEqual(output.linerNotes, "Liner Notes")
         XCTAssertEqual(output.longDescription, "Long Description")
@@ -312,10 +312,10 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         source.composerSort = "Composer Sort"
         source.conductor = "Conductor"
         source.conductorID = 56789012
-        source.contentAdvisory.rating = .au_Movie_G
-        source.contentAdvisory.ratingNotes = "Rating Notation"
-        source.contentRating = .explicit
-        source.contentType = .audiobook
+        source.contentRating.rating = .au_Movie_G
+        source.contentRating.ratingNotes = "Rating Notation"
+        source.rating = .explicit
+        source.mediaKind = .audiobook
         source.copyright = "Copyright"
         source.copyrightWebpage = "Copyright Webpage"
         source.description = "Description"
@@ -407,7 +407,7 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         try source.write(outputLocation: outputUrl)
         let output = try AudioFile(location: outputUrl)
         
-        XCTAssertNotNil(output.getCoverArt)
+        XCTAssertNotNil(output.coverArt)
         XCTAssertEqual(output.acknowledgment, "Acknowledgement")
         XCTAssertEqual(output.involvementCreditsList[.accounting], ["Accountant"])
         XCTAssertEqual(output.performanceCreditsList[.additional], ["Additional"])
@@ -437,10 +437,10 @@ final class SwiftTaggerTests_AllMetadata: XCTestCase {
         XCTAssertEqual(output.composerSort, "Composer Sort")
         XCTAssertEqual(output.conductor, "Conductor")
         XCTAssertEqual(output.conductorID, 56789012)
-        XCTAssertEqual(output.contentAdvisory.rating, .au_Movie_G)
-        XCTAssertEqual(output.contentAdvisory.ratingNotes, "Rating Notation")
-        XCTAssertEqual(output.contentRating, .explicit)
-        XCTAssertEqual(output.contentType, .audiobook)
+        XCTAssertEqual(output.contentRating.rating, .au_Movie_G)
+        XCTAssertEqual(output.contentRating.ratingNotes, "Rating Notation")
+        XCTAssertEqual(output.rating, .explicit)
+        XCTAssertEqual(output.mediaKind, .audiobook)
         XCTAssertEqual(output.copyright, "Copyright")
         XCTAssertEqual(output.copyrightWebpage, "Copyright Webpage")
         XCTAssertEqual(output.description, "Description")

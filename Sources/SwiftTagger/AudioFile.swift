@@ -13,6 +13,7 @@ import SwiftTaggerMP4
 /// A type representing an audio file stored locally
 @available(OSX 10.13, *)
 public struct AudioFile {
+    var metadata: [(item: String, value: Any)] = []
     public init(location: URL) throws {
         self.location = location
 
@@ -30,11 +31,25 @@ public struct AudioFile {
             self.mp3 = try Mp3File(location: location)
             if let mp3 = self.mp3 {
                 id3Tag = try SwiftTaggerID3.Tag(readFrom: mp3)
+                let id3Metadata = id3Tag.listMetadata()
+                for item in id3Metadata {
+                    if let itemID = MetadataItem(from: item.frameKey) {
+                        let entry = (itemID.rawValue, item.value)
+                        self.metadata.append(entry)
+                    }
+                }
             }
         } else {
             self.mp4 = try Mp4File(location: location)
             if let mp4 = self.mp4 {
-                mp4Tag = try SwiftTaggerMP4.Tag(from: mp4)
+                mp4Tag = try SwiftTaggerMP4.Tag(mp4File: mp4)
+                let mp4Metadata = mp4Tag.metadata
+                for item in mp4Metadata {
+                    if let metadataItem = MetadataItem(from: item.0) {
+                        let entry = (metadataItem.rawValue, item.1)
+                        self.metadata.append(entry)
+                    }
+                }
             }
         }
     }
@@ -45,7 +60,7 @@ public struct AudioFile {
         switch library {
             case .mp4:
                 if let mp4 = self.mp4 {
-                    try mp4.write(tag: self.mp4Tag, outputLocation: outputLocation)
+                    try mp4.write(tag: self.mp4Tag, to: outputLocation)
             }
             case .id3:
                 if let mp3 = self.mp3 {
@@ -63,7 +78,7 @@ public struct AudioFile {
     var mp4Tag: SwiftTaggerMP4.Tag {
         get {
             do {
-                return try self._mp4Tag ?? SwiftTaggerMP4.Tag(from: self.mp4 ?? Mp4File(location: self.location))
+                return try self._mp4Tag ?? SwiftTaggerMP4.Tag(mp4File: self.mp4 ?? Mp4File(location: self.location))
             } catch {
                 fatalError("SwiftTaggerMP4.Tag is not accessible")
             }
