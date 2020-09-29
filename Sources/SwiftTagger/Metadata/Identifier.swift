@@ -133,6 +133,9 @@ enum Identifier: String, CaseIterable {
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `ConductorID`
     case conductorID
+    
+    /// Content rating/advisory (such as MPAA ratings). userDefined atom/frame `iTunEXTC`
+    case contentRating
 
     /// Copyright declaration ID3 frame `TCOP` MP4 atom `cprt`
     ///
