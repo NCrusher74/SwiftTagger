@@ -41,7 +41,7 @@ print(source.trackNumber.track)
 print(source.trackNumber.totalTracks)
 print(source["FreeformTag"]) // prints freeform tag with the descriptor "FreeformTag"
 print(source.involvementCreditsList[.accounting])
-print(source.performanceCreditsList[.actor])
+print(source.musicianCreditsList[.actor])
 ```
 
 *Editing metadata*:
@@ -59,7 +59,7 @@ source.titleKeywords = ["Title", "Keywords"]
 source.involvementCreditsList[.adaptation] = "Involved Person"
 
 // edits TMCL frame for ID3, or adds performer name to performers tag for MP4
-source.performanceCreditsList[.actress] = "Actress Name"
+source.musicianCreditsList[.actress] = "Actress Name"
 
 // adding freeform tags
 source["MyFreeformTagDescription"] = "New Tag Content"
@@ -184,7 +184,7 @@ try source.write(outputLocation: output.url)
 * `movementName`: (MP4 atom: `©mvn` - ID3 frame: `MVNM`)
 * `movementCount`: (MP4 atom: `©mvc` - ID3 frame: `MVCN`)
 * `movementNumber`: (MP4 atom: `©mvi` - ID3 frame: `MVIN`)
-* `musicianCreditsList (aka performanceCreditsList)`: (ID3 frame: `TMCL`)
+* `musicianCreditsList (aka musicianCreditsList)`: (ID3 frame: `TMCL`)
 * `narrator`: (MP4 atom: `©nrt`)
 * `originalAlbum`: (ID3 frame: `TOAL`)
 * `originalArtist`: (MP4 atom: `©ope` - ID3 frame: `TOPE`)
@@ -195,7 +195,7 @@ try source.write(outputLocation: output.url)
 
 **P**
 * `paymentWebpage`: (ID3 frame: `WPAY`)
-* `performers`: (MP4 atom: `©prf`) (values entered here will write the `performanceCreditsList` for ID3)
+* `performers`: (MP4 atom: `©prf`) (values entered here will write the `musicianCreditsList` for ID3)
 * `playlistDelay`: (ID3 frame: `TDLY`)
 * `playlistID`: (MP4 atom: `plID`)
 * `podcast`: (MP4 atom: `pcst`) (this frame exists in ID3, but setting it will cause iTunes not to recognize the audio or metadata)

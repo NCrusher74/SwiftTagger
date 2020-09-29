@@ -9,7 +9,7 @@ import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
 
-public typealias PerformanceCredits = SwiftTaggerID3.MusicianAndPerformerCredits
+public typealias MusicianCredits = SwiftTaggerID3.MusicianAndPerformerCredits
 public typealias InvolvementCredits = SwiftTaggerID3.InvolvedPersonCredits
 
 public typealias GenreID3 = SwiftTaggerID3.GenreType
