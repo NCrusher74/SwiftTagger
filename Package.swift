@@ -37,13 +37,3 @@ let package = Package(
         ),
     ]
 )
-
-    /*
- .testTarget(
- name: "SharedTests",
- dependencies: ["Shared"],
- resources: [
- .process("TestData")
- ]
- )
- */

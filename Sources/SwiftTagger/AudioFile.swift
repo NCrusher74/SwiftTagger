@@ -1,62 +1,95 @@
-//
-//  AudioFile.swift
-//  
-//
-//  Created by Nolaine Crusher on 9/28/20.
-//
+/*
+ AudioFile.swift
+ SwiftTagger
+ 
+ Copyright ©2020 Nolaine Crusher. All rights reserved.
+ 
+ */
 
 import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
 
-struct AudioFile {
-    
-    var location: URL
-    
-    @available(OSX 10.12, *)
-    init(location: URL) throws {
-        let validExtensions = ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax", "mp3"]
-        guard validExtensions.contains(location.pathExtension.lowercased()) else {
+/// A type representing an audio file stored locally
+@available(OSX 10.13, *)
+public struct AudioFile {
+    public init(location: URL) throws {
+        self.location = location
+        
+        let validMp4Extensions = ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"]
+        if self.location.pathExtension.lowercased() == "mp3" {
+            self.library = .id3
+        } else if validMp4Extensions.contains(
+                    self.location.pathExtension.lowercased()) {
+            self.library = .mp4
+        } else {
             throw AudioFileError.InvalidFileType
         }
-        self.location = location
-    }
-    
-    @available(OSX 10.12, *)
-    var tag: Tag {
-        get {
-            if location.pathExtension.lowercased() == "mp3" {
-                do {
-                    let file = try Mp3File(location: location)
-                    let tag = try file.tag()
-                    return Tag.id3(tag)
-                } catch {
-                    fatalError("Unable to initialize MP3 audio file")
-                }
-            } else {
-                let mp4Extensions = ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"]
-                if mp4Extensions.contains(location.pathExtension) {
-                    do {
-                        let file = try Mp4File(location: location)
-                        let tag = try file.tag()
-                        return Tag.mp4(tag)
-                    } catch {
-                        fatalError("Unable to initialize MP4 Tag instance from file")
-                    }
-                } else {
-                    fatalError("Unable to initialize audio file")
-                }
+        
+        if self.library == .id3 {
+            self.mp3 = try Mp3File(location: location)
+            if let mp3 = self.mp3 {
+                id3Tag = try SwiftTaggerID3.Tag(mp3File: mp3)
+            }
+        } else {
+            self.mp4 = try Mp4File(location: location)
+            if let mp4 = self.mp4 {
+                mp4Tag = try SwiftTaggerMP4.Tag(mp4File: mp4)
             }
         }
     }
+    
+    // MARK: - Write
+    /// Writes the media with edited metdata to a new file at the specified location
+    public func write(outputLocation: URL) throws {
+        switch library {
+            case .mp4:
+                if let mp4 = self.mp4 {
+                    try mp4.write(tag: self.mp4Tag, to: outputLocation)
+                }
+            case .id3:
+                if let mp3 = self.mp3 {
+                    try mp3.write(tag: self.id3Tag, version: .v2_4, outputLocation: outputLocation)
+                }
+        }
+    }
+    
+    // MARK: - Properties
+    var location: URL
+    var library: Library
+    
+    private var mp4: SwiftTaggerMP4.Mp4File? = nil
+    private var _mp4Tag: SwiftTaggerMP4.Tag? = nil
+    var mp4Tag: SwiftTaggerMP4.Tag {
+        get {
+            do {
+                return try self._mp4Tag ?? SwiftTaggerMP4.Tag(mp4File: self.mp4 ?? Mp4File(location: self.location))
+            } catch {
+                fatalError("SwiftTaggerMP4.Tag is not accessible")
+            }
+        }
+        set {
+            self._mp4Tag = newValue
+        }
+    }
+    
+    private var mp3: SwiftTaggerID3.Mp3File? = nil
+    private var _id3Tag: SwiftTaggerID3.Tag? = nil
+    var id3Tag: SwiftTaggerID3.Tag {
+        get {
+            do {
+                return try self._id3Tag ?? SwiftTaggerID3.Tag(mp3File: self.mp3 ?? Mp3File(location: self.location))
+            } catch {
+                fatalError("SwiftTaggerID3.Tag is not accessible")
+            }
+        }
+        set {
+            self._id3Tag = newValue
+        }
+    }
 }
 
-enum FileType {
-    case mp3(Mp3File)
-    case mp4(Mp4File)
-}
-
-enum Tag {
-    case id3(SwiftTaggerID3.Tag)
-    case mp4(SwiftTaggerMP4.Tag)
+enum Library {
+    case mp4
+    case id3
 }
