@@ -20,16 +20,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag["Acknowledgment"] = new
-                    case .mp4: mp4Tag.acknowledgment = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag["Acknowledgment"] = nil
-                    case .mp4: mp4Tag.acknowledgment = nil
-                }
+            switch library {
+                case .id3: id3Tag["Acknowledgment"] = newValue
+                case .mp4: mp4Tag.acknowledgment = newValue
             }
         }
     }
@@ -45,16 +38,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.album = new
-                    case .mp4: mp4Tag.album = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.album = nil
-                    case .mp4: mp4Tag.album = nil
-                }
+            switch library {
+                case .id3: id3Tag.album = newValue
+                case .mp4: mp4Tag.album = newValue
             }
         }
     }
@@ -70,16 +56,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.albumArtist = new
-                    case .mp4: mp4Tag.albumArtist = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.albumArtist = nil
-                    case .mp4: mp4Tag.albumArtist = nil
-                }
+            switch library {
+                case .id3: id3Tag.albumArtist = newValue
+                case .mp4: mp4Tag.albumArtist = newValue
             }
         }
     }
@@ -95,16 +74,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.albumArtistSort = new
-                    case .mp4: mp4Tag.albumArtistSort = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.albumArtistSort = nil
-                    case .mp4: mp4Tag.albumArtistSort = nil
-                }
+            switch library {
+                case .id3: id3Tag.albumArtistSort = newValue
+                case .mp4: mp4Tag.albumArtistSort = newValue
             }
         }
     }
@@ -120,16 +92,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.albumSort = new
-                    case .mp4: mp4Tag.albumSort = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.albumSort = nil
-                    case .mp4: mp4Tag.albumSort = nil
-                }
+            switch library {
+                case .id3: id3Tag.albumSort = newValue
+                case .mp4: mp4Tag.albumSort = newValue
             }
         }
     }
@@ -154,16 +119,14 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag["AppleStoreCountryID"] = String(new)
-                    case .mp4: mp4Tag.appleStoreCountryID = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag["AppleStoreCountryID"] = nil
-                    case .mp4: mp4Tag.appleStoreCountryID = nil
-                }
+            switch library {
+                case .id3:
+                    if let new = newValue {
+                        id3Tag["AppleStoreCountryID"] = String(new)
+                    } else {
+                        id3Tag["AppleStoreCountryID"] = nil
+                    }
+                case .mp4: mp4Tag.appleStoreCountryID = newValue
             }
         }
     }
@@ -179,16 +142,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.arranger = new
-                    case .mp4: mp4Tag.arranger = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.arranger = nil
-                    case .mp4: mp4Tag.arranger = nil
-                }
+            switch library {
+                case .id3: id3Tag.arranger = newValue
+                case .mp4: mp4Tag.arranger = newValue
             }
         }
     }
@@ -234,16 +190,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.involvementCreditsList[.artDirection] = new.toArray
-                    case .mp4: mp4Tag.artDirector = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.involvementCreditsList[.artDirection] = nil
-                    case .mp4: mp4Tag.artDirector = nil
-                }
+            switch library {
+                case .id3: id3Tag.involvementCreditsList[.artDirection] = newValue?.toArray
+                case .mp4: mp4Tag.artDirector = newValue
             }
         }
     }
@@ -259,16 +208,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.artist = new
-                    case .mp4: mp4Tag.artist = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.artist = nil
-                    case .mp4: mp4Tag.artist = nil
-                }
+            switch library {
+                case .id3: id3Tag.artist = newValue
+                case .mp4: mp4Tag.artist = newValue
             }
         }
     }
@@ -293,16 +235,14 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag["ArtistID"] = String(new)
-                    case .mp4: mp4Tag.artistID = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag["ArtistID"] = nil
-                    case .mp4: mp4Tag.artistID = nil
-                }
+            switch library {
+                case .id3:
+                    if let new = newValue {
+                        id3Tag["ArtistID"] = String(new)
+                    } else {
+                        id3Tag["ArtistID"] = nil
+                    }
+                case .mp4: mp4Tag.artistID = newValue
             }
         }
     }
@@ -346,16 +286,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.artistSort = new
-                    case .mp4: mp4Tag.artistSort = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.artistSort = nil
-                    case .mp4: mp4Tag.artistSort = nil
-                }
+            switch library {
+                case .id3: id3Tag.artistSort = newValue
+                case .mp4: mp4Tag.artistSort = newValue
             }
         }
     }
@@ -371,16 +304,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.artistWebpage = new
-                    case .mp4: mp4Tag.artistUrl = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.artistWebpage = nil
-                    case .mp4: mp4Tag.artistUrl = nil
-                }
+            switch library {
+                case .id3: id3Tag.artistWebpage = newValue
+                case .mp4: mp4Tag.artistUrl = newValue
             }
         }
     }
@@ -398,16 +324,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.audioFileWebpage = new
-                    case .mp4: mp4Tag["Audio File Webpage"] = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.audioFileWebpage = nil
-                    case .mp4: mp4Tag["Audio File Webpage"] = nil
-                }
+            switch library {
+                case .id3: id3Tag.audioFileWebpage = newValue
+                case .mp4: mp4Tag["Audio File Webpage"] = newValue
             }
         }
     }
@@ -424,16 +343,27 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.audioSourceWebpage = new
-                    case .mp4: mp4Tag["Audio Source Webpage"] = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.audioSourceWebpage = nil
-                    case .mp4: mp4Tag["Audio Source Webpage"] = nil
-                }
+            switch library {
+                case .id3: id3Tag.audioSourceWebpage = newValue
+                case .mp4: mp4Tag["Audio Source Webpage"] = newValue
+            }
+        }
+    }
+    
+    /// BPM. ID3 frame `TBPM`, MP4 atom `tmpo`
+    ///
+    /// Contains the number of beats per minute in the main part of the audio. The BPM is an integer and represented as a numerical string.
+    var bpm: Int? {
+        get {
+            switch library {
+                case .id3: return id3Tag.bpm
+                case .mp4: return mp4Tag.bpm
+            }
+        }
+        set {
+            switch library {
+                case .id3: id3Tag.bpm = newValue
+                case .mp4: mp4Tag.bpm = newValue
             }
         }
     }

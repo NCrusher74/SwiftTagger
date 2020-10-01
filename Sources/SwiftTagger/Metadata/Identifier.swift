@@ -39,765 +39,96 @@ enum Identifier: String, CaseIterable {
     case description
     case director
     case discNumber
-    
-    /// Encoding date/time. ID3 frame `TDEN`
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Encoding Date/Time`
     case encodingDateTime
-    
-    /// Encoded by. ID3 frame `TENC` MP4 atom `©enc`
-    ///
-    /// Contains the name of the person or organisation that encoded the audio file. This field may contain a copyright message, if the audio file also is copyrighted by the encoder.
-    case encodedBy
-    
-    /// Software/Hardware and settings and tools used for encoding frame.
-    /// ID3 frame `TSSE` MP4 atom `©too`
-    ///
-    /// Includes the audio encoder used and its settings when the file was encoded. Hardware refers to hardware encoders, not the computer on which a program was run.
-    case encoderAndSettings
-    
-    /// Executive producer of the movie . MP4 frame `©xpd`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `executiveProducer`
-    case executiveProducer
-    
-    /// Boolean value indicating there should be no delay between tracks MP4 atom `pgap`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, a true value for this item will result in the `playlistDelay` frame being set to 0. Otherwise, this value will be ignored when tagging ID3 files.
-    case gaplessPlayback
-    
-    /// User-defined genre  ID3 frame `TCON`, MP4 atom `©gen`
-    ///
-    /// In ID3v1 was stored as a one byte numeric value only, is now a string. You may use one or several of the ID3v1 types as numerical strings, or, since the category list would be impossible to maintain with accurate and up to date categories, define your own. Example: "21" $00 "Eurodisco" $00
-    ///
-    /// You may also use any of the following keywords:
-    ///
-    /// RX  Remix
-    ///
-    /// CR  Cover
-    case genreCustom
-    
-    /// Predefined genre ID3 frame `TCON`, MP4 atom `genr`
-    ///
-    /// In ID3v1 was stored as a one byte numeric value only, is now a string. You may use one or several of the ID3v1 types as numerical strings, or, since the category list would be impossible to maintain with accurate and up to date categories, define your own. Example: "21" $00 "Eurodisco" $00
-    ///
-    /// You may also use any of the following keywords:
-    ///
-    /// RX  Remix
-    ///
-    /// CR  Cover
-    case genrePredefined
-    
-    /// The iTunes-store genre identifier. MP4 atom `geID`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `GenreID`
+    case encodedBy    
+    case encoderAndSettings    
+    case executiveProducer    
+    case gaplessPlayback    
+    case genreCustom    
+    case genrePredefined    
     case genreID
-    
-    /// Grouping ID3 frame `GRP1` MP4 atom `©grp`
-    ///
-    /// Frame used by iTunes to group works.
-    case grouping
-    
-    /// Information about the movie MP4 atom `©inf`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Information`
-    case information
-    
-    /// Initial key. ID3 frame `TKEY`
-    ///
-    /// Contains the musical key in which the sound starts. It is represented as a string with a maximum length of three characters. The ground keys are represented with "A","B","C","D","E", "F" and "G" and halfkeys represented with "b" and "#". Minor is represented as "m", e.g. "Dbm" $00. Off key is represented with an "o" only.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Initial Key`
-    case initialKey
-    
-    /// InvolvedPeopleList frame. ID3 frame `TIPL`
-    ///
-    /// `InvolvedPeopleList` handles production and support credits, while `MusicianCreditsList` handles performer credits.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to the appropriate atom for the role, if it exists. Otherwise, a userDefined atom will be created with a description corresponding to the role
+    case grouping    
+    case information    
+    case initialKey    
     case involvedPeopleList
-    
-    /// ISRC ID frame `TSRC` MP4 atom `©isr`
-    ///
-    /// Should contain the International Standard Recording Code [ISRC] (12 characters).
-    case isrc
-    
-    /// The iTunes-store account MP4 atom `apID`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `iTunes Account`
+    case isrc    
     case iTunesAccount
-    
-    /// The iTunes-store account type identifier MP4 atom `akID`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `iTunes Account Type`
-    case iTunesAccountType
-    
-    /// Name of record label MP4 atom `©lab`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Label`
-    case label
-    
-    /// URL of record label MP4 atom `©lal`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedWebpage frame with the description `Label Webpage`
-    case labelWebpage
-    
-    /// Language ID3 frame `TLAN`, MP4 atom `elng`
-    ///
-    /// Should contain the languages of the text or lyrics spoken or sung in the audio. The language is represented with three characters according to ISO-639-2 [ISO-639-2]. If more than one language is used in the text their language codes should follow according to the amount of their usage, e.g. "eng" $00 "sve" $00.
-    case languages
-    
-    /// Length frame ID3 frame `TLEN` MP4 atom `mvhd`
-    ///
-    /// Contains the length of the audio file in milliseconds. Because SwiftTagger does not support editing media files, this property is read-only
-    case length
-    
-    /// Liner notes. MP4 atom `©lnt`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `Liner Notes`
-    case linerNotes
-    
-    /// Long desccription MP4 atom `ldes`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `Long Description`
-    case longDescription
-    
-    /// Lyrics (unsynchronized) ID3 frame `USLT` MP4 atom `©lyr`
-    ///
-    /// This frame contains the lyrics of the song or a text transcription of other vocal activities.
-    ///
-    /// For audiobooks, this is commonly used to contain a long book-jacket description or "blurb"
-    case lyrics
-    
-    /// Lyricist/Text writer. ID3 frame `TEXT` MP4 atom `©aut`
-    ///
-    /// Intended for the writer of the text or lyrics in the recording.
+    case iTunesAccountType    
+    case label    
+    case labelWebpage    
+    case languages    
+    case length    
+    case linerNotes    
+    case longDescription    
+    case lyrics    
     case lyricist
-    
-    /// The media kind value for the media. MP4 atom `stik`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Media Kind`
     case mediaKind
-    
-    /// Mood. ID3 frame `TMOO`
-    ///
-    /// Intended to reflect the mood of the audio with a few keywords, e.g. "Romantic" or "Sad".
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Mood`
-    case mood
-    
-    /// Movement Count. ID3 frame `MVCN` MP4 atom `©mvc`
-    ///
-    /// Used by iTunes to denote the number of movements in a work
-    case movementCount
-    
-    /// Movement Name. ID3 frame `MVNM` MP4 atom `©mvn`
-    ///
-    /// Used by iTunes to name the movements of a multi-part work
-    case movement
-    
-    /// Movement Number. ID3 frame `MVIN` MP4 atom `©mvi`
-    ///
-    /// Used by iTunes to denote the total number of movements in a work
-    case movementNumber
-    
-    /// Musician credits list. ID3 frame `TMCL`
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to the appropriate atom for the role, if one exists. Otherwise, a userDefined atom will be created with a description that corresponds to the role
-    case musicianCreditsList
-    
-    /// Narrator (as listed by Audible in audiobooks) MP4 atom `©nrt`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Narrator`
-    case narrator
-    
-    /// Original album/movie/show title. ID3 frame `TOAL`
-    ///
-    /// Intended for the title of the original recording (or source of sound), if for example the music in the file should be a cover of a previously released song.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Album`
-    case originalAlbum
-    
-    /// Original artist/performer. ID3 frame `TOPE` MP4 atom `©ope`
-    ///
-    /// Intended for the performer of the original recording, if for example the music in the file should be a cover of a previously released song.
-    case originalArtist
-    
-    /// Original filename. ID3 frame `TOFN`
-    ///
-    /// Contains the preferred filename for the file, since some media doesn't allow the desired length of the filename. The filename is case sensitive and includes its suffix.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Filename`
-    case originalFilename
-    
-    /// Original lyricist/text writer. ID3 frame `TOLY`
-    ///
-    /// Intended for the text writer of the original recording, if for example the music in the file should be a cover of a previously released song.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Lyricist`
-    case originalLyricist
-    
-    /// Original release time. ID3 frame `TDOR`
-    ///
-    /// Contains a timestamp describing when the original recording of the audio was released.
-    ///
-    /// There is no correspondin MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Release Date/Time`
-    case originalReleaseDateTime
-    
-    /// File owner/licensee. ID3 frame `TOWN` MP4 atom `ownr`
-    ///
-    /// Contains the name of the owner or licensee of the file and it's contents.
-    case owner
-    
-    /// Payment Webpage. ID3 frame `WPAY`
-    ///
-    /// URL pointing at a webpage that will handle the process of paying for this file.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Payment Webpage`
-    case paymentWebpage
-    
-    /// Names of performers MP4 atom `©prf`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `musicianCreditsList` frame with the role `performer`
-    case performers
-    
-    /// Playlist delay. ID3 frame `TDLY`
-    ///
-    /// Defines the numbers of milliseconds of silence that should be inserted before this audio. The value zero indicates that this is a part of a multifile audio track that should be played continuously.
-    ///
-    /// There is no corresponding MP4 atom. Instead, a 0 value entered here will result in the `gaplessPlayback` atom being set to `true`. Any other value in this atom will result in `gaplessPlayback` being set to `false`
-    case playlistDelay
-    
-    /// The iTunes playlist identifier MP4 atom `plID`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `PlaylistID`
-    case playlistID
-    
-    /// Boolean value indicating whether or not the track is a podcast MP4 atom `pcst`
-    ///
-    /// While there *is* a corresponding frame for ID3 with the identifier (`PCST`), attempts to implement this frame in SwiftTaggerID3 resulted in files that iTunes/Apple Music wouldn't recognize, so this value will not set a frame for ID3
-    case podcast
-    
-    /// Podcast Category. ID3 frame `TCAT` MP4 atom `catg`
-    ///
-    /// Used by iTunes to categorize podcasts
-    case podcastCategory
-    
-    /// Podcast Description. ID3 frame `TDES`
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to the `songDescription` atom, since it is unlikely both will be in use
-    case podcastDescription
-    
-    /// PodcastID. ID3 frame `TGID` MP4 atom `egid`
-    ///
-    /// Used by iTunes to list a podcast's ID
-    case podcastID
-    
-    /// Podcast keywords. ID3 frame `TKWD` MP3 atom `keyw`
-    ///
-    /// Used by iTunes to for keywords describing a podcast
-    case podcastKeywords
-    
-    /// Podcast feed. ID3 frame `WFED` MP4 atom `purl`
-    ///
-    /// Used by iTunes to list the web feed of a podcast (despite the identifier beginning with W in ID3, this is a string frame
-    case podcastFeed
-    
-    /// Name of producer. MP4 atom `©prd`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `producer`
-    case producer
-    
-    /// Keywords for producer. MP4 atom `©prk`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Producer Keywords`
-    case producerKeywords
-    
-    /// Produced notice. ID3 frame `TPRO`
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Produced Notice`
-    case producedNotice
-    
-    /// Publisher. ID3 frame `TPUB` MP4 atom `©pub`
-    ///
-    /// Simply contains the name of the label or publisher.
-    case publisher
-    
-    /// Publishers official webpage. ID3 frame `WPUB`
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Publisher Webpage`
-    case publisherWebpage
-    
-    /// Purchase Date/Time. MP4 atom `purd`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Purchase Date/Time`
-    case purchaseDateTime
-    
-    /// Internet radio station name. ID3 frame `TRSN`
-    ///
-    /// Contains the name of the internet radio station from which the audio is streamed.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Sadio Station`
-    case radioStation
-    
-    /// Internet radio station owner. ID3 frame `TRSO`
-    ///
-    /// Contains the name of the owner of the internet radio station from which the audio is streamed.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Radio Station Owner`
-    case radioStationOwner
-    
-    /// Official Internet radio station homepage. ID3 frame `WORS`
-    ///
-    /// A URL pointing at the homepage of the internet radio station.
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Radio Station Webpage`
-    case radioStationWebpage
-    
-    /// Rating indicator for `clean`, `explicit`, or `none` MP4 atom `rtng`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Rating`
-    case rating
-    
-    /// Name of file creator or maker MP4 atom `©mak`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Record Company`
-    case recordCompany
-    
-    /// URL of file creator or maker MP4 atom `©mal`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedWebpage frame with the description `Record Company Webpage`
-    case recordCompanyWebpage
-    
-    /// Recording copyright statement, aka phonogram rights. Normally preceded by the symbol (P) ( P in a circle) MP4 atom `©phg`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Recording Copyright`
-    case recordingCopyright
-    
-    /// Recording date/time. ID3 frame `TDRC` MP4 atom `©day`
-    ///
-    /// (versions 2.2 and 2.3 only) Intended to be used as complement to the "TYE", "TDA" and "TIM" frames. E.g. "4th-7th June, 12th June" in combination with the "TYE" frame.
-    case recordingDateTime
-    
-    /// Release time/time. ID3 tag `TDRL` MP4 atom `rldt`
-    ///
-    /// Contains a timestamp describing when the audio was first released. NEW IN VERSION 2.4
-    case releaseDateTime
-    
-    /// Special hardware and software requirements `©req`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Requirements`
-    case requirements
-    
-    /// iTunes seller. ID MP4 atom "xid "
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `SellerID`
-    case sellerID
-    
-    /// Set/track subtitle. ID3 frame `TSST` MP4 atom `©st3`
-    ///
-    /// Intended for the subtitle of the part of a set this track belongs to (ID3), or the subtitle of a track (MP4).
-    case setOrTrackSubtitle
-    
-    /// Boolean value indicating whether Work and Movement data should be displayed. MP4 atom`shwm`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Show work and movement`
-    case showWorkAndMovement
-    
-    /// Sound engineer of track. MP4 atom `©sne`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `soundEngineer`
-    case soundEngineer
-    
-    /// Name and version number of the software (or hardware) that generated this movie. MP4 atom `©swr`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Software Version`
-    case softwareVersion
-    
-    /// Featured soloist. MP4 atom `©sol`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `musicianCreditsList` frame with the role `soloist`
-    case soloist
-    
-    /// Song description. MP4 atom `desc`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `Song Description`
-    case songDescription
-    
-    /// Name of songwriter. MP4 atom `©swf`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `songwriter`
-    case songwriter
-    
-    /// Keywords for songwriter. MP4 atom `©swk`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Songwriter Keywords`
-    case songwriterKeywords
-    
-    /// Credits for those who provided movie source content. MP4 atom `©src`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `SourceCredit`
-    case sourceCredit
-    
-    /// Subtitle of content. ID3 frame `TIT3` MP4 atom `©snm`
-    ///
-    /// Used for information directly related to the contents title (e.g. "Op. 16" or "Performed live at Wembley").
-    case subtitle
-    
-    /// Subtitle keywords of the content. MP4 atom `©snk`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Subtitle Keywords`
-    case subtitleKeywords
-    
-    /// Tagging date/time. ID3 frame `TDTG`
-    ///
-    /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Tagging Date`
-    case taggingDateTime
-    
-    /// Title/Song name. ID3 frame `TIT2` MP4 atom `©nam`
-    ///
-    /// The actual name of the piece (e.g. "Adagio", "Hurricane Donna").
-    ///
-    /// For audiobooks that are stored in multiple files, this is usually the title of the part contained in the file, rather than the book title.
-    case title
-    
-    /// Title keywords of the content. MP4 atom `©nak`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Title Keywords`
-    case titleKeywords
-    
-    /// Title sort order. ID3 frame `TSOT` MP4 atom`sonm`
-    ///
-    /// Defines a string which should be used instead of the title (TIT2) for sorting purposes.
-    case titleSort
-    
-    /// Thanks MP4 atom `©thx`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Thanks`
+    case mood    
+    case movementCount    
+    case movement    
+    case movementNumber    
+    case musicianCreditsList    
+    case narrator    
+    case originalAlbum    
+    case originalArtist    
+    case originalFilename    
+    case originalLyricist    
+    case originalReleaseDateTime    
+    case owner    
+    case paymentWebpage    
+    case performers    
+    case playlistDelay    
+    case playlistID    
+    case podcast    
+    case podcastCategory    
+    case podcastDescription    
+    case podcastID    
+    case podcastKeywords    
+    case podcastFeed    
+    case producer    
+    case producerKeywords    
+    case producedNotice    
+    case publisher    
+    case publisherWebpage    
+    case purchaseDateTime    
+    case radioStation    
+    case radioStationOwner    
+    case radioStationWebpage    
+    case rating    
+    case recordCompany    
+    case recordCompanyWebpage    
+    case recordingDateTime    
+    case releaseDateTime    
+    case requirements    
+    case sellerID    
+    case setOrTrackSubtitle    
+    case showWorkAndMovement    
+    case soundEngineer    
+    case softwareVersion    
+    case soloist    
+    case songDescription    
+    case songwriter    
+    case songwriterKeywords    
+    case sourceCredit    
+    case subtitle    
+    case subtitleKeywords    
+    case taggingDateTime    
+    case title    
+    case titleKeywords    
+    case titleSort    
     case thanks
-    
-    /// Track number/Position in set. ID3 frame `TRCK` MP4 atom `trkn`
-    ///
-    /// A numeric string containing the order number of the audio-file on its original recording. This MAY be extended with a "/" character and a numeric string containing the total number of tracks/elements on the original recording. E.g. "4/9".
-    case trackNumber
-    
-    /// MP4 atom `tves` (TV Episode Number)
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `seriesEpisodeNumber`
-    case seriesEpisodeNumber
-    
-    /// MP4 atom `tven` (TV Episode Title)
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `seriesEpisodeTitle`
-    case seriesEpisodeTitle
-    
-    /// MP4 atom `tvnn` (TV Network)
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `seriesDistributor`
+    case trackNumber    
+    case seriesEpisodeNumber    
+    case seriesEpisodeTitle    
     case seriesDistributor
-    
-    /// MP4 atom `tvsn` (TV Season)
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `seriesSeason`
-    case seriesSeason
-    
-    /// MP4 atom `tvsh` (TV Show)
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `SeriesTitle`
-    case series
-    
-    /// MP4 atom `sdes` (TV show description)
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `SeriesDescription`
-    case seriesDescription
-    
-    /// MP4 atom `sosn` (sort by TV Show)
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `SeriesSort`
-    case seriesSort
-    
-    /// User Defined. ID3 frame `TXXX` MP4 atom `----`
-    ///
-    /// A freeform text frame/atom intended to hold user-defined items. Data is stored as a string, though it may be used for numeric strings (including boolean 1/0 strings), arrays, and so forth.
-    case userDefined
-    
-    /// User Defined Webpage. ID3 frame `WXXX`, MP4 atom `©url`
-    ///
-    /// A frame/atom intended to hold a user-defined webpage address.
-    case userDefinedWebpage
-    
-    /// Work name/Content group description. ID3 frame `TT1/TIT1`, MP4 atom `©wrk`
-    ///
-    /// Used if the sound belongs to a larger category of sounds/music. For example, classical music is often sorted in different musical sections (e.g. "Piano Concerto", "Weather - Hurricane").
-    ///
-    /// For audiobooks, this may be used to contain series data
-    case work
-    
-    /// Name of movie’s writer. MP4 atom `©wrt`
-    ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeoplesList` frame with the role `writer`
-    case writer
-    
-    /// Year. MP4 atom `yrrc`
-    ///
-    /// This is a read-only item that corresponds to the `year` value of the recording date/time.
+    case seriesSeason    
+    case series    
+    case seriesDescription    
+    case seriesSort    
+    case userDefined    
+    case userDefinedWebpage    
+    case work    
+    case writer    
     case year
     
-//    func atomKey(_ additionalIdentifier: String?) -> AtomKey {
-//        switch self {
-//            case .acknowledgment: return .acknowledgment
-//            case .album: return .album
-//            case .albumArtist: return .albumArtist
-//            case .albumArtistSort: return .albumArtistSort
-//            case .albumSort: return .albumSort
-//            case .appleStoreCountryID: return .appleStoreCountryID
-//            case .arranger: return .arranger
-//            case .arrangerKeywords: return .arrangerKeywords
-//            case .artDirector: return .artDirector
-//            case .artist: return .artist
-//            case .artistID: return .artistID
-//            case .artistKeywords: return .artistKeywords
-//            case .artistSort: return .artistSort
-//            case .artistWebpage: return .artistUrl
-//            case .audioFileWebpage: return .unknown("Audio File Webpage")
-//            case .audioSourceWebpage: return .unknown("Audio Source Webpage")
-//            case .bpm: return .bpm
-//            case .comments: return .comment
-//            case .compilation: return .compilation
-//            case .composer: return .composer
-//            case .composerID: return .composerID
-//            case .composerKeywords: return .composerKeywords
-//            case .composerSort: return .composerSort
-//            case .conductor: return .conductor
-//            case .conductorID: return .conductorID
-//            case .contentRating: return .unknown("iTunEXTC")
-//            case .copyright: return .copyright
-//            case .copyrightWebpage: return .unknown("Copyright Webpage")
-//            case .coverArt: return .coverArt
-//            case .description: return .description
-//            case .director: return .director
-//            case .discNumber: return .discNumber
-//            case .encodingDateTime: return .unknown("Encoding Date/Time")
-//            case .encodedBy: return .encodedBy
-//            case .encoderAndSettings: return .encodingTool
-//            case .executiveProducer: return .executiveProducer
-//            case .gaplessPlayback: return .gaplessPlayback
-//            case .genreCustom: return .customGenre
-//            case .genrePredefined: return .predefinedGenre
-//            case .genreID: return .genreID
-//            case .grouping: return .grouping
-//            case .information: return .information
-//            case .initialKey: return .unknown("Initial Key")
-//            case .involvedPeopleList: return .unknown(additionalIdentifier ?? "Involved Person")
-//            case .isrc: return .isrc
-//            case .iTunesAccount: return .iTunesAccount
-//            case .iTunesAccountType: return .iTunesAccountType
-//            case .label: return .label
-//            case .labelWebpage: return .labelUrl
-//            case .languages: return .unknown(additionalIdentifier ?? "Language")
-//            case .length: return .unknown(additionalIdentifier ?? "Length")
-//            case .linerNotes: return .linerNotes
-//            case .longDescription: return .longDescription
-//            case .lyrics: return .lyrics
-//            case .lyricist: return .lyricist
-//            case .mediaKind: return .mediaKind
-//            case .mood: return .unknown("Mood")
-//            case .movementCount: return .movementCount
-//            case .movement: return .movementName
-//            case .movementNumber: return .movementNumber
-//            case .musicianCreditsList: return .unknown(additionalIdentifier ?? "Performer")
-//            case .narrator: return .narrator
-//            case .originalAlbum: return .unknown("Original Album")
-//            case .originalArtist: return .originalArtist
-//            case .originalFilename: return .unknown("Original Filename")
-//            case .originalLyricist: return .unknown("Original Lyricist")
-//            case .originalReleaseDateTime: return .unknown("Original Release Date/Time")
-//            case .owner: return .owner
-//            case .paymentWebpage: return .unknown("Payment Webpage")
-//            case .performers: return .performers
-//            case .playlistDelay: return .unknown(additionalIdentifier ?? "")
-//            case .playlistID: return .playlistID
-//            case .podcast: return .podcast
-//            case .podcastCategory: return .category
-//            case .podcastDescription: return .unknown("Podcast Description")
-//            case .podcastID: return .podcastID
-//            case .podcastKeywords: return .keywords
-//            case .podcastFeed: return .podcastUrl
-//            case .producer: return .producer
-//            case .producerKeywords: return .producerKeywords
-//            case .producedNotice: return .unknown("Produced Notice")
-//            case .publisher: return .publisher
-//            case .publisherWebpage: return .unknown("Publisher Webpage")
-//            case .purchaseDateTime: return .purchaseDate
-//            case .radioStation: return .unknown("Radio Station")
-//            case .radioStationOwner: return .unknown("Radio Station Owner")
-//            case .radioStationWebpage: return .unknown("Radio Station Webpage")
-//            case .rating: return .rating
-//            case .recordCompany: return .recordCompany
-//            case .recordCompanyWebpage: return .recordCompanyUrl
-//            case .recordingCopyright: return .recordingCopyright
-//            case .recordingDateTime: return .recordingDate
-//            case .releaseDateTime: return .releaseDate
-//            case .requirements: return .requirements
-//            case .sellerID: return .sellerID
-//            case .setOrTrackSubtitle: return .trackSubtitle
-//            case .showWorkAndMovement: return .showWorkAndMovement
-//            case .soundEngineer: return .soundEngineer
-//            case .softwareVersion: return .softwareVersion
-//            case .soloist: return .soloist
-//            case .songDescription: return .songDescription
-//            case .songwriter: return .songwriter
-//            case .songwriterKeywords: return .songwriterKeywords
-//            case .sourceCredit: return .sourceCredit
-//            case .subtitle: return .subtitle
-//            case .subtitleKeywords: return .subtitleKeywords
-//            case .taggingDateTime: return .unknown("Tagging Date/Time")
-//            case .title: return .title
-//            case .titleKeywords: return .titleKeywords
-//            case .titleSort: return .titleSort
-//            case .thanks: return .thanks
-//            case .trackNumber: return .trackNumber
-//            case .seriesEpisodeNumber: return .tvEpisodeNumber
-//            case .seriesEpisodeTitle: return .tvEpisodeTitle
-//            case .seriesDistributor: return .tvNetwork
-//            case .seriesSeason: return .tvSeason
-//            case .series: return .tvShow
-//            case .seriesDescription: return .tvShowDescription
-//            case .seriesSort: return .tvShowSort
-//            case .userDefined: return .unknown(additionalIdentifier ?? "")
-//            case .userDefinedWebpage: return .unknown(additionalIdentifier ?? "Webpage")
-//            case .work: return .workName
-//            case .writer: return .writer
-//            case .year: return .year
-//        }
-//    }
-//
-//    func frameKey(_ language: ISO6392Code?, _ additionalIdentifier: String?) -> FrameKey {
-//        switch self {
-//            case .acknowledgment: return .userDefinedText("Acknowledgments")
-//            case .album: return .album
-//            case .albumArtist: return .albumArtist
-//            case .albumArtistSort: return .albumArtistSort
-//            case .albumSort: return .albumSort
-//            case .appleStoreCountryID: return .userDefinedText("AppleStoreCountryID")
-//            case .arranger: return .arranger
-//            case .arrangerKeywords: return .userDefinedText("Arranger Keywords")
-//            case .artDirector: return .involvedPeopleList
-//            case .artist: return .artist
-//            case .artistID: return .userDefinedText("ArtistID")
-//            case .artistKeywords: return .userDefinedText("Artist Keywords")
-//            case .artistSort: return .artistSort
-//            case .artistWebpage: return .artistWebpage
-//            case .audioFileWebpage: return .audioFileWebpage
-//            case .audioSourceWebpage: return .audioSourceWebpage
-//            case .bpm: return .bpm
-//            case .comments: return .comments(language: language ?? .und, description: additionalIdentifier ?? "Comment")
-//            case .compilation: return .compilation
-//            case .composer: return .composer
-//            case .composerID: return .userDefinedText("ComposerID")
-//            case .composerKeywords: return .userDefinedText("Composer Keywords")
-//            case .composerSort: return .composerSort
-//            case .conductor: return .conductor
-//            case .conductorID: return .userDefinedText("ConductorID")
-//            case .contentRating: return .userDefinedText("iTunEXTC")
-//            case .copyright: return .copyright
-//            case .copyrightWebpage: return .copyrightWebpage
-//            case .coverArt: return .attachedPicture(imageType: .other)
-//            case .description: return .comments(language: language ?? .und, description: "Description")
-//            case .director: return .involvedPeopleList
-//            case .discNumber: return .discNumber
-//            case .encodingDateTime: return .encodingTime
-//            case .encodedBy: return .encodedBy
-//            case .encoderAndSettings: return .encodingSettings
-//            case .executiveProducer: return .involvedPeopleList
-//            case .gaplessPlayback: return .playlistDelay
-//            case .genreCustom: return .genre
-//            case .genrePredefined: return .genre
-//            case .genreID: return .userDefinedText("GenreID")
-//            case .grouping: return .grouping
-//            case .information: return .userDefinedText("Information")
-//            case .initialKey: return .initialKey
-//            case .involvedPeopleList: return .involvedPeopleList
-//            case .isrc: return .isrc
-//            case .iTunesAccount: return .userDefinedText("iTunes Account")
-//            case .iTunesAccountType: return .userDefinedText("iTunes Account Type")
-//            case .label: return .userDefinedText("Label")
-//            case .labelWebpage: return .userDefinedWebpage("Label Webpage")
-//            case .languages: return .languages
-//            case .length: return .length
-//            case .linerNotes: return .comments(language: language ?? .und, description: "Liner Notes")
-//            case .longDescription:return .comments(language: language ?? .und, description: "Long Description")
-//            case .lyrics:return .unsynchronizedLyrics(language: language ?? .und, description: additionalIdentifier ?? "Lyrics")
-//            case .lyricist: return .lyricist
-//            case .mediaKind: return .userDefinedText("Media Kind")
-//            case .mood: return .mood
-//            case .movementCount: return .movementCount
-//            case .movement: return .movement
-//            case .movementNumber: return .movementNumber
-//            case .musicianCreditsList: return .musicianCreditsList
-//            case .narrator: return .userDefinedText("Narrator")
-//            case .originalAlbum: return .originalAlbum
-//            case .originalArtist: return .originalArtist
-//            case .originalFilename: return .originalFilename
-//            case .originalLyricist: return .originalLyricist
-//            case .originalReleaseDateTime: return .originalReleaseTime
-//            case .owner: return .fileOwner
-//            case .paymentWebpage: return .paymentWebpage
-//            case .performers: return .musicianCreditsList
-//            case .playlistDelay: return .playlistDelay
-//            case .playlistID: return .userDefinedText("PlaylistID")
-//            case .podcast: return .userDefinedText("podcast")
-//            case .podcastCategory: return .podcastCategory
-//            case .podcastDescription: return .podcastDescription
-//            case .podcastID: return .podcastID
-//            case .podcastKeywords: return .podcastKeywords
-//            case .podcastFeed: return .podcastFeed
-//            case .producer: return .involvedPeopleList
-//            case .producerKeywords: return .userDefinedText("Producer Keywords")
-//            case .producedNotice: return .producedNotice
-//            case .publisher: return .publisher
-//            case .publisherWebpage: return .publisherWebpage
-//            case .purchaseDateTime: return .userDefinedText("Purchase Date/Time")
-//            case .radioStation: return .radioStation
-//            case .radioStationOwner: return .radioStationOwner
-//            case .radioStationWebpage: return .radioStationWebpage
-//            case .rating: return .userDefinedText("Rating")
-//            case .recordCompany: return .userDefinedText("Record Company")
-//            case .recordCompanyWebpage: return .userDefinedWebpage("Record Company Webpage")
-//            case .recordingCopyright: return .userDefinedText("Recording Copyright")
-//            case .recordingDateTime: return .recordingDate
-//            case .releaseDateTime: return .releaseTime
-//            case .requirements: return .userDefinedText("Requirements")
-//            case .sellerID: return .userDefinedText("SellerID")
-//            case .setOrTrackSubtitle: return .setSubtitle
-//            case .showWorkAndMovement: return .userDefinedText("Show Work And Movement")
-//            case .soundEngineer: return .involvedPeopleList
-//            case .softwareVersion: return .userDefinedText("Software Version")
-//            case .soloist: return .musicianCreditsList
-//            case .songDescription: return .comments(language: language ?? .und, description: "Song Description")
-//            case .songwriter: return .involvedPeopleList
-//            case .songwriterKeywords: return .userDefinedText("Songwriter Keywords")
-//            case .sourceCredit: return .userDefinedText("Source Credit")
-//            case .subtitle: return .subtitle
-//            case .subtitleKeywords: return .userDefinedText("Subtitle Keywords")
-//            case .taggingDateTime: return .taggingTime
-//            case .title: return .title
-//            case .titleKeywords: return .userDefinedText("Title Keywords")
-//            case .titleSort: return .titleSort
-//            case .thanks: return .userDefinedText("Thanks")
-//            case .trackNumber: return .trackNumber
-//            case .seriesEpisodeNumber: return .userDefinedText("Series Episode Number")
-//            case .seriesEpisodeTitle:return .userDefinedText("Series Episode Title")
-//            case .seriesDistributor:return .userDefinedText("Series Distributor")
-//            case .seriesSeason:return .userDefinedText("Series Season")
-//            case .series:return .userDefinedText("Series Title")
-//            case .seriesDescription:return .userDefinedText("Series Description")
-//            case .seriesSort:return .userDefinedText("Series Sort")
-//            case .userDefined: return .userDefinedText(additionalIdentifier ?? "")
-//            case .userDefinedWebpage: return .userDefinedWebpage(additionalIdentifier ?? "")
-//            case .work: return .contentGroup
-//            case .writer: return .involvedPeopleList
-//            case .year: return .recordingDate
-//        }
-//    }
 }

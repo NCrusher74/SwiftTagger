@@ -1,41 +1,15 @@
 //
-//  AudioFile.Accessors.B-C.swift
+//  AudioFile.Accessors.B-D.swift
 //  
 //
 //  Created by Nolaine Crusher on 9/29/20.
 //
 
 import Foundation
-import SwiftTaggerMP4
 import Cocoa
 
 @available(OSX 10.13, *)
 extension AudioFile {
-        
-    /// BPM. ID3 frame `TBPM`, MP4 atom `tmpo`
-    ///
-    /// Contains the number of beats per minute in the main part of the audio. The BPM is an integer and represented as a numerical string.
-    var bpm: Int? {
-        get {
-            switch library {
-                case .id3: return id3Tag.bpm
-                case .mp4: return mp4Tag.bpm
-            }
-        }
-        set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.bpm = new
-                    case .mp4: mp4Tag.bpm = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.bpm = nil
-                    case .mp4: mp4Tag.bpm = nil
-                }
-            }
-        }
-    }
     
     /// Comments ID3 frame `COMM` MP4 atom `©cmt`
     ///
@@ -50,16 +24,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag[comment: "Comment", .und] = new
-                    case .mp4: mp4Tag.comment = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag[comment: "Comment", .und] = nil
-                    case .mp4: mp4Tag.comment = nil
-                }
+            switch library {
+                case .id3: id3Tag[comment: "Comment", .und] = newValue
+                case .mp4: mp4Tag.comment = newValue
             }
         }
     }
@@ -75,16 +42,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.compilation = new
-                    case .mp4: mp4Tag.compilation = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.compilation = nil
-                    case .mp4: mp4Tag.compilation = nil
-                }
+            switch library {
+                case .id3: id3Tag.compilation = newValue
+                case .mp4: mp4Tag.compilation = newValue
             }
         }
     }
@@ -100,16 +60,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.composer = new
-                    case .mp4: mp4Tag.composer = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.composer = nil
-                    case .mp4: mp4Tag.composer = nil
-                }
+            switch library {
+                case .id3: id3Tag.composer = newValue
+                case .mp4: mp4Tag.composer = newValue
             }
         }
     }
@@ -134,20 +87,18 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag["ComposerID"] = String(new)
-                    case .mp4: mp4Tag.conductorID = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag["ComposerID"] = nil
-                    case .mp4: mp4Tag.conductorID = nil
-                }
+            switch library {
+                case .id3:
+                    if let new = newValue {
+                        id3Tag["ComposerID"] = String(new)
+                    } else {
+                        id3Tag["ComposerID"] = nil
+                    }
+                case .mp4: mp4Tag.conductorID = newValue
             }
         }
     }
-
+    
     /// Keywords for composer. MP4 atom `©cok`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Composer Keywords`
@@ -184,16 +135,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.composerSort = new
-                    case .mp4: mp4Tag.composerSort = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.composerSort = nil
-                    case .mp4: mp4Tag.composerSort = nil
-                }
+            switch library {
+                case .id3: id3Tag.composerSort = newValue
+                case .mp4: mp4Tag.composerSort = newValue
             }
         }
     }
@@ -207,20 +151,13 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.conductor = new
-                    case .mp4: mp4Tag.conductor = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.conductor = nil
-                    case .mp4: mp4Tag.conductor = nil
-                }
+            switch library {
+                case .id3: id3Tag.conductor = newValue
+                case .mp4: mp4Tag.conductor = newValue
             }
         }
     }
-
+    
     /// The iTunes-store conductor identifier. MP4 atom `cnID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `ConductorID`
@@ -241,16 +178,14 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag["ConductorID"] = String(new)
-                    case .mp4: mp4Tag.conductorID = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag["ConductorID"] = nil
-                    case .mp4: mp4Tag.conductorID = nil
-                }
+            switch library {
+                case .id3:
+                    if let new = newValue {
+                        id3Tag["ConductorID"] = String(new)
+                    } else {
+                        id3Tag["ConductorID"] = nil
+                    }
+                case .mp4: mp4Tag.conductorID = newValue
             }
         }
     }
@@ -310,16 +245,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.copyright = new
-                    case .mp4: mp4Tag.copyright = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.copyright = nil
-                    case .mp4: mp4Tag.copyright = nil
-                }
+            switch library {
+                case .id3: id3Tag.copyright = newValue
+                case .mp4: mp4Tag.copyright = newValue
             }
         }
     }
@@ -337,20 +265,13 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.copyrightWebpage = new
-                    case .mp4: mp4Tag["Copyright Webpage"] = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.copyrightWebpage = nil
-                    case .mp4: mp4Tag["Copyright Webpage"] = nil
-                }
+            switch library {
+                case .id3: id3Tag.copyrightWebpage = newValue
+                case .mp4: mp4Tag["Copyright Webpage"] = newValue
             }
         }
     }
-
+    
     /// Embedded cover art ID3 frame `APIC`, MP4 atom `covr`
     var coverArt: NSImage? {
         switch library {
@@ -386,16 +307,9 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag[comment: "Description", .und] = new
-                    case .mp4: mp4Tag.comment = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag[comment: "Description", .und] = nil
-                    case .mp4: mp4Tag.comment = nil
-                }
+            switch library {
+                case .id3: id3Tag[comment: "Description", .und] = newValue
+                case .mp4: mp4Tag.comment = newValue
             }
         }
     }
@@ -411,20 +325,13 @@ extension AudioFile {
             }
         }
         set {
-            if let new = newValue {
-                switch library {
-                    case .id3: id3Tag.involvementCreditsList[.director] = new.toArray
-                    case .mp4: mp4Tag.director = new
-                }
-            } else {
-                switch library {
-                    case .id3: id3Tag.involvementCreditsList[.director] = nil
-                    case .mp4: mp4Tag.director = nil
-                }
+            switch library {
+                case .id3: id3Tag.involvementCreditsList[.director] = newValue?.toArray
+                case .mp4: mp4Tag.director = newValue
             }
         }
     }
-
+    
     /// Disc index/position in set, ID3 frame `TPOS` MP4 atom `disk`
     ///
     /// A numeric string that describes which part of a set the audio came from.
