@@ -328,7 +328,7 @@ extension AudioFile {
     var podcastKeywords: [String] {
         get {
             switch library {
-                case .id3: return id3Tag.podcastKeywords
+                case .id3: return id3Tag.podcastKeywords 
                 case .mp4: return mp4Tag.keywords ?? []
             }
         }
@@ -347,13 +347,13 @@ extension AudioFile {
         get {
             switch library {
                 case .id3: return id3Tag.podcastFeed
-                case .mp4: return mp4Tag.podcastUrl
+                case .mp4: return mp4Tag.podcastFeed
             }
         }
         set {
             switch library {
                 case .id3: id3Tag.podcastFeed = newValue
-                case .mp4: mp4Tag.podcastUrl = newValue
+                case .mp4: mp4Tag.podcastFeed = newValue
             }
         }
     }

@@ -214,7 +214,7 @@ extension AudioFile {
                     } else {
                         return (.none, nil)
                     }
-                case .mp4: return mp4Tag.contentRating
+                case .mp4: return mp4Tag.contentRating 
             }
         }
         set {
@@ -338,8 +338,8 @@ extension AudioFile {
     var discNumber: (disc: Int, totalDiscs: Int?) {
         get {
             switch library {
-                case .id3: return id3Tag.discNumber
-                case .mp4: return mp4Tag.discNumber
+                case .id3: return id3Tag.discNumber 
+                case .mp4: return mp4Tag.discNumber 
             }
         }
         set {

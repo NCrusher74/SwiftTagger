@@ -349,22 +349,4 @@ extension AudioFile {
             }
         }
     }
-    
-    /// BPM. ID3 frame `TBPM`, MP4 atom `tmpo`
-    ///
-    /// Contains the number of beats per minute in the main part of the audio. The BPM is an integer and represented as a numerical string.
-    var bpm: Int? {
-        get {
-            switch library {
-                case .id3: return id3Tag.bpm
-                case .mp4: return mp4Tag.bpm
-            }
-        }
-        set {
-            switch library {
-                case .id3: id3Tag.bpm = newValue
-                case .mp4: mp4Tag.bpm = newValue
-            }
-        }
-    }
 }

@@ -266,7 +266,7 @@ extension AudioFile {
                     list[.composer] = id3Tag.composer?.toArray
                     list[.lyricist] = id3Tag.lyricist?.toArray
                     list[.publisher] = id3Tag.publisher?.toArray
-                    return list
+                    return list 
                 case .mp4:
                     var list = [InvolvementCredits : [String]]()
                     list[.artDirection] = mp4Tag.artDirector?.toArray

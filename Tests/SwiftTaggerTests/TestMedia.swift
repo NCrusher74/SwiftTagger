@@ -6,75 +6,29 @@
 //
 
 import Foundation
-import SwiftTaggerMP4
-import SwiftTaggerID3
-let testMediaDirectory = URL(fileURLWithPath: #file).deletingLastPathComponent()
+let testMediaDirectory = URL(fileURLWithPath: #file)
+    .deletingLastPathComponent()
+    .appendingPathComponent("TestMedia")
 
-let sampleM4b: URL = {
-    return URL(fileURLWithPath: "/Users/nolainecrusher/Documents/Git/SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/TestMedia/SampleBook.m4b")
-}()
+public let sampleMp3 = testMediaDirectory
+    .appendingPathComponent("sampleMp3")
+    .appendingPathExtension("mp3")
 
-//let sampleM4b: URL =
-//    testMediaDirectory
-//    .appendingPathComponent("SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/SampleBook")
-//    .appendingPathExtension("m4b")
-//
+public let sampleMp4 = testMediaDirectory
+    .appendingPathComponent("sampleMp4")
+    .appendingPathExtension("m4a")
 
-let sampleM4a: URL = {
-   return URL(fileURLWithPath: "/Users/nolainecrusher/Documents/Git/SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/TestMedia/mp4_chaptered.m4a")
-}()
+public let sampleMp3NoMeta = testMediaDirectory
+    .appendingPathComponent("mp3-nometa")
+    .appendingPathExtension("mp3")
 
-//let sampleM4a: URL =
-//    testMediaDirectory
-//    .appendingPathComponent("SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/mp4_chaptered")
-//    .appendingPathExtension("m4a")
-//
+public let sampleMp4NoMeta = testMediaDirectory
+    .appendingPathComponent("mp4-nometa")
+    .appendingPathExtension("m4a")
 
-let sampleMp4NoMeta: URL = {
-  return URL(fileURLWithPath: "/Users/nolainecrusher/Documents/Git/SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/TestMedia/mp4_nometa.m4a")
-}()
-
-//let sampleMp4NoMeta: URL =
-//    testMediaDirectory
-//    .appendingPathComponent("SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/mp4_nometa")
-//    .appendingPathExtension("m4a")
-//
-
-let sampleCover: URL = {
-    return URL(fileURLWithPath: "/Users/nolainecrusher/Documents/Git/SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/TestMedia/samplecover-green.jpg")
-}()
-
-//let sampleCover: URL =
-//    testMediaDirectory
-//    .appendingPathComponent("SwiftTaggerID3/Tests/SwiftTaggerID3Tests/samplecover-green")
-//    .appendingPathExtension("jpg")
-//
-
-let sampleMp3V24: URL = {
-    return URL(fileURLWithPath: "/Users/nolainecrusher/Documents/Git/SwiftTaggerID3/Tests/SwiftTaggerID3Tests/TestMedia/mp3-v24-with-meta.mp3")
-}()
-
-//public let sampleMp3V24 = testMediaDirectory
-//    .appendingPathComponent("SwiftTaggerID3Tests/mp3-v24-with-meta")
-//    .appendingPathExtension("mp3")
-//
-
-let sampleMp3Chaptered: URL = {
-    return URL(fileURLWithPath: "/Users/nolainecrusher/Documents/Git/SwiftTaggerID3/Tests/SwiftTaggerID3Tests/TestMedia/mp3-chapterized.mp3")
-}()
-
-//public let sampleMp3Chaptered = testMediaDirectory
-//    .appendingPathComponent("SwiftTaggerID3/Tests/SwiftTaggerID3Tests/mp3-chapterized")
-//    .appendingPathExtension("mp3")
-//
-
-let sampleMp3NoMeta: URL = {
-   return URL(fileURLWithPath: "/Users/nolainecrusher/Documents/Git/SwiftTaggerID3/Tests/SwiftTaggerID3Tests/TestMedia/mp3-nometa.mp3")
-}()
-
-//public let sampleMp3NoMeta = testMediaDirectory
-//    .appendingPathComponent("SwiftTaggerID3/Tests/SwiftTaggerID3Tests/mp3-nometa")
-//    .appendingPathExtension("mp3")
+public let sampleCover = testMediaDirectory
+    .appendingPathComponent("samplecover-green")
+    .appendingPathExtension("jpg")
 
 func tempOutputDirectory(fileExtension: FileType) -> URL {
     let tempDirectory = FileManager.default.temporaryDirectory

@@ -24,7 +24,6 @@ public typealias Rating = SwiftTaggerMP4.Rating
 public typealias ISO6392Code = SwiftLanguageAndLocaleCodes.ISO6392Code
 public typealias ICULocaleCode = SwiftLanguageAndLocaleCodes.ICULocaleCode
 
-
 //    func atomKey(_ additionalIdentifier: String?) -> AtomKey {
 //        switch self {
 //            case .acknowledgment: return .acknowledgment

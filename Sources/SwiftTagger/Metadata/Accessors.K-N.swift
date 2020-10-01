@@ -222,13 +222,13 @@ extension AudioFile {
         get {
             switch library {
                 case .id3: return id3Tag.movement
-                case .mp4: return mp4Tag.movementName
+                case .mp4: return mp4Tag.movement
             }
         }
         set {
             switch library {
                 case .id3: id3Tag.movement = newValue
-                case .mp4: mp4Tag.movementName = newValue
+                case .mp4: mp4Tag.movement = newValue
             }
         }
     }
@@ -259,7 +259,7 @@ extension AudioFile {
             switch library {
                 case .id3: var list = id3Tag.musicianCreditsList
                     list[.artist] = id3Tag.artist?.toArray
-                    return list
+                    return list 
                 case .mp4:
                     var list = [MusicianCredits : [String]]()
                     list[.artist] = mp4Tag.artist?.toArray

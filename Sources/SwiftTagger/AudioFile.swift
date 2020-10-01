@@ -13,78 +13,59 @@ import SwiftTaggerMP4
 /// A type representing an audio file stored locally
 @available(OSX 10.13, *)
 public struct AudioFile {
-    public init(location: URL) throws {
-        self.location = location
-        
-        let validMp4Extensions = ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"]
-        if self.location.pathExtension.lowercased() == "mp3" {
-            self.library = .id3
-        } else if validMp4Extensions.contains(
-                    self.location.pathExtension.lowercased()) {
-            self.library = .mp4
-        } else {
-            throw AudioFileError.InvalidFileType
-        }
-        
-        if self.library == .id3 {
-            self.mp3 = try Mp3File(location: location)
-            if let mp3 = self.mp3 {
-                id3Tag = try SwiftTaggerID3.Tag(mp3File: mp3)
-            }
-        } else {
-            self.mp4 = try Mp4File(location: location)
-            if let mp4 = self.mp4 {
-                mp4Tag = try SwiftTaggerMP4.Tag(mp4File: mp4)
-            }
-        }
-    }
-    
-    // MARK: - Write
-    /// Writes the media with edited metdata to a new file at the specified location
-    public func write(outputLocation: URL) throws {
-        switch library {
-            case .mp4:
-                if let mp4 = self.mp4 {
-                    try mp4.write(tag: self.mp4Tag, to: outputLocation)
-                }
-            case .id3:
-                if let mp3 = self.mp3 {
-                    try mp3.write(tag: self.id3Tag, version: .v2_4, outputLocation: outputLocation)
-                }
-        }
-    }
-    
     // MARK: - Properties
     var location: URL
-    var library: Library
+    private var _id3Tag: SwiftTaggerID3.Tag?
+    private var _mp4Tag: SwiftTaggerMP4.Tag?
+
+    public init(location: URL) throws {
+        self.location = location
+        switch library {
+            case .id3:
+                let file = try Mp3File(location: location)
+                self._id3Tag = try file.tag()
+            case .mp4:
+                let file = try Mp4File(location: location)
+                self._mp4Tag = try file.tag()
+        }
+    }
     
-    private var mp4: SwiftTaggerMP4.Mp4File? = nil
-    private var _mp4Tag: SwiftTaggerMP4.Tag? = nil
+    var id3Tag: SwiftTaggerID3.Tag {
+        get {
+            if let tag = self._id3Tag {
+                return tag
+            } else {
+                /// this should never happen, as there should always be a tag instance if there is a file instance
+                fatalError("Cannot access ID3 tag")
+            }
+        }
+        set {
+            self._id3Tag = newValue
+        }
+    }
+
     var mp4Tag: SwiftTaggerMP4.Tag {
         get {
-            do {
-                return try self._mp4Tag ?? SwiftTaggerMP4.Tag(mp4File: self.mp4 ?? Mp4File(location: self.location))
-            } catch {
-                fatalError("SwiftTaggerMP4.Tag is not accessible")
+            if let tag = self._mp4Tag {
+                return tag
+            } else {
+                /// this should never happen, as there should always be a tag instance if there is a file instance
+                fatalError("Cannot access MP4 tag")
             }
         }
         set {
             self._mp4Tag = newValue
         }
     }
-    
-    private var mp3: SwiftTaggerID3.Mp3File? = nil
-    private var _id3Tag: SwiftTaggerID3.Tag? = nil
-    var id3Tag: SwiftTaggerID3.Tag {
-        get {
-            do {
-                return try self._id3Tag ?? SwiftTaggerID3.Tag(mp3File: self.mp3 ?? Mp3File(location: self.location))
-            } catch {
-                fatalError("SwiftTaggerID3.Tag is not accessible")
-            }
-        }
-        set {
-            self._id3Tag = newValue
+
+    var library: Library {
+        let fileExtension = location.pathExtension.lowercased()
+        if ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"].contains(fileExtension) {
+            return .mp4
+        } else if fileExtension == "mp3" {
+            return .id3
+        } else {
+            fatalError("Invalid file type with extension \(fileExtension). Must have valid extension for MP3 or MP4 audio files")
         }
     }
 }

@@ -135,8 +135,8 @@ extension AudioFile {
     var trackNumber: (track: Int, totalTracks: Int?) {
         get {
             switch library {
-                case .id3: return id3Tag.trackNumber
-                case .mp4: return mp4Tag.trackNumber
+                case .id3: return id3Tag.trackNumber 
+                case .mp4: return mp4Tag.trackNumber 
             }
         }
         set {

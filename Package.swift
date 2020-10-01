@@ -31,8 +31,8 @@ let package = Package(
         .testTarget(
             name: "SwiftTaggerTests",
             dependencies: ["SwiftTagger", "SwiftTaggerMP4", "SwiftTaggerID3"],
-            resources: [.process("SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/TestMedia"),
-                .process("SwiftTaggerID3/Tests/SwiftTaggerID3Tests/TestMedia"),
+            resources: [.copy("SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/TestMedia"),
+                .copy("SwiftTaggerID3/Tests/SwiftTaggerID3Tests/TestMedia"),
             ]
         ),
     ]
