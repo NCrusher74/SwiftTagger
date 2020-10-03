@@ -12,7 +12,7 @@ extension AudioFile {
     /// Name of record label MP4 atom `©lab`
     ///
     /// There is no corresponding ID3 frame. For MP3al files, this metadata will be written to a userDefinedText frame with the description `Label`
-    var label: String? {
+    public var label: String? {
         get {
             switch library {
                 case .id3: return id3Tag["Label"]
@@ -30,16 +30,16 @@ extension AudioFile {
     /// URL of record label MP4 atom `©lal`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedWebpage frame with the description `Label Webpage`
-    var labelWebpage: String? {
+    public var labelWebpage: String? {
         get {
             switch library {
-                case .id3: return id3Tag[userDefinedUrl: "Label Webpge"]
+                case .id3: return id3Tag[userDefinedUrl: "Label Webpage"]
                 case .mp4: return mp4Tag.labelUrl
             }
         }
         set {
             switch library {
-                case .id3: id3Tag[userDefinedUrl: "Label Webpge"] = newValue
+                case .id3: id3Tag[userDefinedUrl: "Label Webpage"] = newValue
                 case .mp4: mp4Tag.labelUrl = newValue
             }
         }
@@ -48,23 +48,28 @@ extension AudioFile {
     /// Language ID3 frame `TLAN`, MP4 atom `elng`
     ///
     /// Should contain the languages of the text or lyrics spoken or sung in the audio. The language is represented with three characters according to ISO-639-2 [ISO-639-2]. If more than one language is used in the text their language codes should follow according to the amount of their usage, e.g. "eng" $00 "sve" $00.
-    var language: (id3: [ISO6392Code]?, mp4: ICULocaleCode?) {
+    public var language: (id3: [ISO6392Code]?, mp4: [ICULocaleCode]?) {
         get {
             switch library {
                 case .id3: return (id3Tag.languages, nil)
-                case .mp4: return (nil, mp4Tag.language)
+                case .mp4: return (nil, mp4Tag.languages)
             }
         }
         set {
-            if let id3Value = newValue.id3, library == .id3 {
-                id3Tag.languages = id3Value
-            } else {
-                id3Tag.frames[.languages] = nil
-            }
-            if let mp4Value = newValue.mp4, library == .mp4 {
-                mp4Tag.language = mp4Value
-            } else {
-                mp4Tag.language = .unspecified
+            switch library {
+                case .id3:
+                    if let new = newValue.id3 {
+                        id3Tag.languages = new
+                    } else {
+                        id3Tag.languages = [.und]
+                    }
+                case .mp4:
+                    if let new = newValue.mp4 {
+                        mp4Tag.languages = new
+                    } else {
+                        mp4Tag.languages = [.unspecified]
+                    }
+                    
             }
         }
     }
@@ -72,7 +77,7 @@ extension AudioFile {
     /// Length frame ID3 frame `TLEN` MP4 atom `mvhd`
     ///
     /// Contains the length of the audio file in milliseconds. Because SwiftTagger does not support editing media files, this property is read-only
-    var length: Int? {
+    public var length: Int? {
         switch library {
             case .id3: return id3Tag.length
             case .mp4: return mp4Tag.duration
@@ -82,7 +87,7 @@ extension AudioFile {
     /// Liner notes. MP4 atom `©lnt`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `Liner Notes`
-    var linerNotes: String? {
+    public var linerNotes: String? {
         get {
             switch library {
                 case .id3: return id3Tag[comment: "Liner Notes", .und]
@@ -100,7 +105,7 @@ extension AudioFile {
     /// Long desccription MP4 atom `ldes`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `Long Description`
-    var longDescription: String? {
+    public var longDescription: String? {
         get {
             switch library {
                 case .id3: return id3Tag[comment: "Long Description", .und]
@@ -120,7 +125,7 @@ extension AudioFile {
     /// This frame contains the lyrics of the song or a text transcription of other vocal activities.
     ///
     /// For audiobooks, this is commonly used to contain a long book-jacket description or "blurb"
-    var lyrics: String? {
+    public var lyrics: String? {
         get {
             switch library {
                 case .id3: return id3Tag[lyrics: "Lyrics", .und]
@@ -138,7 +143,7 @@ extension AudioFile {
     /// Lyricist/Text writer. ID3 frame `TEXT` MP4 atom `©aut`
     ///
     /// Intended for the writer of the text or lyrics in the recording.
-    var lyricist: String? {
+    public var lyricist: String? {
         get {
             switch library {
                 case .id3: return id3Tag.lyricist
@@ -156,7 +161,7 @@ extension AudioFile {
     /// The media kind value for the media. MP4 atom `stik`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Media Kind`
-    var mediaKind: Stik? {
+    public var mediaKind: Stik? {
         get {
             switch library {
                 case .id3:
@@ -182,7 +187,7 @@ extension AudioFile {
     /// Intended to reflect the mood of the audio with a few keywords, e.g. "Romantic" or "Sad".
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Mood`
-    var mood: String? {
+    public var mood: String? {
         get {
             switch library {
                 case .id3: return id3Tag.mood
@@ -200,7 +205,7 @@ extension AudioFile {
     /// Movement Count. ID3 frame `MVCN` MP4 atom `©mvc`
     ///
     /// Used by iTunes to denote the number of movements in a work
-    var movementCount: Int? {
+    public var movementCount: Int? {
         get {
             switch library {
                 case .id3: return id3Tag.movementCount
@@ -218,7 +223,7 @@ extension AudioFile {
     /// Movement Name. ID3 frame `MVNM` MP4 atom `©mvn`
     ///
     /// Used by iTunes to name the movements of a multi-part work
-    var movement: String? {
+    public var movement: String? {
         get {
             switch library {
                 case .id3: return id3Tag.movement
@@ -236,7 +241,7 @@ extension AudioFile {
     /// Movement Number. ID3 frame `MVIN` MP4 atom `©mvi`
     ///
     /// Used by iTunes to denote the total number of movements in a work
-    var movementNumber: Int? {
+    public var movementNumber: Int? {
         get {
             switch library {
                 case .id3: return id3Tag.movementNumber
@@ -254,7 +259,7 @@ extension AudioFile {
     /// Musician credits list. ID3 frame `TMCL`
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to the appropriate atom for the role, if one exists. Otherwise, a userDefined atom will be created with a description that corresponds to the role
-    var musicianCreditsList: [MusicianCredits : [String]] {
+    public var musicianCreditsList: [MusicianCredits : [String]] {
         get {
             switch library {
                 case .id3: var list = id3Tag.musicianCreditsList
@@ -266,6 +271,12 @@ extension AudioFile {
                     list[.soloist] = mp4Tag.soloist?.toArray
                     list[.narrator] = mp4Tag.narrator?.toArray
                     list[.performer] = mp4Tag.performers
+
+                    for atom in mp4Tag.unknownAtoms {
+                        if let credit = MusicianCredits(rawValue: atom.name) {
+                            list[credit] = atom.stringValue.toArray
+                        }
+                    }
                     return list
             }
         }
@@ -301,7 +312,7 @@ extension AudioFile {
     /// Narrator (as listed by Audible in audiobooks) MP4 atom `©nrt`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Narrator`
-    var narrator: String? {
+    public var narrator: String? {
         get {
             switch library {
                 case .id3: return id3Tag.musicianCreditsList[.narrator]?.toString

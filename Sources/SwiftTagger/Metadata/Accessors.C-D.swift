@@ -16,7 +16,7 @@ extension AudioFile {
     /// This frame is intended for any kind of full text information that does not fit in any other frame. ALLOWS `(/n)` new line characters.
     ///
     /// For audiobooks, this frame is frequently used to contain the book-jacket description, or "blurb"
-    var comments: String? {
+    public var comments: String? {
         get {
             switch library {
                 case .id3: return id3Tag[comment: "Comment", .und]
@@ -34,7 +34,7 @@ extension AudioFile {
     /// Compilation. ID3 tag `TCMP`, MP4 atom `cpil`
     ///
     /// This is a simple text frame that iTunes uses to indicate if the file is part of a compilation. Contains a text string (1 or 0) representing a boolean value
-    var compilation: Bool? {
+    public var compilation: Bool? {
         get {
             switch library {
                 case .id3: return id3Tag.compilation
@@ -52,7 +52,7 @@ extension AudioFile {
     /// Composer ID3 frame `TCOM` MP4 atom `©com`
     ///
     /// The name of the composer. Also used commonly in audiobooks for the name of the narrator.
-    var composer: String? {
+    public var composer: String? {
         get {
             switch library {
                 case .id3: return id3Tag.composer
@@ -70,7 +70,7 @@ extension AudioFile {
     /// The iTunes-store composer identifier. MP4 atom `cmID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `ComposerID`
-    var composerID: Int? {
+    public var composerID: Int? {
         get {
             switch library {
                 case .id3:
@@ -83,7 +83,7 @@ extension AudioFile {
                     } else {
                         return nil
                     }
-                case .mp4: return mp4Tag.conductorID
+                case .mp4: return mp4Tag.composerID
             }
         }
         set {
@@ -94,7 +94,7 @@ extension AudioFile {
                     } else {
                         id3Tag["ComposerID"] = nil
                     }
-                case .mp4: mp4Tag.conductorID = newValue
+                case .mp4: mp4Tag.composerID = newValue
             }
         }
     }
@@ -102,7 +102,7 @@ extension AudioFile {
     /// Keywords for composer. MP4 atom `©cok`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Composer Keywords`
-    var composerKeywords: [String] {
+    public var composerKeywords: [String] {
         get {
             switch library {
                 case .id3: return id3Tag["Composer Keywords"]?.toArray ?? []
@@ -127,7 +127,7 @@ extension AudioFile {
     /// ComposerSort. ID3 frame `TSOC` MP4 atom `soco`
     ///
     /// Frame used for sorting by composer in iTunes
-    var composerSort: String? {
+    public var composerSort: String? {
         get {
             switch library {
                 case .id3: return id3Tag.composerSort
@@ -143,7 +143,7 @@ extension AudioFile {
     }
     
     /// Conductor name. ID3 frame `TPE3`, MP4 atom `©con`
-    var conductor: String? {
+    public var conductor: String? {
         get {
             switch library {
                 case .id3: return id3Tag.conductor
@@ -161,7 +161,7 @@ extension AudioFile {
     /// The iTunes-store conductor identifier. MP4 atom `cnID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `ConductorID`
-    var conductorID: Int? {
+    public var conductorID: Int? {
         get {
             switch library {
                 case .id3:
@@ -191,39 +191,45 @@ extension AudioFile {
     }
     
     /// Content rating/advisory (such as MPAA ratings). userDefined atom/frame `iTunEXTC`
-    var contentRating: (contentRating: ContentRating, ratingNotes: String?) {
+    public var contentRating:
+        (contentRating: ContentRating, ratingNotes: String?) {
         get {
             switch library {
+                case .mp4: return mp4Tag.contentRating
                 case .id3:
-                    if let ratingString = id3Tag["iTunEXTC"] {
-                        let components: [String] = ratingString.components(separatedBy: "|")
-                        var rating: ContentRating = .none
-                        var notes: String? = nil
+                    if let string = id3Tag["iTunEXTC"] {
+                        let components: [String] = string.components(separatedBy: "|")
                         if components.count == 3 {
-                            if let contentRating = ContentRating(rawValue: ratingString) {
-                                rating = contentRating
+                            if let rating = ContentRating(rawValue: string) {
+                                return (rating, nil)
+                            } else {
+                                return (.none, nil)
                             }
                         } else {
-                            let string = components.dropLast().joined(separator: "|")
-                            if let contentRating = ContentRating(rawValue: string) {
-                                rating = contentRating
+                            let ratingComponentsString = components[0 ..< 3].joined(separator: "|") + "|"
+                            let note = components.last
+                            if let rating = ContentRating(rawValue: ratingComponentsString) {
+                                return (rating, note)
+                            } else {
+                                return (.none, nil)
                             }
-                            notes = components.dropFirst(3).joined()
                         }
-                        return (rating, notes)
                     } else {
                         return (.none, nil)
                     }
-                case .mp4: return mp4Tag.contentRating 
             }
         }
         set {
             if newValue != (.none, nil) {
                 switch library {
-                    case .id3:
-                        let string = "\(newValue.contentRating.rawValue)|\(newValue.ratingNotes ?? "")"
-                        id3Tag["iTunEXTC"] = string
                     case .mp4: mp4Tag.contentRating = newValue
+                    case .id3:
+                        let string = newValue.contentRating.rawValue
+                        if let note = newValue.ratingNotes {
+                            id3Tag["iTunEXTC"] = string + note
+                        } else {
+                            id3Tag["iTunEXTC"] = string
+                        }
                 }
             } else {
                 switch library {
@@ -237,7 +243,7 @@ extension AudioFile {
     /// Copyright declaration ID3 frame `TCOP` MP4 atom `cprt`
     ///
     /// The string must begin with a year and a space character (making five characters), is intended for the copyright holder of the original sound, not the audio file itself.
-    var copyright: String? {
+    public var copyright: String? {
         get {
             switch library {
                 case .id3: return id3Tag.copyright
@@ -257,7 +263,7 @@ extension AudioFile {
     /// URL pointing at a webpage where the terms of use and ownership of the file is described.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Copyright Webpage`
-    var copyrightWebpage: String? {
+    public var copyrightWebpage: String? {
         get {
             switch library {
                 case .id3: return id3Tag.copyrightWebpage
@@ -273,14 +279,14 @@ extension AudioFile {
     }
     
     /// Embedded cover art ID3 frame `APIC`, MP4 atom `covr`
-    var coverArt: NSImage? {
+    public var coverArt: NSImage? {
         switch library {
             case .id3: return id3Tag[attachedPicture: .other]
             case .mp4: return mp4Tag.coverArt
         }
     }
     
-    mutating func setCoverArt(imageLocation: URL) throws {
+    public mutating func setCoverArt(imageLocation: URL) throws {
         switch library {
             case .id3: try id3Tag.set(attachedPicture: .other,
                                       imageLocation: imageLocation,
@@ -289,7 +295,7 @@ extension AudioFile {
         }
     }
     
-    mutating func removeCoverArt() throws {
+    public mutating func removeCoverArt() throws {
         switch library {
             case .id3: id3Tag.removeImage(type: .other)
             case .mp4: try mp4Tag.removeCoverArt()
@@ -299,17 +305,17 @@ extension AudioFile {
     /// Description (short) MP4 atom `©des`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `Description`
-    var description: String? {
+    public var description: String? {
         get {
             switch library {
                 case .id3: return id3Tag[comment: "Description", .und]
-                case .mp4: return mp4Tag.comment
+                case .mp4: return mp4Tag.description
             }
         }
         set {
             switch library {
                 case .id3: id3Tag[comment: "Description", .und] = newValue
-                case .mp4: mp4Tag.comment = newValue
+                case .mp4: mp4Tag.description = newValue
             }
         }
     }
@@ -317,7 +323,7 @@ extension AudioFile {
     /// Name of movie’s director. MP4 atom `©dir`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to to the `involvedPeopleList` frame with the role `director`
-    var director: String? {
+    public var director: String? {
         get {
             switch library {
                 case .id3: return id3Tag.involvementCreditsList[.director]?.toString
@@ -335,7 +341,7 @@ extension AudioFile {
     /// Disc index/position in set, ID3 frame `TPOS` MP4 atom `disk`
     ///
     /// A numeric string that describes which part of a set the audio came from.
-    var discNumber: (disc: Int, totalDiscs: Int?) {
+    public var discNumber: (disc: Int, totalDiscs: Int?) {
         get {
             switch library {
                 case .id3: return id3Tag.discNumber 

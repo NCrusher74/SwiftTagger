@@ -15,7 +15,7 @@ extension AudioFile {
     /// Contains the name of the internet radio station from which the audio is streamed.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Radio Station`
-    var radioStation: String? {
+    public var radioStation: String? {
         get {
             switch library {
                 case .id3: return id3Tag.radioStation
@@ -35,7 +35,7 @@ extension AudioFile {
     /// Contains the name of the owner of the internet radio station from which the audio is streamed.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Radio Station Owner`
-    var radioStationOwner: String? {
+    public var radioStationOwner: String? {
         get {
             switch library {
                 case .id3: return id3Tag.radioStationOwner
@@ -55,7 +55,7 @@ extension AudioFile {
     /// A URL pointing at the homepage of the internet radio station.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Radio Station Webpage`
-    var radioStationWebpage: String? {
+    public var radioStationWebpage: String? {
         get {
             switch library {
                 case .id3: return id3Tag.radioStationWebpage
@@ -73,7 +73,7 @@ extension AudioFile {
     /// Rating indicator for `clean`, `explicit`, or `none` MP4 atom `rtng`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Rating`
-    var rating: Rating? {
+    public var rating: Rating? {
         get {
             switch library {
                 case .id3:
@@ -101,7 +101,7 @@ extension AudioFile {
     /// Name of file creator or maker MP4 atom `©mak`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Record Company`
-    var recordCompany: String? {
+    public var recordCompany: String? {
         get {
             switch library {
                 case .id3: return id3Tag["Record Company"]
@@ -119,23 +119,23 @@ extension AudioFile {
     /// URL of file creator or maker MP4 atom `©mal`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedWebpage frame with the description `Record Company Webpage`
-    var recordCompanyWebpage: String? {
+    public var recordCompanyWebpage: String? {
         get {
             switch library {
-                case .id3: return id3Tag["Record Company Webpage"]
+                case .id3: return id3Tag[userDefinedUrl: "Record Company Webpage"]
                 case .mp4: return mp4Tag.recordCompanyUrl
             }
         }
         set {
             switch library {
-                case .id3: id3Tag["Record Company Webpage"] = newValue
+                case .id3: id3Tag[userDefinedUrl: "Record Company Webpage"] = newValue
                 case .mp4: mp4Tag.recordCompanyUrl = newValue
             }
         }
     }
 
-    /// Recording copyright statement, aka producedNotice (id3) or phonogram rights (mp4). Normally preceded by the symbol (P) ( P in a circle) ID3 frame `TPRO`, MP4 atom `©phg`
-    var recordingCopyright: String? {
+    /// Recording copyright statement, aka producedNotice (id3) or phonogram rights (mp4). Normally preceded by the symbol (P) ( P in a circle) ID3 frame `TPRO`, MP4 atom `©phg`. Setting this item will prepend the new string with the Sound recording copyright symbol (\u{2117})
+    public var recordingCopyright: String? {
         get {
             switch library {
                 case .id3: return id3Tag.producedNotice
@@ -153,7 +153,7 @@ extension AudioFile {
     /// Recording date/time. ID3 frame `TDRC` MP4 atom `©day`
     ///
     /// (versions 2.2 and 2.3 only) Intended to be used as complement to the "TYE", "TDA" and "TIM" frames. E.g. "4th-7th June, 12th June" in combination with the "TYE" frame.
-    var recordingDateTime: Date? {
+    public var recordingDateTime: Date? {
         get {
             switch library {
                 case .id3: return id3Tag.recordingDateTime
@@ -171,7 +171,7 @@ extension AudioFile {
     /// Release time/time. ID3 tag `TDRL` MP4 atom `rldt`
     ///
     /// Contains a timestamp describing when the audio was first released. NEW IN VERSION 2.4
-    var releaseDateTime: Date? {
+    public var releaseDateTime: Date? {
         get {
             switch library {
                 case .id3: return id3Tag.releaseDateTime
@@ -189,7 +189,7 @@ extension AudioFile {
     /// Special hardware and software requirements `©req`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Requirements`
-    var requirements: String? {
+    public var requirements: String? {
         get {
             switch library {
                 case .id3: return id3Tag["Requirements"]
@@ -207,7 +207,7 @@ extension AudioFile {
     /// iTunes seller. ID MP4 atom "xid "
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `SellerID`
-    var sellerID: String? {
+    public var sellerID: String? {
         get {
             switch library {
                 case .id3: return id3Tag["SellerID"]
@@ -225,7 +225,7 @@ extension AudioFile {
     /// Set/track subtitle. ID3 frame `TSST` (set subtitle) MP4 atom `©st3` (track subtitle)
     ///
     /// Intended for the subtitle of the part of a set this track belongs to (ID3), or the subtitle of a track (MP4).
-    var trackOrSetSubtitle: String? {
+    public var trackOrSetSubtitle: String? {
         get {
             switch library {
                 case .id3: return id3Tag.setSubtitle
@@ -243,7 +243,7 @@ extension AudioFile {
     /// Boolean value indicating whether Work and Movement data should be displayed. MP4 atom`shwm`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Show work and movement`
-    var showWorkAndMovement: Bool? {
+    public var showWorkAndMovement: Bool? {
         get {
             switch library {
                 case .id3: if let string = id3Tag["Show Work and Movement"] {
@@ -277,7 +277,7 @@ extension AudioFile {
     /// Sound engineer of track. MP4 atom `©sne`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `soundEngineer`
-    var soundEngineer: String? {
+    public var soundEngineer: String? {
         get {
             switch library {
                 case .id3: return id3Tag.involvementCreditsList[.soundEngineer]?.toString
@@ -300,7 +300,7 @@ extension AudioFile {
     /// Name and version number of the software (or hardware) that generated this movie. MP4 atom `©swr`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Software Version`
-    var softwareVersion: String? {
+    public var softwareVersion: String? {
         get {
             switch library {
                 case .id3: return id3Tag["Software Version"]
@@ -318,7 +318,7 @@ extension AudioFile {
     /// Featured soloist. MP4 atom `©sol`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `musicianCreditsList` frame with the role `soloist`
-    var soloist: String? {
+    public var soloist: String? {
         get {
             switch library {
                 case .id3: return id3Tag.musicianCreditsList[.soloist]?.toString
@@ -341,7 +341,7 @@ extension AudioFile {
     /// Song description. MP4 atom `desc`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a comment frame with the description `Song Description`
-    var songDescription: String? {
+    public var songDescription: String? {
         get {
             switch library {
                 case .id3: return id3Tag[comment: "Song Description", .und]
@@ -359,7 +359,7 @@ extension AudioFile {
     /// Name of songwriter. MP4 atom `©swf`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `songwriter`
-    var songwriter: String? {
+    public var songwriter: String? {
         get {
             switch library {
                 case .id3: return id3Tag.involvementCreditsList[.songwriter]?.toString
@@ -382,7 +382,7 @@ extension AudioFile {
     /// Keywords for songwriter. MP4 atom `©swk`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Songwriter Keywords`
-    var songwriterKeywords: [String] {
+    public var songwriterKeywords: [String] {
         get {
             switch library {
                 case .id3:
@@ -403,7 +403,7 @@ extension AudioFile {
                         id3Tag["Songwriter Keywords"] = nil
                     }
                 case .mp4:
-                    mp4Tag.songwriterKeywords = nil
+                    mp4Tag.songwriterKeywords = newValue
             }
         }
     }
@@ -411,7 +411,7 @@ extension AudioFile {
     /// Credits for those who provided movie source content. MP4 atom `©src`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `SourceCredit`
-    var sourceCredit: String? {
+    public var sourceCredit: String? {
         get {
             switch library {
                 case .id3: return id3Tag["Source Credit"]
@@ -429,7 +429,7 @@ extension AudioFile {
     /// Subtitle of content. ID3 frame `TIT3` MP4 atom `©snm`
     ///
     /// Used for information directly related to the contents title (e.g. "Op. 16" or "Performed live at Wembley").
-    var subtitle: String? {
+    public var subtitle: String? {
         get {
             switch library {
                 case .id3: return id3Tag.subtitle
@@ -447,7 +447,7 @@ extension AudioFile {
     /// Subtitle keywords of the content. MP4 atom `©snk`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Subtitle Keywords`
-    var subtitleKeywords: [String] {
+    public var subtitleKeywords: [String] {
         get {
             switch library {
                 case .id3:
@@ -468,7 +468,7 @@ extension AudioFile {
                         id3Tag["Subtitle Keywords"] = nil
                     }
                 case .mp4:
-                    mp4Tag.subtitleKeywords = nil
+                    mp4Tag.subtitleKeywords = newValue
             }
         }
     }

@@ -30,10 +30,7 @@ let package = Package(
             path: "Sources"),
         .testTarget(
             name: "SwiftTaggerTests",
-            dependencies: ["SwiftTagger", "SwiftTaggerMP4", "SwiftTaggerID3"],
-            resources: [.copy("SwiftTaggerMP4/Tests/SwiftTaggerMP4Tests/TestMedia"),
-                .copy("SwiftTaggerID3/Tests/SwiftTaggerID3Tests/TestMedia"),
-            ]
+            dependencies: ["SwiftTagger"]
         ),
     ]
 )

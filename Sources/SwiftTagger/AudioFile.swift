@@ -15,8 +15,8 @@ import SwiftTaggerMP4
 public struct AudioFile {
     // MARK: - Properties
     var location: URL
-    private var _id3Tag: SwiftTaggerID3.Tag?
-    private var _mp4Tag: SwiftTaggerMP4.Tag?
+    private var _id3Tag: Id3Tag?
+    private var _mp4Tag: Mp4Tag?
 
     public init(location: URL) throws {
         self.location = location
@@ -30,12 +30,25 @@ public struct AudioFile {
         }
     }
     
-    var id3Tag: SwiftTaggerID3.Tag {
+    public func write(outputLocation: URL) throws {
+        switch library {
+            case .id3:
+                let file = try Mp3File(location: self.location)
+                var tag = self.id3Tag
+                try file.write(tag: &tag, version: .v2_4, outputLocation: outputLocation)
+            case .mp4:
+                let file = try Mp4File(location: self.location)
+                let tag = self.mp4Tag
+                try file.write(tag: tag, to: outputLocation)
+        }
+    }
+    
+    var id3Tag: Id3Tag {
         get {
             if let tag = self._id3Tag {
                 return tag
             } else {
-                /// this should never happen, as there should always be a tag instance if there is a file instance
+                /// this should never happen, as the only time we will be using this accessor is if there is a valid MP3 file, which means there will be a valid tag instance
                 fatalError("Cannot access ID3 tag")
             }
         }
@@ -44,12 +57,21 @@ public struct AudioFile {
         }
     }
 
-    var mp4Tag: SwiftTaggerMP4.Tag {
+    var id3Metadata: [FrameKey : Frame ] {
+        get {
+            return id3Tag.frames
+        }
+        set {
+            id3Tag.frames = newValue
+        }
+    }
+    
+    var mp4Tag: Mp4Tag {
         get {
             if let tag = self._mp4Tag {
                 return tag
             } else {
-                /// this should never happen, as there should always be a tag instance if there is a file instance
+                /// this should never happen, as the only time we will be using this accessor is if there is a valid MP4 file, which means there will be a valid tag instance
                 fatalError("Cannot access MP4 tag")
             }
         }
@@ -58,6 +80,15 @@ public struct AudioFile {
         }
     }
 
+    var mp4Metadata: [AtomKey : Atom ] {
+        get {
+            return mp4Tag.metadataAtoms
+        }
+        set {
+            mp4Tag.metadataAtoms = newValue
+        }
+    }
+    
     var library: Library {
         let fileExtension = location.pathExtension.lowercased()
         if ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"].contains(fileExtension) {
@@ -71,6 +102,11 @@ public struct AudioFile {
 }
 
 enum Library {
-    case mp4
     case id3
+    case mp4
+}
+
+enum AppCompatibleAccessor {
+    case kid3
+    case yate
 }

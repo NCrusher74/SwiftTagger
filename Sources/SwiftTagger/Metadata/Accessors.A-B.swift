@@ -12,7 +12,7 @@ extension AudioFile {
     /// Acknowledgments. MP4 atom `©cak`.
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Acknowledgments`
-    var acknowledgment: String? {
+    public var acknowledgment: String? {
         get {
             switch library {
                 case .id3: return id3Tag["Acknowledgment"]
@@ -30,7 +30,7 @@ extension AudioFile {
     /// Album title. ID3 frame `TALB`, MP4 atom `©alb`.
     ///
     /// Intended for the title of the recording (or source of sound) from which the audio in the file is taken.
-    var album: String? {
+    public var album: String? {
         get {
             switch library {
                 case .id3: return id3Tag.album
@@ -48,7 +48,7 @@ extension AudioFile {
     /// Album artist or band. ID3 frame `TPE2`, MP4 atom `aART`
     ///
     /// The ID3 spec describes this frame as: `Band/Orchestra/Accompaniment` frame used for additional information about the performers in the recording. But usually it just serves as the AlbumArtist frame
-    var albumArtist: String? {
+    public var albumArtist: String? {
         get {
             switch library {
                 case .id3: return id3Tag.albumArtist
@@ -66,7 +66,7 @@ extension AudioFile {
     /// Album artist sort order. ID3 frame `TSO2`, MP4 atom `soaa`
     ///
     /// Defines a string which should be used instead of the performer for sorting purposes.
-    var albumArtistSort: String? {
+    public var albumArtistSort: String? {
         get {
             switch library {
                 case .id3: return id3Tag.albumArtistSort
@@ -84,7 +84,7 @@ extension AudioFile {
     /// Album sort order. ID3 frame `TSOA`, MP4 atom `soal`
     ///
     /// Defines a string which should be used instead of the album name for sorting purposes. E.g. an album named "A Soundtrack" might preferably be sorted as "Soundtrack".
-    var albumSort: String? {
+    public var albumSort: String? {
         get {
             switch library {
                 case .id3: return id3Tag.albumSort
@@ -102,7 +102,7 @@ extension AudioFile {
     /// The country code of the iTunes store. MP4 atom `sfID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `iTunesStoreCountry`
-    var appleStoreCountryID: Int? {
+    public var appleStoreCountryID: Int? {
         get {
             switch library {
                 case .id3:
@@ -134,7 +134,7 @@ extension AudioFile {
     /// Interpreted, remixed, or otherwise modified by. ID3 frame `TSE4`, MP4 atom `©arg`
     ///
     /// Contains more information about the people behind a remix and similar interpretations of another existing piece.
-    var arranger: String? {
+    public var arranger: String? {
         get {
             switch library {
                 case .id3: return id3Tag.arranger
@@ -152,7 +152,7 @@ extension AudioFile {
     /// Keywords for arranger. MP4 atom `©ark`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `ArrangerKeywords`
-    var arrangerKeywords: [String] {
+    public var arrangerKeywords: [String] {
         get {
             switch library {
                 case .id3:
@@ -182,7 +182,7 @@ extension AudioFile {
     /// The art director of the movie. MP4 atom `©ard`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `artDirection`
-    var artDirector: String? {
+    public var artDirector: String? {
         get {
             switch library {
                 case .id3: return id3Tag.involvementCreditsList[.artDirection]?.toString
@@ -200,7 +200,7 @@ extension AudioFile {
     /// Lead artist/Lead performer/Soloist/Performing group. ID3 frame `TPE1` MP4 atom `©ART`
     ///
     /// The main artist. Also commonly used in audiobook metadata for the name of a book's author.
-    var artist: String? {
+    public var artist: String? {
         get {
             switch library {
                 case .id3: return id3Tag.artist
@@ -218,7 +218,7 @@ extension AudioFile {
     /// The iTunes-store artist identifier. MP4 atom `atID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `ArtistID`
-    var artistID: Int? {
+    public var artistID: Int? {
         get {
             switch library {
                 case .id3:
@@ -250,7 +250,7 @@ extension AudioFile {
     /// Keywords of main artist/performer. MP4 atom `©prk`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Artist Keywords`
-    var artistKeywords: [String] {
+    public var artistKeywords: [String] {
         get {
             switch library {
                 case .id3:
@@ -278,7 +278,7 @@ extension AudioFile {
     }
     
     /// Used for sorting by performer in iTunes. ID3 frame `TSOP` MP4 atom `soar`
-    var artistSort: String? {
+    public var artistSort: String? {
         get {
             switch library {
                 case .id3: return id3Tag.artistSort
@@ -296,7 +296,7 @@ extension AudioFile {
     /// Official artist/performer webpage. ID3 frame `WOAR` MP4 atom `©prl`
     ///
     /// A URL pointing at the artists official webpage. There may be more than one "WOAR" frame in a tag if the audio contains more than one performer, but not with the same content.
-    var artistWebpage: String? {
+    public var artistWebpage: String? {
         get {
             switch library {
                 case .id3: return id3Tag.artistWebpage
@@ -316,7 +316,7 @@ extension AudioFile {
     /// URL pointing at a file specific webpage.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `AudioFileWebpage`
-    var officialAudioFileWebpage: String? {
+    public var officialAudioFileWebpage: String? {
         get {
             switch library {
                 case .id3: return id3Tag.audioFileWebpage
@@ -335,7 +335,7 @@ extension AudioFile {
     ///
     /// URL pointing at the official webpage for the source of the audio file, e.g. a movie.
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `AudioSourceWebpage`
-    var officialAudioSourceWebpage: String? {
+    public var officialAudioSourceWebpage: String? {
         get {
             switch library {
                 case .id3: return id3Tag.audioSourceWebpage
@@ -346,6 +346,21 @@ extension AudioFile {
             switch library {
                 case .id3: id3Tag.audioSourceWebpage = newValue
                 case .mp4: mp4Tag["Audio Source Webpage"] = newValue
+            }
+        }
+    }
+    
+    public var bpm: Int? {
+        get {
+            switch library {
+                case .id3: return id3Tag.bpm
+                case .mp4: return mp4Tag.bpm
+            }
+        }
+        set {
+            switch library {
+                case .id3: id3Tag.bpm = newValue
+                case .mp4: mp4Tag.bpm = newValue
             }
         }
     }

@@ -12,7 +12,7 @@ extension AudioFile {
     /// Encoding date/time. ID3 frame `TDEN`
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Encoding Date/Time`
-    var encodingDateTime: Date? {
+    public var encodingDateTime: Date? {
         get {
             switch library {
                 case .id3: return id3Tag.encodingDateTime
@@ -46,7 +46,7 @@ extension AudioFile {
     /// Encoded by. ID3 frame `TENC` MP4 atom `©enc`
     ///
     /// Contains the name of the person or organisation that encoded the audio file. This field may contain a copyright message, if the audio file also is copyrighted by the encoder.
-    var encodedBy: String? {
+    public var encodedBy: String? {
         get {
             switch library {
                 case .id3: return id3Tag.encodedBy
@@ -61,7 +61,7 @@ extension AudioFile {
         }
     }
     
-    var encoderSettings: String? {
+    public var encoderSettings: String? {
         get {
             switch library {
                 case .id3: return id3Tag.encodingSettings
@@ -79,7 +79,7 @@ extension AudioFile {
     /// Executive producer of the movie . MP4 frame `©xpd`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `executiveProducer`
-    var executiveProducer: String? {
+    public var executiveProducer: String? {
         get {
             switch library {
                 case .id3: return id3Tag.involvementCreditsList[.executiveProducer]?.toString
@@ -97,7 +97,7 @@ extension AudioFile {
     /// Boolean value indicating there should be no delay between tracks MP4 atom `pgap`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, a true value for this item will result in the `playlistDelay` frame being set to 0. Otherwise, this value will be ignored when tagging ID3 files.
-    var gaplessPlayback: Bool? {
+    public var gaplessPlayback: Bool? {
         get {
             switch library {
                 case .id3:
@@ -123,7 +123,7 @@ extension AudioFile {
     }
     
     /// User-defined genre  ID3 frame `TCON`, MP4 atom `©gen`
-    var genreCustom: String? {
+    public var genreCustom: String? {
         get {
             switch library {
                 case .id3: return id3Tag.genre.genre
@@ -139,7 +139,7 @@ extension AudioFile {
     }
     
     /// Predefined genre ID3 frame `TCON`, MP4 atom `genr`
-    var genrePredefined: (id3: GenreID3?, mp4: GenreMP4?) {
+    public var genrePredefined: (id3: GenreID3?, mp4: GenreMP4?) {
         get {
             switch library {
                 case .id3:
@@ -154,37 +154,43 @@ extension AudioFile {
         set {
             switch library {
                 case .id3: id3Tag.genre.genreCategory = newValue.id3
+                    self.genreID = newValue.id3?.code
                 case .mp4: mp4Tag.predefinedGenre = newValue.mp4
+                    self.genreID = newValue.mp4?.rawValue
             }
         }
     }
     
-    /// The iTunes-store genre identifier. MP4 atom `geID`
+    /// The iTunes-store genre identifier numeric value. MP4 atom `geID`
     ///
-    /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `GenreID`
-    var genreID: Int? {
+    /// This will return the NUMERIC value of the predefined genre to the intended atom (MP4) or frame (ID3)
+    public var genreID: Int? {
         get {
             switch library {
                 case .id3:
-                    if let genre = id3Tag.genre.genreCategory {
+                    if let genre = self.genrePredefined.id3 {
                         return genre.code
                     } else {
                         return nil
                     }
-                case .mp4: return mp4Tag.genreID?.rawValue
+                case .mp4:
+                    if let genre = self.genrePredefined.mp4 {
+                        return genre.rawValue
+                    } else {
+                        return nil
+                    }
             }
         }
         set {
             switch library {
-                case .id3:
-                    if let new = newValue {
-                        id3Tag.genre.genreCategory = GenreID3(code: new)
-                    } else {
-                        id3Tag.genre.genreCategory = nil
-                    }
+                case .id3: return
                 case .mp4:
                     if let new = newValue {
-                        mp4Tag.genreID = GenreMP4(rawValue: new)
+                        if let genre = GenreMP4(rawValue: new) {
+                            mp4Tag.genreID = genre
+                        } else {
+                            mp4Tag.genreID = nil
+                        }
                     } else {
                         mp4Tag.genreID = nil
                     }
@@ -195,7 +201,7 @@ extension AudioFile {
     /// Grouping ID3 frame `GRP1` MP4 atom `©grp`
     ///
     /// Frame used by iTunes to group works.
-    var grouping: String? {
+    public var grouping: String? {
         get {
             switch library {
                 case .id3: return id3Tag.grouping
@@ -213,7 +219,7 @@ extension AudioFile {
     /// Information about the movie MP4 atom `©inf`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Information`
-    var information: String? {
+    public var information: String? {
         get {
             switch library {
                 case .id3: return id3Tag["Information"]
@@ -233,7 +239,7 @@ extension AudioFile {
     /// Contains the musical key in which the sound starts. It is represented as a string with a maximum length of three characters. The ground keys are represented with "A","B","C","D","E", "F" and "G" and halfkeys represented with "b" and "#". Minor is represented as "m", e.g. "Dbm" $00. Off key is represented with an "o" only.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Initial Key`
-    var initialKey: KeySignature? {
+    public var initialKey: KeySignature? {
         get {
             switch library {
                 case .id3: return id3Tag.initialKey
@@ -258,7 +264,7 @@ extension AudioFile {
     /// `InvolvedPeopleList` handles production and support credits, while `MusicianCreditsList` handles performer credits.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to the appropriate atom for the role, if it exists. Otherwise, a userDefined atom will be created with a description corresponding to the role
-    var involvementCreditList: [InvolvementCredits : [String]] {
+    public var involvementCreditsList: [InvolvementCredits : [String]] {
         get {
             switch library {
                 case .id3: var list = id3Tag.involvementCreditsList
@@ -280,6 +286,12 @@ extension AudioFile {
                     list[.soundEngineer] = mp4Tag.soundEngineer?.toArray
                     list[.songwriter] = mp4Tag.songwriter?.toArray
                     list[.writer] = mp4Tag.writer?.toArray
+                    
+                    for atom in mp4Tag.unknownAtoms {
+                        if let credit = InvolvementCredits(rawValue: atom.name) {
+                            list[credit] = atom.stringValue.toArray
+                        }
+                    }
                     return list
             }
         }
@@ -303,20 +315,21 @@ extension AudioFile {
                         mp4Tag.soundEngineer = newValue[.soundEngineer]?.toString
                         mp4Tag.songwriter = newValue[.songwriter]?.toString
                         mp4Tag.writer = newValue[.writer]?.toString
-                        let filteredNew = newValue.filter(
-                            {$0.key != .arranger &&
-                                $0.key != .composer &&
-                                $0.key != .artDirection &&
-                                $0.key != .director &&
-                                $0.key != .executiveProducer &&
-                                $0.key != .lyricist &&
-                                $0.key != .producer &&
-                                $0.key != .publisher &&
-                                $0.key != .soundEngineer &&
-                                $0.key != .songwriter &&
-                                $0.key != .writer})
-                        for (role, personArray) in filteredNew {
-                            mp4Tag[role.rawValue] = personArray.toString
+                        
+                        for entry in newValue {
+                            if entry.key != .arranger &&
+                                entry.key != .composer &&
+                                entry.key != .artDirection &&
+                                entry.key != .director &&
+                                entry.key != .executiveProducer &&
+                                entry.key != .lyricist &&
+                                entry.key != .producer &&
+                                entry.key != .publisher &&
+                                entry.key != .soundEngineer &&
+                                entry.key != .songwriter &&
+                                entry.key != .writer {
+                                mp4Tag[entry.key.rawValue] = entry.value.toString
+                            }
                         }
                 }
             } else {
@@ -331,7 +344,7 @@ extension AudioFile {
     /// ISRC ID frame `TSRC` MP4 atom `©isr`
     ///
     /// Should contain the International Standard Recording Code [ISRC] (12 characters).
-    var isrc: String? {
+    public var isrc: String? {
         get {
             switch library {
                 case .id3: return id3Tag.isrc
@@ -349,7 +362,7 @@ extension AudioFile {
     /// The iTunes-store account MP4 atom `apID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `iTunes Account`
-    var iTunesAccount: String? {
+    public var iTunesAccount: String? {
         get {
             switch library {
                 case .id3: return id3Tag["iTunes Account"]
@@ -367,7 +380,7 @@ extension AudioFile {
     /// The iTunes-store account type identifier MP4 atom `akID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `iTunes Account Type`
-    var iTunesAccountType: Int? {
+    public var iTunesAccountType: Int? {
         get {
             switch library {
                 case .id3: if let string = id3Tag["iTunes Account Type"] {

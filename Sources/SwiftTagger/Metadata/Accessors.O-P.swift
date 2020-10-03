@@ -15,7 +15,7 @@ extension AudioFile {
     /// Intended for the title of the original recording (or source of sound), if for example the music in the file should be a cover of a previously released song.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Album`
-    var originalAlbum: String? {
+    public var originalAlbum: String? {
         get {
             switch library {
                 case .id3: return id3Tag.originalAlbum
@@ -33,7 +33,7 @@ extension AudioFile {
     /// Original artist/performer. ID3 frame `TOPE` MP4 atom `©ope`
     ///
     /// Intended for the performer of the original recording, if for example the music in the file should be a cover of a previously released song.
-    var originalArtist: String? {
+    public var originalArtist: String? {
         get {
             switch library {
                 case .id3: return id3Tag.originalArtist
@@ -53,7 +53,7 @@ extension AudioFile {
     /// Contains the preferred filename for the file, since some media doesn't allow the desired length of the filename. The filename is case sensitive and includes its suffix.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Filename`
-    var originalFilename: String? {
+    public var originalFilename: String? {
         get {
             switch library {
                 case .id3: return id3Tag.originalFilename
@@ -73,7 +73,7 @@ extension AudioFile {
     /// Intended for the text writer of the original recording, if for example the music in the file should be a cover of a previously released song.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Lyricist`
-    var originalLyricist: String? {
+    public var originalLyricist: String? {
         get {
             switch library {
                 case .id3: return id3Tag.originalLyricist
@@ -94,7 +94,7 @@ extension AudioFile {
     ///
     /// There is no correspondin MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Release Date/Time`
     @available(OSX 10.13, *)
-    var originalReleaseDateTime: Date? {
+    public var originalReleaseDateTime: Date? {
         get {
             switch library {
                 case .id3: return id3Tag.originalRelease
@@ -128,7 +128,7 @@ extension AudioFile {
     /// File owner/licensee. ID3 frame `TOWN` MP4 atom `ownr`
     ///
     /// Contains the name of the owner or licensee of the file and it's contents.
-    var owner: String? {
+    public var owner: String? {
         get {
             switch library {
                 case .id3: return id3Tag.fileOwner
@@ -148,7 +148,7 @@ extension AudioFile {
     /// URL pointing at a webpage that will handle the process of paying for this file.
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Payment Webpage`
-    var paymentWebpage: String? {
+    public var paymentWebpage: String? {
         get {
             switch library {
                 case .id3: return id3Tag.paymentWebpage
@@ -166,7 +166,7 @@ extension AudioFile {
     /// Names of performers MP4 atom `©prf`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `musicianCreditsList` frame with the role `performer`
-    var performers: [String] {
+    public var performers: [String] {
         get {
             switch library {
                 case .id3: return id3Tag.musicianCreditsList[.performer] ?? []
@@ -193,7 +193,7 @@ extension AudioFile {
     /// Defines the numbers of milliseconds of silence that should be inserted before this audio. The value zero indicates that this is a part of a multifile audio track that should be played continuously.
     ///
     /// There is no corresponding MP4 atom. Instead, a 0 value entered here will result in the `gaplessPlayback` atom being set to `true`. Any other value in this atom will result in `gaplessPlayback` being set to `false`
-    var playlistDelay: Int? {
+    public var playlistDelay: Int? {
         get {
             switch library {
                 case .id3: return id3Tag.playlistDelay
@@ -221,7 +221,7 @@ extension AudioFile {
     /// The iTunes playlist identifier MP4 atom `plID`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `PlaylistID`
-    var playlistID: Int? {
+    public var playlistID: Int? {
         get {
             switch library {
                 case .id3:
@@ -241,9 +241,9 @@ extension AudioFile {
             switch library {
                 case .id3:
                     if let new = newValue {
-                        id3Tag["PlaylitID"] = String(new)
+                        id3Tag["PlaylistID"] = String(new)
                     } else {
-                        id3Tag["PlaylitID"] = nil
+                        id3Tag["PlaylistID"] = nil
                     }
                 case .mp4: mp4Tag.playlistID = newValue
             }
@@ -253,7 +253,7 @@ extension AudioFile {
     /// Boolean value indicating whether or not the track is a podcast MP4 atom `pcst`
     ///
     /// While there *is* a corresponding frame for ID3 with the identifier (`PCST`), attempts to implement this frame in SwiftTaggerID3 resulted in files that iTunes/Apple Music wouldn't recognize, so this value will not retrieve or set a frame for ID3
-    var podcast: Bool? {
+    public var podcast: Bool? {
         get {
             switch library {
                 case .id3: return nil
@@ -271,7 +271,7 @@ extension AudioFile {
     /// Podcast Category. ID3 frame `TCAT` MP4 atom `catg`
     ///
     /// Used by iTunes to categorize podcasts
-    var podcastCategory: String? {
+    public var podcastCategory: String? {
         get {
             switch library {
                 case .id3: return id3Tag.podcastCategory
@@ -289,7 +289,7 @@ extension AudioFile {
     /// Podcast Description. ID3 frame `TDES`
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to the `songDescription` atom, since it is unlikely both will be in use at the same time
-    var podcastDescription: String? {
+    public var podcastDescription: String? {
         get {
             switch library {
                 case .id3: return id3Tag.podcastDescription
@@ -307,7 +307,7 @@ extension AudioFile {
     /// PodcastID. ID3 frame `TGID` MP4 atom `egid`
     ///
     /// Used by iTunes to list a podcast's ID
-    var podcastID: String? {
+    public var podcastID: String? {
         get {
             switch library {
                 case .id3: return id3Tag.podcastID
@@ -325,7 +325,7 @@ extension AudioFile {
     /// Podcast keywords. ID3 frame `TKWD` MP3 atom `keyw`
     ///
     /// Used by iTunes to for keywords describing a podcast
-    var podcastKeywords: [String] {
+    public var podcastKeywords: [String] {
         get {
             switch library {
                 case .id3: return id3Tag.podcastKeywords 
@@ -343,7 +343,7 @@ extension AudioFile {
     /// Podcast feed. ID3 frame `WFED` MP4 atom `purl`
     ///
     /// Used by iTunes to list the web feed of a podcast (despite the identifier beginning with W in ID3, this is a string frame
-    var podcastFeed: String? {
+    public var podcastFeed: String? {
         get {
             switch library {
                 case .id3: return id3Tag.podcastFeed
@@ -361,7 +361,7 @@ extension AudioFile {
     /// Name of producer. MP4 atom `©prd`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to the `involvedPeopleList` frame with the role `producer`
-    var producer: String? {
+    public var producer: String? {
         get {
             switch library {
                 case .id3: return id3Tag.involvementCreditsList[.producer]?.toString
@@ -384,7 +384,7 @@ extension AudioFile {
     /// Keywords for producer. MP4 atom `©prk`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Producer Keywords`
-    var producerKeywords: [String] {
+    public var producerKeywords: [String] {
         get {
             switch library {
                 case .id3:
@@ -413,7 +413,7 @@ extension AudioFile {
     /// Publisher. ID3 frame `TPUB` MP4 atom `©pub`
     ///
     /// Simply contains the name of the label or publisher.
-    var publisher: String? {
+    public var publisher: String? {
         get {
             switch library {
                 case .id3: return id3Tag.publisher
@@ -431,7 +431,7 @@ extension AudioFile {
     /// Publishers official webpage. ID3 frame `WPUB`
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Publisher Webpage`
-    var publisherWebpage: String? {
+    public var publisherWebpage: String? {
         get {
             switch library {
                 case .id3: return id3Tag.publisherWebpage
@@ -440,7 +440,7 @@ extension AudioFile {
         }
         set {
             switch library {
-                case .id3: id3Tag.publisher = newValue
+                case .id3: id3Tag.publisherWebpage = newValue
                 case .mp4: mp4Tag["Publisher Webpage"] = newValue
             }
         }
@@ -449,7 +449,7 @@ extension AudioFile {
     /// Purchase Date/Time. MP4 atom `purd`
     ///
     /// There is no corresponding ID3 frame. For MP3 files, this metadata will be written to a userDefinedText frame with the description `Purchase Date/Time`
-    var purchaseDateTime: Date? {
+    public var purchaseDateTime: Date? {
         get {
             switch library {
                 case .mp4: return mp4Tag.purchaseDate
