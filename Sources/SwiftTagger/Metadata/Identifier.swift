@@ -24,7 +24,6 @@ enum Identifier: String, CaseIterable {
     case audioFileWebpage
     case audioSourceWebpage
     case bpm
-    case comments
     case compilation
     case composer
     case composerID
@@ -126,8 +125,7 @@ enum Identifier: String, CaseIterable {
     case seriesDescription    
     case seriesSort    
     case userDefined    
-    case userDefinedWebpage    
-    case work    
+    case work
     case writer    
     case year
     

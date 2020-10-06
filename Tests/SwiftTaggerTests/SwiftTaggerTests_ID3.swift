@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import SwiftTagger
-import SwiftTaggerID3
 
 final class SwiftTaggerTests_ID3_Read: XCTestCase {
     
@@ -192,7 +191,6 @@ final class SwiftTaggerTests_ID3_Read: XCTestCase {
         XCTAssertEqual(file.originalReleaseDateTime, testAllDate)
         XCTAssertEqual(file.recordingDateTime, testAllDate)
         
-        XCTAssertEqual(file[webpage: "UserURL"], "http://userdefined.url")
         XCTAssertEqual(file["UserText"], "User Text Content")
         
         XCTAssertEqual(file.discNumber.disc, 4)
@@ -339,7 +337,6 @@ final class SwiftTaggerTests_ID3_Read: XCTestCase {
         XCTAssertEqual(output.originalReleaseDateTime, testAllDate)
         XCTAssertEqual(output.recordingDateTime, testAllDate)
         
-        XCTAssertEqual(output[webpage: "UserURL"], "http://userdefined.url")
         XCTAssertEqual(output["UserText"], "User Text Content")
         
         XCTAssertEqual(output.discNumber.disc, 4)
@@ -537,5 +534,21 @@ final class SwiftTaggerTests_ID3_Read: XCTestCase {
         XCTAssertEqual(output.writer, "Writer Name")
         XCTAssertEqual(output.involvementCreditsList[.writer], ["Writer Name"])
         XCTAssertEqual(output.year, components.year)
+        
+        let chapter1 = output.chapterList[0]
+        XCTAssertEqual(chapter1.startTime, 0)
+        XCTAssertEqual(chapter1.title, "Chapter 01")
+        let chapter2 = output.chapterList[1]
+        XCTAssertEqual(chapter2.startTime, 700)
+        XCTAssertEqual(chapter2.title, "Chapter 02")
+        let chapter3 = output.chapterList[2]
+        XCTAssertEqual(chapter3.startTime, 1670)
+        XCTAssertEqual(chapter3.title, "Chapter 03")
+        let chapter4 = output.chapterList[3]
+        XCTAssertEqual(chapter4.startTime, 3165)
+        XCTAssertEqual(chapter4.title, "Chapter 04")
+        let chapter5 = output.chapterList[4]
+        XCTAssertEqual(chapter5.startTime, 3976)
+        XCTAssertEqual(chapter5.title, "Chapter 05")
     }
 }

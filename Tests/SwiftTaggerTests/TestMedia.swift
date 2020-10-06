@@ -95,17 +95,23 @@ let components: DateComponents = {
 }()
 
 func testSettings(_ file: inout AudioFile) throws -> AudioFile {
-    let chapters: [(startTime: Int, title: String)] = [
-        (0, "Chapter 01"),
-        (700, "Chapter 02"),
-        (1670, "Chapter 03"),
-        (3165, "Chapter 04"),
-        (3976, "Chapter 05")
-    ]
+//    let chapters: [(startTime: Int, title: String)] = [
+//        (0, "Chapter 01"),
+//        (700, "Chapter 02"),
+//        (1670, "Chapter 03"),
+//        (3165, "Chapter 04"),
+//        (3976, "Chapter 05")
+//    ]
+//
+//    for chapter in chapters {
+//        file.addChapter(startTime: chapter.startTime, title: chapter.title)
+//    }
     
-    for chapter in chapters {
-        file.addChapter(startTime: chapter.startTime, title: chapter.title)
-    }
+    file.addChapter(startTime: 0, title: "Chapter 01")
+    file.addChapter(startTime: 700, title: "Chapter 02")
+    file.addChapter(startTime: 1670, title: "Chapter 03")
+    file.addChapter(startTime: 3165, title: "Chapter 04")
+    file.addChapter(startTime: 3976, title: "Chapter 05")
     
     file.acknowledgment = "Acknowledgment"
     file.album = "Album"

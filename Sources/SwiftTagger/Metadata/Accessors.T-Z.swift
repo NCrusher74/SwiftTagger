@@ -357,4 +357,22 @@ extension AudioFile {
             return nil
         }
     }
+    
+    /// User Defined. ID3 frame `TXXX` MP4 atom `----`
+    ///
+    /// A freeform text frame/atom intended to hold user-defined items. Data is stored as a string, though it may be used for numeric strings (including boolean 1/0 strings), arrays, and so forth.
+    public subscript(_ description: String) -> String? {
+        get {
+            switch library {
+                case .id3: return id3Tag[description]
+                case .mp4: return mp4Tag[description]
+            }
+        }
+        set {
+            switch library {
+                case .id3: id3Tag[description] = newValue
+                case .mp4: mp4Tag[description] = newValue
+            }
+        }
+    }
 }

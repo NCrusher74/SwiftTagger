@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import SwiftTagger
-import SwiftTaggerID3
 
 final class SwiftTaggerTests_MP4_Read: XCTestCase {
     
@@ -165,7 +164,7 @@ final class SwiftTaggerTests_MP4_Read: XCTestCase {
         XCTAssertEqual(file.executiveProducer,"Executive Producer")
         XCTAssertEqual(file.labelWebpage,"www.filmmaker.url")
         XCTAssertEqual(file.gaplessPlayback,true)
-        XCTAssertEqual(file.genreID, 5000012)
+        XCTAssertEqual(file.genreID, 50000024)
         XCTAssertEqual(file.grouping,"Grouping")
         XCTAssertEqual(file.information,"Information")
         XCTAssertEqual(file.isrc,"123456789012")
@@ -226,7 +225,6 @@ final class SwiftTaggerTests_MP4_Read: XCTestCase {
         XCTAssertEqual(file.seriesSort,"TV Show Sort")
         XCTAssertEqual(file.seriesEpisodeTitle,"TV Episode Title")
         XCTAssertEqual(file.seriesDescription,"TV Show Description")
-        XCTAssertEqual(file[webpage: nil],"www.website.url")
         XCTAssertEqual(file.work,"Work Name")
         XCTAssertEqual(file.writer,"Writer")
         XCTAssertEqual(file.year,2020)
@@ -336,7 +334,7 @@ final class SwiftTaggerTests_MP4_Read: XCTestCase {
         XCTAssertEqual(output.executiveProducer,"Executive Producer")
         XCTAssertEqual(output.labelWebpage,"www.filmmaker.url")
         XCTAssertEqual(output.gaplessPlayback,true)
-        XCTAssertEqual(output.genreID, 5000012)
+        XCTAssertEqual(output.genreID, 50000024)
         XCTAssertEqual(output.grouping,"Grouping")
         XCTAssertEqual(output.information,"Information")
         XCTAssertEqual(output.isrc,"123456789012")
@@ -397,7 +395,6 @@ final class SwiftTaggerTests_MP4_Read: XCTestCase {
         XCTAssertEqual(output.seriesSort,"TV Show Sort")
         XCTAssertEqual(output.seriesEpisodeTitle,"TV Episode Title")
         XCTAssertEqual(output.seriesDescription,"TV Show Description")
-        XCTAssertEqual(file[webpage: nil],"www.website.url")
         XCTAssertEqual(output.work,"Work Name")
         XCTAssertEqual(output.writer,"Writer")
         XCTAssertEqual(output.year,2020)
@@ -412,6 +409,23 @@ final class SwiftTaggerTests_MP4_Read: XCTestCase {
         try test.write(outputLocation: outputUrl)
         let output = try AudioFile(location: outputUrl)
         
+        print(output.chapterList)
+        let chapter1 = output.chapterList[0]
+        XCTAssertEqual(chapter1.startTime, 0)
+        XCTAssertEqual(chapter1.title, "Chapter 01")
+        let chapter2 = output.chapterList[1]
+        XCTAssertEqual(chapter2.startTime, 700)
+        XCTAssertEqual(chapter2.title, "Chapter 02")
+        let chapter3 = output.chapterList[2]
+        XCTAssertEqual(chapter3.startTime, 1670)
+        XCTAssertEqual(chapter3.title, "Chapter 03")
+        let chapter4 = output.chapterList[3]
+        XCTAssertEqual(chapter4.startTime, 3165)
+        XCTAssertEqual(chapter4.title, "Chapter 04")
+        let chapter5 = output.chapterList[4]
+        XCTAssertEqual(chapter5.startTime, 3976)
+        XCTAssertEqual(chapter5.title, "Chapter 05")
+
         XCTAssertEqual(output.acknowledgment, "Acknowledgment")
         XCTAssertEqual(output.album, "Album")
         XCTAssertEqual(output.albumArtist, "Album Artist Name")
