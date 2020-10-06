@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  String.swift
+//  SwiftTagger
 //
 //  Created by Nolaine Crusher on 9/30/20.
 //

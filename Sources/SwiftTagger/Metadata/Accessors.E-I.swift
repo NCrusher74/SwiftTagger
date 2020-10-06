@@ -1,6 +1,6 @@
 //
 //  AudioFile.Accessors.E-I.swift
-//  
+//  SwiftTagger
 //
 //  Created by Nolaine Crusher on 9/29/20.
 //
@@ -244,7 +244,7 @@ extension AudioFile {
             switch library {
                 case .id3: return id3Tag.initialKey
                 case .mp4:
-                    if let string = mp4Tag["Initial Key"] {
+                    if let string = mp4Tag["Initial key"] {
                         return KeySignature(rawValue: string)
                     } else {
                         return nil
@@ -254,7 +254,7 @@ extension AudioFile {
         set {
             switch library {
                 case .id3: id3Tag.initialKey = newValue
-                case .mp4: mp4Tag["Initial Key"] = newValue?.rawValue
+                case .mp4: mp4Tag["Initial key"] = newValue?.rawValue
             }
         }
     }

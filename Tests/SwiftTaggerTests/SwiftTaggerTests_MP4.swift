@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  SwiftTaggerTests_MP4.swift
+//  SwiftTagger
 //
 //  Created by Nolaine Crusher on 10/1/20.
 //
@@ -8,7 +8,7 @@
 import XCTest
 @testable import SwiftTagger
 
-final class SwiftTaggerTests_MP4_Read: XCTestCase {
+final class SwiftTaggerTests_MP4: XCTestCase {
     
     func testRead() throws {
         let file = try AudioFile(location: sampleMp4)
@@ -478,7 +478,7 @@ final class SwiftTaggerTests_MP4_Read: XCTestCase {
         XCTAssertEqual(output.iTunesAccountType, 1)
         XCTAssertEqual(output.information, "Information")
         XCTAssertEqual(output.initialKey, .aFlatMajor)
-        XCTAssertEqual(output.mp4Tag["Initial Key"], "Ab")
+        XCTAssertEqual(output.mp4Tag["Initial key"], "Ab")
         XCTAssertEqual(output.involvementCreditsList[.accounting], ["Accountant Name"])
         XCTAssertEqual(output.mp4Tag["Accounting"], "Accountant Name")
         XCTAssertEqual(output.isrc, "987654321098")

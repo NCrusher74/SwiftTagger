@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  SwiftTaggerTests_ID3.swift
+//  SwiftTagger
 //
 //  Created by Nolaine Crusher on 10/1/20.
 //
@@ -8,7 +8,7 @@
 import XCTest
 @testable import SwiftTagger
 
-final class SwiftTaggerTests_ID3_Read: XCTestCase {
+final class SwiftTaggerTests_ID3: XCTestCase {
     
     func testRead() throws {
         let file = try AudioFile(location: sampleMp3)

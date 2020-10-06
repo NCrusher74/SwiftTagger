@@ -1,10 +1,9 @@
-/*
- AudioFile.swift
- SwiftTagger
- 
- Copyright ©2020 Nolaine Crusher. All rights reserved.
- 
- */
+//
+// AudioFile.swift
+// SwiftTagger
+//
+// Copyright ©2020 Nolaine Crusher. All rights reserved.
+//
 
 import Foundation
 import SwiftTaggerID3
@@ -104,9 +103,4 @@ public struct AudioFile {
 enum Library {
     case id3
     case mp4
-}
-
-enum AppCompatibleAccessor {
-    case kid3
-    case yate
 }
