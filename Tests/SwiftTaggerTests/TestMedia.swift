@@ -151,7 +151,7 @@ func testSettings(_ file: inout AudioFile) throws -> AudioFile {
     file.executiveProducer = "Exec Producer Name"
     file.gaplessPlayback = true
     file.genreCustom = "Genre"
-    file.genrePredefined.mp4 = .audiobooks
+    file.genrePredefined.mp4 = .audiobooks(.audiobooks)
     file.genrePredefined.id3 = .Audiobook
     file.grouping = "Grouping"
     file.iTunesAccount = "iTunes Account"

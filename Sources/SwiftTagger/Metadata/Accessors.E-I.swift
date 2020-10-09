@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SwiftTaggerMP4
 @available(OSX 10.13, *)
 extension AudioFile {
     /// Encoding date/time. ID3 frame `TDEN`
@@ -156,7 +156,7 @@ extension AudioFile {
                 case .id3: id3Tag.genre.genreCategory = newValue.id3
                     self.genreID = newValue.id3?.code
                 case .mp4: mp4Tag.predefinedGenre = newValue.mp4
-                    self.genreID = newValue.mp4?.rawValue
+                    self.genreID = newValue.mp4?.genreID
             }
         }
     }
@@ -175,7 +175,7 @@ extension AudioFile {
                     }
                 case .mp4:
                     if let genre = self.genrePredefined.mp4 {
-                        return genre.rawValue
+                        return genre.genreID
                     } else {
                         return nil
                     }
@@ -186,11 +186,8 @@ extension AudioFile {
                 case .id3: return
                 case .mp4:
                     if let new = newValue {
-                        if let genre = GenreMP4(rawValue: new) {
-                            mp4Tag.genreID = genre
-                        } else {
-                            mp4Tag.genreID = nil
-                        }
+                        let genre = GenreMP4(genreID: new)
+                        mp4Tag.genreID = genre
                     } else {
                         mp4Tag.genreID = nil
                     }
