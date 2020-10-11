@@ -88,7 +88,7 @@ public struct AudioFile {
         }
     }
     
-    var library: Library {
+    public var library: Library {
         let fileExtension = location.pathExtension.lowercased()
         if ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"].contains(fileExtension) {
             return .mp4
@@ -100,7 +100,7 @@ public struct AudioFile {
     }
 }
 
-enum Library {
+public enum Library {
     case id3
     case mp4
 }
