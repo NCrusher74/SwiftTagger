@@ -8,6 +8,7 @@
 import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
+import iTunesGenreID
 import SwiftLanguageAndLocaleCodes
 
 typealias Id3Tag = SwiftTaggerID3.Tag

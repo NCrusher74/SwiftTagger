@@ -156,7 +156,7 @@ extension AudioFile {
                 case .id3: id3Tag.genre.genreCategory = newValue.id3
                     self.genreID = newValue.id3?.code
                 case .mp4: mp4Tag.predefinedGenre = newValue.mp4
-                    self.genreID = newValue.mp4?.genreID
+                    self.genreID = newValue.mp4?.identifier
             }
         }
     }
@@ -175,7 +175,7 @@ extension AudioFile {
                     }
                 case .mp4:
                     if let genre = self.genrePredefined.mp4 {
-                        return genre.genreID
+                        return genre.identifier
                     } else {
                         return nil
                     }
@@ -186,7 +186,7 @@ extension AudioFile {
                 case .id3: return
                 case .mp4:
                     if let new = newValue {
-                        let genre = GenreMP4(genreID: new)
+                        let genre = GenreMP4(identifier: new)
                         mp4Tag.genreID = genre
                     } else {
                         mp4Tag.genreID = nil
