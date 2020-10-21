@@ -162,8 +162,7 @@ func testSettings(_ file: inout AudioFile) throws -> AudioFile {
     file.isrc = "987654321098"
     file.label = "Label"
     file.labelWebpage = "LabelURL.com"
-    file.language.mp4 = [.englishWorld]
-    file.language.id3 = [.eng]
+    file.language = [.english]
     file.linerNotes = "Liner Notes"
     file.longDescription = "Long Description"
     file.lyricist = "Lyricist Name"

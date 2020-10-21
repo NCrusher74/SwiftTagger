@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftLanguageAndLocaleCodes
 
 @available(OSX 10.13, *)
 extension AudioFile {
@@ -48,28 +49,25 @@ extension AudioFile {
     /// Language ID3 frame `TLAN`, MP4 atom `elng`
     ///
     /// Should contain the languages of the text or lyrics spoken or sung in the audio. The language is represented with three characters according to ISO-639-2 [ISO-639-2]. If more than one language is used in the text their language codes should follow according to the amount of their usage, e.g. "eng" $00 "sve" $00.
-    public var language: (id3: [ISO6392Code]?, mp4: [ICULocaleCode]?) {
+    public var language: [Language] {
         get {
             switch library {
-                case .id3: return (id3Tag.languages, nil)
-                case .mp4: return (nil, mp4Tag.languages)
+                case .id3:  return id3Tag.languages
+                case .mp4: return mp4Tag.languages
+                    
             }
         }
         set {
-            switch library {
-                case .id3:
-                    if let new = newValue.id3 {
-                        id3Tag.languages = new
-                    } else {
-                        id3Tag.languages = [.und]
-                    }
-                case .mp4:
-                    if let new = newValue.mp4 {
-                        mp4Tag.languages = new
-                    } else {
-                        mp4Tag.languages = [.unspecified]
-                    }
-                    
+            if !newValue.isEmpty {
+                switch library {
+                    case .id3: id3Tag.languages = newValue
+                    case .mp4: mp4Tag.languages = newValue
+                }
+            } else {
+                switch library {
+                    case .id3: id3Tag.languages = []
+                    case .mp4: mp4Tag.languages = []
+                }
             }
         }
     }

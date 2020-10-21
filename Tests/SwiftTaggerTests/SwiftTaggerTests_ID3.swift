@@ -67,7 +67,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(tag.publisherWebpage, "http://publisher.url")
         XCTAssertEqual(tag.radioStationWebpage, "http://radiostation.url")
         
-        XCTAssertEqual(tag.languages, [.eng])
+        XCTAssertEqual(tag.languages, [.english])
         
         XCTAssertEqual(tag.trackNumber.track, 6)
         XCTAssertEqual(tag.trackNumber.totalTracks, 7)
@@ -174,7 +174,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(file.publisherWebpage, "http://publisher.url")
         XCTAssertEqual(file.radioStationWebpage, "http://radiostation.url")
         
-        XCTAssertEqual(file.language.id3, [.eng])
+        XCTAssertEqual(file.language, [.english])
         
         XCTAssertEqual(file.trackNumber.track, 6)
         XCTAssertEqual(file.trackNumber.totalTracks, 7)
@@ -320,7 +320,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(output.publisherWebpage, "http://publisher.url")
         XCTAssertEqual(output.radioStationWebpage, "http://radiostation.url")
         
-        XCTAssertEqual(output.language.id3, [.eng])
+        XCTAssertEqual(output.language, [.english])
         
         XCTAssertEqual(output.trackNumber.track, 6)
         XCTAssertEqual(output.trackNumber.totalTracks, 7)
@@ -425,7 +425,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(output.id3Tag["Label"], "Label")
         XCTAssertEqual(output.labelWebpage, "LabelURL.com")
         XCTAssertEqual(output.id3Tag[userDefinedUrl: "Label Webpage"], "LabelURL.com")
-        XCTAssertEqual(output.language.id3, [.eng])
+        XCTAssertEqual(output.language, [.english])
         XCTAssertEqual(output.linerNotes, "Liner Notes")
         XCTAssertEqual(output.id3Tag[comment: "Liner Notes", .und], "Liner Notes")
         XCTAssertEqual(output.longDescription, "Long Description")

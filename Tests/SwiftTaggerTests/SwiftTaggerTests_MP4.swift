@@ -486,7 +486,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(output.isrc, "987654321098")
         XCTAssertEqual(output.label, "Label")
         XCTAssertEqual(output.labelWebpage, "LabelURL.com")
-        XCTAssertEqual(output.language.mp4, [.englishWorld])
+        XCTAssertEqual(output.language, [.english])
         XCTAssertEqual(output.linerNotes, "Liner Notes")
         XCTAssertEqual(output.longDescription, "Long Description")
         XCTAssertEqual(output.lyricist, "Lyricist Name")
