@@ -138,8 +138,39 @@ extension AudioFile {
     public var recordingCopyright: String? {
         get {
             switch library {
-                case .id3: return id3Tag.producedNotice
-                case .mp4: return mp4Tag.recordingCopyright
+                case .id3: if let string =
+                                id3Tag.producedNotice {
+                    return string
+                } else if let copyright = self.copyright {
+                    if copyright.contains("(P)") {
+                        let components = copyright.components(separatedBy: "(P)")
+                        if let last = components.last {
+                            return last
+                        } else {
+                            return copyright
+                        }
+                    } else {
+                        return copyright
+                    }
+                } else {
+                    return nil
+                }
+                case .mp4: if let string = mp4Tag.recordingCopyright {
+                    return string
+                } else if let copyright = self.copyright {
+                    if copyright.contains("(P)") {
+                        let components = copyright.components(separatedBy: "(P)")
+                        if let last = components.last {
+                            return last
+                        } else {
+                            return copyright
+                        }
+                    } else {
+                        return copyright
+                    }
+                } else {
+                    return nil
+                }
             }
         }
         set {
