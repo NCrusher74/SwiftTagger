@@ -1,5 +1,7 @@
 # SwiftTagger
 
+### If you find this library helpful, please consider [donating](https://paypal.me/NCrusher74)
+
 SwiftTagger combines the `SwiftTaggerMP4` and `SwiftTaggerID3` libraries into a comprehensive audio file tagging and chaptering library, including bridging the gaps where a tag exists in `ID3` but not for `Mp4` and vice versa.
 
 You can find `SwiftTaggerMP4` [here:](https://github.com/NCrusher74/SwiftTaggerMP4)
