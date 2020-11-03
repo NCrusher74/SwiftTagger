@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Cocoa
+import SwiftTaggerID3
 
 @available(OSX 10.13, *)
 extension AudioFile {
@@ -279,7 +279,7 @@ extension AudioFile {
     }
     
     /// Embedded cover art ID3 frame `APIC`, MP4 atom `covr`
-    public var coverArt: NSImage? {
+    public var coverArt: NativeImage? {
         switch library {
             case .id3: return id3Tag[attachedPicture: .other]
             case .mp4: return mp4Tag.coverArt
