@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftTaggerID3
+import SwiftConvenienceExtensions
 
 @available(OSX 10.13, *)
 extension AudioFile {
