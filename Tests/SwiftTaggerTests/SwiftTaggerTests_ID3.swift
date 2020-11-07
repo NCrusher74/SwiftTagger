@@ -11,8 +11,8 @@ import XCTest
 final class SwiftTaggerTests_ID3: XCTestCase {
     
     func testRead() throws {
-        let file = try AudioFile(location: sampleMp3)
-        let tag = file.id3Tag
+        var file = try AudioFile(location: sampleMp3)
+        var tag = file.id3Tag
         
         XCTAssertEqual(tag.album, "Album")
         XCTAssertEqual(tag.albumArtist, "Album Artist")
@@ -247,7 +247,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
 
         let outputUrl = tempOutputDirectory(fileExtension: .mp3)
         try file.write(outputLocation: outputUrl)
-        let output = try AudioFile(location: outputUrl)
+        var output = try AudioFile(location: outputUrl)
 
         let knownTitles = ["Chapter 01",
                            "Chapter 02",
@@ -353,7 +353,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         let test = try testSettings(&file)
         let outputUrl = try localOutputDirectory(fileName: "mp3Test", fileExtension: .mp3)
         try test.write(outputLocation: outputUrl)
-        let output = try AudioFile(location: outputUrl)
+        var output = try AudioFile(location: outputUrl)
         
         XCTAssertEqual(output.acknowledgment, "Acknowledgment")
         XCTAssertEqual(output.id3Tag["Acknowledgment"], "Acknowledgment")

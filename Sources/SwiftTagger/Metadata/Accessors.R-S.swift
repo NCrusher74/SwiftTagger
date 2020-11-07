@@ -136,41 +136,10 @@ extension AudioFile {
 
     /// Recording copyright statement, aka producedNotice (id3) or phonogram rights (mp4). Normally preceded by the symbol (P) ( P in a circle) ID3 frame `TPRO`, MP4 atom `©phg`. Setting this item will prepend the new string with the Sound recording copyright symbol (\u{2117})
     public var recordingCopyright: String? {
-        get {
+        mutating get {
             switch library {
-                case .id3: if let string =
-                                id3Tag.producedNotice {
-                    return string
-                } else if let copyright = self.copyright {
-                    if copyright.contains("(P)") {
-                        let components = copyright.components(separatedBy: "(P)")
-                        if let last = components.last {
-                            return last
-                        } else {
-                            return copyright
-                        }
-                    } else {
-                        return copyright
-                    }
-                } else {
-                    return nil
-                }
-                case .mp4: if let string = mp4Tag.recordingCopyright {
-                    return string
-                } else if let copyright = self.copyright {
-                    if copyright.contains("(P)") {
-                        let components = copyright.components(separatedBy: "(P)")
-                        if let last = components.last {
-                            return last
-                        } else {
-                            return copyright
-                        }
-                    } else {
-                        return copyright
-                    }
-                } else {
-                    return nil
-                }
+                case .id3: return id3Tag.producedNotice
+                case .mp4: return mp4Tag.recordingCopyright
             }
         }
         set {

@@ -11,8 +11,8 @@ import XCTest
 final class SwiftTaggerTests_MP4: XCTestCase {
     
     func testRead() throws {
-        let file = try AudioFile(location: sampleMp4)
-        let tag = file.mp4Tag
+        var file = try AudioFile(location: sampleMp4)
+        var tag = file.mp4Tag
         
         let calendar = Calendar(identifier: .iso8601)
         let dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone(secondsFromGMT: 0) ?? .current, year: 2020, month: 09, day: 01)
@@ -287,7 +287,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         
         let outputUrl = tempOutputDirectory(fileExtension: .m4a)
         try file.write(outputLocation: outputUrl)
-        let output = try AudioFile(location: outputUrl)
+        var output = try AudioFile(location: outputUrl)
         
         let calendar = Calendar(identifier: .iso8601)
         let dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone(secondsFromGMT: 0) ?? .current, year: 2020, month: 09, day: 01)
@@ -409,7 +409,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         let test = try testSettings(&file)
         let outputUrl = try localOutputDirectory(fileName: "mp4Test", fileExtension: .m4a)
         try test.write(outputLocation: outputUrl)
-        let output = try AudioFile(location: outputUrl)
+        var output = try AudioFile(location: outputUrl)
         
         print(output.chapterList)
         let chapter1 = output.chapterList[0]
@@ -580,5 +580,14 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(output.writer, "Writer Name")
         XCTAssertEqual(output.involvementCreditsList[.writer], ["Writer Name"])
         XCTAssertEqual(output.year, components.year)
+    }
+    
+    func testAudibleCopyrightString() throws {
+        let path = "/Users/nolainecrusher/Downloads/audiobook_tools/samples/October262020_ep7.aax"
+        let url = URL(fileURLWithPath: path)
+        var file = try AudioFile(location: url)
+        print(file.copyright)
+        print(file.recordingCopyright)
+        print(file.copyright)
     }
 }
