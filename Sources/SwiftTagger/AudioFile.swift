@@ -10,7 +10,7 @@ import SwiftTaggerID3
 import SwiftTaggerMP4
 
 /// A type representing an audio file stored locally
-@available(OSX 10.13, *)
+@available(OSX 10.13, iOS 10.0, *)
 public struct AudioFile {
     // MARK: - Properties
     var location: URL
