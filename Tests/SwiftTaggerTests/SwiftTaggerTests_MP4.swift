@@ -457,7 +457,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(output.conductorID, 45678901)
         XCTAssertEqual(output.contentRating.contentRating, .au_Movie_G)
         XCTAssertEqual(output.contentRating.ratingNotes, "Notes")
-        XCTAssertEqual(output.copyright, "\u{00A9} 2020 Copyright")
+        XCTAssertEqual(output.copyright, "\u{00A9}2020 Copyright")
         XCTAssertEqual(output.copyrightWebpage, "CopyrightURL.com")
         XCTAssertNotNil(output.coverArt)
         XCTAssertEqual(output.description, "Description")
@@ -542,7 +542,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(output.rating, .clean)
         XCTAssertEqual(output.recordCompany, "Record Company")
         XCTAssertEqual(output.recordCompanyWebpage, "RecordCompanyURL.com")
-        XCTAssertEqual(output.recordingCopyright, "\u{2117} 2020 Recording Copyright")
+        XCTAssertEqual(output.recordingCopyright, "\u{2117}2020 Recording Copyright")
         XCTAssertEqual(output.recordingDateTime, testAllDate)
         XCTAssertEqual(output.releaseDateTime, testAllDate)
         XCTAssertEqual(output.requirements, "Requirements")
@@ -581,13 +581,13 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(output.involvementCreditsList[.writer], ["Writer Name"])
         XCTAssertEqual(output.year, components.year)
     }
-    
-    func testAudibleCopyrightString() throws {
-        let path = "/Users/nolainecrusher/Downloads/audiobook_tools/samples/October262020_ep7.aax"
-        let url = URL(fileURLWithPath: path)
-        var file = try AudioFile(location: url)
-        print(file.copyright)
-        print(file.recordingCopyright)
-        print(file.copyright)
-    }
+//    
+//    func testAudibleCopyrightString() throws {
+//        let path = "/Users/nolainecrusher/Downloads/audiobook_tools/samples/October262020_ep7.aax"
+//        let url = URL(fileURLWithPath: path)
+//        var file = try AudioFile(location: url)
+//        print(file.copyright)
+//        print(file.recordingCopyright)
+//        print(file.copyright)
+//    }
 }

@@ -10,7 +10,7 @@ import Foundation
 @available(OSX 10.13, iOS 10.0, *)
 extension AudioFile {
     
-    public var chapterList: [(startTime: Int, title: String)] {
+    public var chapterList: [Chapter] {
         switch library {
             case .id3: return id3Tag.chapterList
             case .mp4: return mp4Tag.chapterList

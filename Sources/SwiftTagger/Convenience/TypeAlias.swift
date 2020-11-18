@@ -10,6 +10,7 @@ import SwiftTaggerID3
 import SwiftTaggerMP4
 import iTunesGenreID
 import SwiftLanguageAndLocaleCodes
+import SwiftConvenienceExtensions
 
 typealias Id3Tag = SwiftTaggerID3.Tag
 typealias Mp4Tag = SwiftTaggerMP4.Tag
@@ -28,3 +29,6 @@ public typealias Rating = SwiftTaggerMP4.Rating
 
 public typealias ISO6392Code = SwiftLanguageAndLocaleCodes.ISO6392Code
 public typealias ICULocaleCode = SwiftLanguageAndLocaleCodes.ICULocaleCode
+
+public typealias TOC = TableOfContents
+public typealias Chapter = TableOfContents.Chapter
