@@ -143,8 +143,8 @@ func testSettings(_ file: inout AudioFile) throws -> AudioFile {
     try file.setCoverArt(imageLocation: sampleCover)
     file.description = "Description"
     file.director = "Director Name"
-    file.discNumber.disc = 1
-    file.discNumber.totalDiscs = 2
+    file.discNumber.index = 1
+    file.discNumber.total = 2
     file.encodedBy = "Encoded By"
     file.encoderSettings = "Encoding Tool And Settings"
     file.encodingDateTime = testAllDate
@@ -227,8 +227,8 @@ func testSettings(_ file: inout AudioFile) throws -> AudioFile {
     file.title = "Title"
     file.titleKeywords = ["Title", "Key", "Words"]
     file.titleSort = "Title Sort"
-    file.trackNumber.track = 7
-    file.trackNumber.totalTracks = 8
+    file.trackNumber.index = 7
+    file.trackNumber.total = 8
     file.trackOrSetSubtitle = "Track/Set Subtitle"
     file.work = "Work"
     file.writer = "Writer Name"

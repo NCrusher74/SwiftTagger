@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SwiftConvenienceExtensions
 @available(OSX 10.13, iOS 10.0, *)
 extension AudioFile {
     
@@ -132,7 +132,7 @@ extension AudioFile {
     /// Track number/Position in set. ID3 frame `TRCK` MP4 atom `trkn`
     ///
     /// A numeric string containing the order number of the audio-file on its original recording. This MAY be extended with a "/" character and a numeric string containing the total number of tracks/elements on the original recording. E.g. "4/9".
-    public var trackNumber: (track: Int, totalTracks: Int?) {
+    public var trackNumber: IntIndex {
         get {
             switch library {
                 case .id3: return id3Tag.trackNumber 

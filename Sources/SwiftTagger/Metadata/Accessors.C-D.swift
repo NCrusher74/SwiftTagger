@@ -341,7 +341,7 @@ extension AudioFile {
     /// Disc index/position in set, ID3 frame `TPOS` MP4 atom `disk`
     ///
     /// A numeric string that describes which part of a set the audio came from.
-    public var discNumber: (disc: Int, totalDiscs: Int?) {
+    public var discNumber: IntIndex {
         get {
             switch library {
                 case .id3: return id3Tag.discNumber 

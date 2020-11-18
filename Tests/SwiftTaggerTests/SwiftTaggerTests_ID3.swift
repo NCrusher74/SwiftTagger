@@ -69,10 +69,10 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         
         XCTAssertEqual(tag.languages, [.english])
         
-        XCTAssertEqual(tag.trackNumber.track, 6)
-        XCTAssertEqual(tag.trackNumber.totalTracks, 7)
-        XCTAssertEqual(tag.discNumber.disc, 4)
-        XCTAssertEqual(tag.discNumber.totalDiscs, 5)
+        XCTAssertEqual(tag.trackNumber.index, 6)
+        XCTAssertEqual(tag.trackNumber.total, 7)
+        XCTAssertEqual(tag.discNumber.index, 4)
+        XCTAssertEqual(tag.discNumber.total, 5)
         
         XCTAssertEqual(tag.involvementCreditsList[.director], ["Director Name"])
         XCTAssertEqual(tag.involvementCreditsList[.producer], ["Producer Name"])
@@ -89,10 +89,10 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(tag[userDefinedUrl: "UserURL"], "http://userdefined.url")
         XCTAssertEqual(tag["UserText"], "User Text Content")
         
-        XCTAssertEqual(tag.discNumber.disc, 4)
-        XCTAssertEqual(tag.discNumber.totalDiscs, 5)
-        XCTAssertEqual(tag.trackNumber.track, 6)
-        XCTAssertEqual(tag.trackNumber.totalTracks, 7)
+        XCTAssertEqual(tag.discNumber.index, 4)
+        XCTAssertEqual(tag.discNumber.total, 5)
+        XCTAssertEqual(tag.trackNumber.index, 6)
+        XCTAssertEqual(tag.trackNumber.total, 7)
         
         XCTAssertEqual(tag.genre.genreCategory, .Blues)
         XCTAssertEqual(tag.genre.genre, "Blues Refinement")
@@ -176,10 +176,10 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         
         XCTAssertEqual(file.language, [.english])
         
-        XCTAssertEqual(file.trackNumber.track, 6)
-        XCTAssertEqual(file.trackNumber.totalTracks, 7)
-        XCTAssertEqual(file.discNumber.disc, 4)
-        XCTAssertEqual(file.discNumber.totalDiscs, 5)
+        XCTAssertEqual(file.trackNumber.index, 6)
+        XCTAssertEqual(file.trackNumber.total, 7)
+        XCTAssertEqual(file.discNumber.index, 4)
+        XCTAssertEqual(file.discNumber.total, 5)
         
         XCTAssertEqual(file.involvementCreditsList[.director], ["Director Name"])
         XCTAssertEqual(file.involvementCreditsList[.producer], ["Producer Name"])
@@ -193,10 +193,10 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         
         XCTAssertEqual(file["UserText"], "User Text Content")
         
-        XCTAssertEqual(file.discNumber.disc, 4)
-        XCTAssertEqual(file.discNumber.totalDiscs, 5)
-        XCTAssertEqual(file.trackNumber.track, 6)
-        XCTAssertEqual(file.trackNumber.totalTracks, 7)
+        XCTAssertEqual(file.discNumber.index, 4)
+        XCTAssertEqual(file.discNumber.total, 5)
+        XCTAssertEqual(file.trackNumber.index, 6)
+        XCTAssertEqual(file.trackNumber.total, 7)
         
         XCTAssertEqual(file.genrePredefined.id3, .Blues)
         XCTAssertEqual(file.genreCustom, "Blues Refinement")
@@ -322,10 +322,10 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         
         XCTAssertEqual(output.language, [.english])
         
-        XCTAssertEqual(output.trackNumber.track, 6)
-        XCTAssertEqual(output.trackNumber.totalTracks, 7)
-        XCTAssertEqual(output.discNumber.disc, 4)
-        XCTAssertEqual(output.discNumber.totalDiscs, 5)
+        XCTAssertEqual(output.trackNumber.index, 6)
+        XCTAssertEqual(output.trackNumber.total, 7)
+        XCTAssertEqual(output.discNumber.index, 4)
+        XCTAssertEqual(output.discNumber.total, 5)
         
         XCTAssertEqual(output.involvementCreditsList[.director], ["Director Name"])
         XCTAssertEqual(output.involvementCreditsList[.producer], ["Producer Name"])
@@ -339,10 +339,10 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         
         XCTAssertEqual(output["UserText"], "User Text Content")
         
-        XCTAssertEqual(output.discNumber.disc, 4)
-        XCTAssertEqual(output.discNumber.totalDiscs, 5)
-        XCTAssertEqual(output.trackNumber.track, 6)
-        XCTAssertEqual(output.trackNumber.totalTracks, 7)
+        XCTAssertEqual(output.discNumber.index, 4)
+        XCTAssertEqual(output.discNumber.total, 5)
+        XCTAssertEqual(output.trackNumber.index, 6)
+        XCTAssertEqual(output.trackNumber.total, 7)
         
         XCTAssertEqual(output.genrePredefined.id3, .Blues)
         XCTAssertEqual(output.genreCustom, "Blues Refinement")
@@ -400,8 +400,8 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(output.id3Tag[comment: "Description", .und], "Description")
         XCTAssertEqual(output.director, "Director Name")
         XCTAssertEqual(output.involvementCreditsList[.director], ["Director Name"])
-        XCTAssertEqual(output.discNumber.disc, 1)
-        XCTAssertEqual(output.discNumber.totalDiscs, 2)
+        XCTAssertEqual(output.discNumber.index, 1)
+        XCTAssertEqual(output.discNumber.total, 2)
         XCTAssertEqual(output.encodedBy, "Encoded By")
         XCTAssertEqual(output.encoderSettings, "Encoding Tool And Settings")
         XCTAssertEqual(output.encodingDateTime, testAllDate)
@@ -525,8 +525,8 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(output.titleKeywords, ["Title", "Key", "Words"])
         XCTAssertEqual(output.id3Tag["Title Keywords"], "Title; Key; Words")
         XCTAssertEqual(output.titleSort, "Title Sort")
-        XCTAssertEqual(output.trackNumber.track, 7)
-        XCTAssertEqual(output.trackNumber.totalTracks, 8)
+        XCTAssertEqual(output.trackNumber.index, 7)
+        XCTAssertEqual(output.trackNumber.total, 8)
         XCTAssertEqual(output.trackOrSetSubtitle, "Track/Set Subtitle")
         XCTAssertEqual(output.id3Tag.setSubtitle, "Track/Set Subtitle")
         XCTAssertEqual(output.work, "Work")
