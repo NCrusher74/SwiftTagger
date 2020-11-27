@@ -11,7 +11,7 @@ import XCTest
 final class SwiftTaggerTests_MP4: XCTestCase {
     
     func testRead() throws {
-        var file = try AudioFile(location: sampleMp4)
+        let file = try AudioFile(location: sampleMp4)
         let tag = file.mp4Tag
         
         let calendar = Calendar(identifier: .iso8601)
@@ -287,7 +287,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         
         let outputUrl = tempOutputDirectory(fileExtension: .m4a)
         try file.write(outputLocation: outputUrl)
-        var output = try AudioFile(location: outputUrl)
+        let output = try AudioFile(location: outputUrl)
         
         let calendar = Calendar(identifier: .iso8601)
         let dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone(secondsFromGMT: 0) ?? .current, year: 2020, month: 09, day: 01)
@@ -409,7 +409,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         let test = try testSettings(&file)
         let outputUrl = try localOutputDirectory(fileName: "mp4Test", fileExtension: .m4a)
         try test.write(outputLocation: outputUrl)
-        var output = try AudioFile(location: outputUrl)
+        let output = try AudioFile(location: outputUrl)
         
         print(output.chapterList)
         let chapter1 = output.chapterList[0]
