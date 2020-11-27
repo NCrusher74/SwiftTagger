@@ -12,7 +12,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
     
     func testRead() throws {
         var file = try AudioFile(location: sampleMp4)
-        var tag = file.mp4Tag
+        let tag = file.mp4Tag
         
         let calendar = Calendar(identifier: .iso8601)
         let dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone(secondsFromGMT: 0) ?? .current, year: 2020, month: 09, day: 01)
@@ -49,7 +49,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(tag.composerSort,"Composer Sort")
         XCTAssertEqual(tag.conductor,"Conductor")
         XCTAssertEqual(tag.conductorID,45678)
-        XCTAssertEqual(tag.copyright,"2020 Copyright")
+        XCTAssertEqual(tag.copyright,"©2020 Copyright")
         XCTAssertEqual(tag.copyrightStatement,"Copyright Statement")
         XCTAssertEqual(tag.customGenre,"Genre")
         XCTAssertEqual(tag.description,"Description")
@@ -96,7 +96,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(tag.purchaseDate, date)
         XCTAssertEqual(tag.rating,.clean)
         XCTAssertEqual(tag.recordCompany,"Record Company")
-        XCTAssertEqual(tag.recordingCopyright,"Recording Copyright")
+        XCTAssertEqual(tag.recordingCopyright,"℗Recording Copyright")
         XCTAssertEqual(tag.recordingDate, date)
         XCTAssertEqual(tag.releaseDate, date)
         XCTAssertEqual(tag.requirements,"Requirements")
@@ -155,7 +155,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(file.composerSort,"Composer Sort")
         XCTAssertEqual(file.conductor,"Conductor")
         XCTAssertEqual(file.conductorID,45678)
-        XCTAssertEqual(file.copyright,"2020 Copyright")
+        XCTAssertEqual(file.copyright,"©2020 Copyright")
         XCTAssertEqual(file.genreCustom,"Genre")
         XCTAssertEqual(file.description,"Description")
         XCTAssertEqual(file.director,"Director")
@@ -198,7 +198,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(file.purchaseDateTime, date)
         XCTAssertEqual(file.rating,.clean)
         XCTAssertEqual(file.recordCompany,"Record Company")
-        XCTAssertEqual(file.recordingCopyright,"Recording Copyright")
+        XCTAssertEqual(file.recordingCopyright,"℗Recording Copyright")
         XCTAssertEqual(file.recordingDateTime, date)
         XCTAssertEqual(file.releaseDateTime, date)
         XCTAssertEqual(file.requirements,"Requirements")
@@ -325,7 +325,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(output.composerSort,"Composer Sort")
         XCTAssertEqual(output.conductor,"Conductor")
         XCTAssertEqual(output.conductorID,45678)
-        XCTAssertEqual(output.copyright,"2020 Copyright")
+        XCTAssertEqual(output.copyright,"©2020 Copyright")
         XCTAssertEqual(output.genreCustom,"Genre")
         XCTAssertEqual(output.description,"Description")
         XCTAssertEqual(output.director,"Director")
@@ -368,7 +368,7 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertEqual(output.purchaseDateTime, date)
         XCTAssertEqual(output.rating,.clean)
         XCTAssertEqual(output.recordCompany,"Record Company")
-        XCTAssertEqual(output.recordingCopyright,"Recording Copyright")
+        XCTAssertEqual(output.recordingCopyright,"℗Recording Copyright")
         XCTAssertEqual(output.recordingDateTime, date)
         XCTAssertEqual(output.releaseDateTime, date)
         XCTAssertEqual(output.requirements,"Requirements")

@@ -12,7 +12,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
     
     func testRead() throws {
         var file = try AudioFile(location: sampleMp3)
-        var tag = file.id3Tag
+        let tag = file.id3Tag
         
         XCTAssertEqual(tag.album, "Album")
         XCTAssertEqual(tag.albumArtist, "Album Artist")
@@ -25,7 +25,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(tag.composerSort, "Composer Sort")
         XCTAssertEqual(tag.conductor, "Conductor")
         XCTAssertEqual(tag.contentGroup, "Content Group")
-        XCTAssertEqual(tag.copyright, "2020 Copyright")
+        XCTAssertEqual(tag.copyright, "©2020 Copyright")
         XCTAssertEqual(tag.encodedBy, "Encoded By")
         XCTAssertEqual(tag.encodingSettings, "Encoding Settings")
         XCTAssertEqual(tag.fileOwner, "File Owner")
@@ -44,7 +44,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(tag.podcastDescription, "Podcast Description")
         XCTAssertEqual(tag.podcastKeywords, ["Podcast", "Keywords"])
         XCTAssertEqual(tag.publisher, "Publisher")
-        XCTAssertEqual(tag.producedNotice, "2020 Produced Notice")
+        XCTAssertEqual(tag.producedNotice, "℗2020 Produced Notice")
         XCTAssertEqual(tag.radioStation, "Radio Station")
         XCTAssertEqual(tag.radioStationOwner, "Radio Station Owner")
         XCTAssertEqual(tag.subtitle, "Subtitle")
@@ -132,7 +132,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(file.composerSort, "Composer Sort")
         XCTAssertEqual(file.conductor, "Conductor")
         XCTAssertEqual(file.work, "Content Group")
-        XCTAssertEqual(file.copyright, "2020 Copyright")
+        XCTAssertEqual(file.copyright, "©2020 Copyright")
         XCTAssertEqual(file.encodedBy, "Encoded By")
         XCTAssertEqual(file.encoderSettings, "Encoding Settings")
         XCTAssertEqual(file.owner, "File Owner")
@@ -151,7 +151,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(file.podcastDescription, "Podcast Description")
         XCTAssertEqual(file.podcastKeywords, ["Podcast", "Keywords"])
         XCTAssertEqual(file.publisher, "Publisher")
-        XCTAssertEqual(file.recordingCopyright, "2020 Produced Notice")
+        XCTAssertEqual(file.recordingCopyright, "℗2020 Produced Notice")
         XCTAssertEqual(file.radioStation, "Radio Station")
         XCTAssertEqual(file.radioStationOwner, "Radio Station Owner")
         XCTAssertEqual(file.subtitle, "Subtitle")
@@ -278,7 +278,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(output.composerSort, "Composer Sort")
         XCTAssertEqual(output.conductor, "Conductor")
         XCTAssertEqual(output.work, "Content Group")
-        XCTAssertEqual(output.copyright, "2020 Copyright")
+        XCTAssertEqual(output.copyright, "©2020 Copyright")
         XCTAssertEqual(output.encodedBy, "Encoded By")
         XCTAssertEqual(output.encoderSettings, "Encoding Settings")
         XCTAssertEqual(output.owner, "File Owner")
@@ -297,7 +297,7 @@ final class SwiftTaggerTests_ID3: XCTestCase {
         XCTAssertEqual(output.podcastDescription, "Podcast Description")
         XCTAssertEqual(output.podcastKeywords, ["Podcast", "Keywords"])
         XCTAssertEqual(output.publisher, "Publisher")
-        XCTAssertEqual(output.recordingCopyright, "2020 Produced Notice")
+        XCTAssertEqual(output.recordingCopyright, "℗2020 Produced Notice")
         XCTAssertEqual(output.radioStation, "Radio Station")
         XCTAssertEqual(output.radioStationOwner, "Radio Station Owner")
         XCTAssertEqual(output.subtitle, "Subtitle")
