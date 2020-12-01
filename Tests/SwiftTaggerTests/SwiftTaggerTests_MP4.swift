@@ -8,6 +8,7 @@
 import XCTest
 @testable import SwiftTagger
 
+@available(OSX 11.0, *)
 final class SwiftTaggerTests_MP4: XCTestCase {
     
     func testRead() throws {

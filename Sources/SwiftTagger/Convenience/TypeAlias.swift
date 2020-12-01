@@ -12,9 +12,6 @@ import iTunesGenreID
 import SwiftLanguageAndLocaleCodes
 import SwiftConvenienceExtensions
 
-typealias Id3Tag = SwiftTaggerID3.Tag
-typealias Mp4Tag = SwiftTaggerMP4.Tag
-
 typealias Atom = SwiftTaggerMP4.Atom
 
 public typealias MusicianCredits = MusicianAndPerformerCredits

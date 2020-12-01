@@ -8,23 +8,35 @@
 import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
+import UniformTypeIdentifiers
 
 /// A type representing an audio file stored locally
-@available(OSX 10.13, iOS 10.0, *)
+@available(OSX 11.0, iOS 10.0, *)
 public struct AudioFile {
     // MARK: - Properties
     var location: URL
-    private var _id3Tag: Id3Tag?
-    private var _mp4Tag: Mp4Tag?
+    private var _id3Tag: SwiftTaggerID3.Tag?
+    private var _mp4Tag: SwiftTaggerMP4.Tag?
+    public var fileType: UTType
 
     public init(location: URL) throws {
         self.location = location
-        switch library {
+        let initializedLibrary: Library
+        if let type = UTType(filenameExtension: location.pathExtension) {
+            let library = try Library(fileType: type)
+            initializedLibrary = library
+        } else {
+            throw AudioFileError.CannotInitializeFileType
+        }
+        
+        switch initializedLibrary {
             case .id3:
                 let file = try Mp3File(location: location)
+                self.fileType = file.fileType
                 self._id3Tag = try file.tag()
             case .mp4:
                 let file = try Mp4File(location: location)
+                self.fileType = file.fileType
                 self._mp4Tag = try file.tag()
         }
     }
@@ -42,7 +54,7 @@ public struct AudioFile {
         }
     }
     
-    var id3Tag: Id3Tag {
+    var id3Tag: SwiftTaggerID3.Tag {
         get {
             if let tag = self._id3Tag {
                 return tag
@@ -65,7 +77,7 @@ public struct AudioFile {
         }
     }
     
-    var mp4Tag: Mp4Tag {
+    var mp4Tag: SwiftTaggerMP4.Tag {
         get {
             if let tag = self._mp4Tag {
                 return tag
@@ -100,7 +112,29 @@ public struct AudioFile {
     }
 }
 
+@available(OSX 11.0, *)
 public enum Library {
     case id3
     case mp4
+    
+    init(fileType: UTType) throws {
+        if fileType == .mp3 {
+            self = .id3
+        } else {
+            let recognizedTypes: [UTType] = [
+                .appleProtectedMPEG4Audio,
+                .mpeg4Audio,
+                .appleProtectedMPEG4Video,
+                .mpeg4Movie,
+                UTType(importedAs: "com.apple.m4a-audio"),
+                UTType(importedAs: "com.apple.protected-mpeg-4-audio-b"),
+                UTType(importedAs: "com.audible.aax-audiobook")
+            ]
+            if recognizedTypes.contains(fileType) {
+                self = .mp4
+            } else {
+                throw AudioFileError.InvalidFileType
+            }
+        }
+    }
 }

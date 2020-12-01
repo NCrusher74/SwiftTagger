@@ -10,6 +10,7 @@ import XCTest
 import SwiftTaggerID3
 import SwiftTaggerMP4
 
+@available(OSX 11.0, *)
 final class SwiftTaggerTests_FileAccess: XCTestCase {
     
     func testFileAccess() throws {
