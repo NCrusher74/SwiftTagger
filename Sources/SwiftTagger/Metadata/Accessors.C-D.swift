@@ -8,7 +8,7 @@
 import Foundation
 import SwiftConvenienceExtensions
 
-@available(OSX 11.0, iOS 10.0, *)
+@available(OSX 11.0, iOS 14.0, *)
 extension AudioFile {
     
     /// Comments ID3 frame `COMM` MP4 atom `©cmt`

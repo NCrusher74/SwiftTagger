@@ -11,7 +11,7 @@ import SwiftTaggerMP4
 import UniformTypeIdentifiers
 
 /// A type representing an audio file stored locally
-@available(OSX 11.0, iOS 10.0, *)
+@available(OSX 11.0, iOS 14.0, *)
 public struct AudioFile {
     // MARK: - Properties
     var location: URL
@@ -112,7 +112,7 @@ public struct AudioFile {
     }
 }
 
-@available(OSX 11.0, *)
+@available(OSX 11.0, iOS 14.0, *)
 public enum Library {
     case id3
     case mp4

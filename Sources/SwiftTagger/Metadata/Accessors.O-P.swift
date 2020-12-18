@@ -7,7 +7,7 @@
 
 import Foundation
 
-@available(OSX 11.0, iOS 10.0, *)
+@available(OSX 11.0, iOS 14.0, *)
 extension AudioFile {
     
     /// Original album/movie/show title. ID3 frame `TOAL`
@@ -93,7 +93,7 @@ extension AudioFile {
     /// Contains a timestamp describing when the original recording of the audio was released.
     ///
     /// There is no correspondin MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Original Release Date/Time`
-    @available(OSX 11.0, iOS 10.0, *)
+    @available(OSX 11.0, iOS 14.0, *)
     public var originalReleaseDateTime: Date? {
         get {
             switch library {

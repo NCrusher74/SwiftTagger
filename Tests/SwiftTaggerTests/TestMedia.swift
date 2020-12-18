@@ -94,7 +94,7 @@ let components: DateComponents = {
     return components
 }()
 
-@available(OSX 11.0, *)
+@available(OSX 11.0, iOS 14.0, *)
 func testSettings(_ file: inout AudioFile) throws -> AudioFile {
 //    let chapters: [(startTime: Int, title: String)] = [
 //        (0, "Chapter 01"),
