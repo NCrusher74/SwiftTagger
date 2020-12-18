@@ -15,21 +15,20 @@ import UniformTypeIdentifiers
 public struct AudioFile {
     // MARK: - Properties
     var location: URL
+    var library: Library
     private var _id3Tag: SwiftTaggerID3.Tag?
     private var _mp4Tag: SwiftTaggerMP4.Tag?
     public var fileType: UTType
 
     public init(location: URL) throws {
         self.location = location
-        let initializedLibrary: Library
         if let type = UTType(filenameExtension: location.pathExtension) {
-            let library = try Library(fileType: type)
-            initializedLibrary = library
+            self.library = try Library(fileType: type)
         } else {
             throw AudioFileError.CannotInitializeFileType
         }
         
-        switch initializedLibrary {
+        switch library {
             case .id3:
                 let file = try Mp3File(location: location)
                 self.fileType = file.fileType
@@ -100,16 +99,16 @@ public struct AudioFile {
         }
     }
     
-    public var library: Library {
-        let fileExtension = location.pathExtension.lowercased()
-        if ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"].contains(fileExtension) {
-            return .mp4
-        } else if fileExtension == "mp3" {
-            return .id3
-        } else {
-            fatalError("Invalid file type with extension \(fileExtension). Must have valid extension for MP3 or MP4 audio files")
-        }
-    }
+//    public var library: Library {
+//        let fileExtension = location.pathExtension.lowercased()
+//        if ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"].contains(fileExtension) {
+//            return .mp4
+//        } else if fileExtension == "mp3" {
+//            return .id3
+//        } else {
+//            fatalError("Invalid file type with extension \(fileExtension). Must have valid extension for MP3 or MP4 audio files")
+//        }
+//    }
 }
 
 @available(OSX 11.0, iOS 14.0, *)
