@@ -191,50 +191,28 @@ extension AudioFile {
     }
     
     /// Content rating/advisory (such as MPAA ratings). userDefined atom/frame `iTunEXTC`
-    public var contentRating:
-        (contentRating: ContentRating, ratingNotes: String?) {
+    public var contentRating: ContentRating? {
         get {
             switch library {
                 case .mp4: return mp4Tag.contentRating
                 case .id3:
                     if let string = id3Tag["iTunEXTC"] {
-                        let components: [String] = string.components(separatedBy: "|")
-                        if components.count == 3 {
-                            if let rating = ContentRating(rawValue: string) {
-                                return (rating, nil)
-                            } else {
-                                return (.none, nil)
-                            }
-                        } else {
-                            let ratingComponentsString = components[0 ..< 3].joined(separator: "|") + "|"
-                            let note = components.last
-                            if let rating = ContentRating(rawValue: ratingComponentsString) {
-                                return (rating, note)
-                            } else {
-                                return (.none, nil)
-                            }
-                        }
+                        return ContentRating(rawValue: string)
                     } else {
-                        return (.none, nil)
+                        return nil
                     }
             }
         }
         set {
-            if newValue != (.none, nil) {
+            if let new = newValue {
                 switch library {
-                    case .mp4: mp4Tag.contentRating = newValue
-                    case .id3:
-                        let string = newValue.contentRating.rawValue
-                        if let note = newValue.ratingNotes {
-                            id3Tag["iTunEXTC"] = string + note
-                        } else {
-                            id3Tag["iTunEXTC"] = string
-                        }
+                    case .mp4: mp4Tag.contentRating = new
+                    case .id3: id3Tag["iTunEXTC"] = new.rawValue
                 }
             } else {
                 switch library {
                     case .id3: id3Tag["iTunEXTC"] = nil
-                    case .mp4: mp4Tag.contentRating = (.none, nil)
+                    case .mp4: mp4Tag.contentRating = nil
                 }
             }
         }

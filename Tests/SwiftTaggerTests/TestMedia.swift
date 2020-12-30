@@ -137,8 +137,7 @@ func testSettings(_ file: inout AudioFile) throws -> AudioFile {
     file.composerSort = "Composer Sort"
     file.conductor = "Conductor Name"
     file.conductorID = 45678901
-    file.contentRating.contentRating = .au_Movie_G
-    file.contentRating.ratingNotes = "Notes"
+    file.contentRating = .au_Movie_G("Notes")
     file.copyright = "2020 Copyright"
     file.copyrightWebpage = "CopyrightURL.com"
     try file.setCoverArt(imageLocation: sampleCover)
