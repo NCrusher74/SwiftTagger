@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension String {
-    @available(OSX 11.0, iOS 14.0, *)
+extension String {    
+    @available(OSX 10.12, iOS 12.0, *)
     var attemptDateFromString: Date? {
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions = [.withInternetDateTime]

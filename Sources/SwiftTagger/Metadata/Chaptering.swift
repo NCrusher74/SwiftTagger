@@ -7,9 +7,9 @@
 
 import Foundation
 
-@available(OSX 11.0, iOS 14.0, *)
-extension AudioFile {
-    
+
+@available(OSX 10.12, iOS 12.0, *)
+extension AudioFile {    
     public var chapterList: [Chapter] {
         switch library {
             case .id3: return id3Tag.chapterList

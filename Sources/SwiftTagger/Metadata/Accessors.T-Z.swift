@@ -7,9 +7,9 @@
 
 import Foundation
 import SwiftConvenienceExtensions
-@available(OSX 11.0, iOS 14.0, *)
-extension AudioFile {
-    
+
+@available(OSX 10.12, iOS 12.0, *)
+extension AudioFile {    
     /// Tagging date/time. ID3 frame `TDTG`
     ///
     /// There is no corresponding MP4 atom. For MP4 files, this metadata will be written to a userDefined atom with the description `Tagging Date`

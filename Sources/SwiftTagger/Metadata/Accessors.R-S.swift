@@ -7,9 +7,9 @@
 
 import Foundation
 
-@available(OSX 11.0, iOS 14.0, *)
-extension AudioFile {
-    
+
+@available(OSX 10.12, iOS 12.0, *)
+extension AudioFile {    
     /// Internet radio station name. ID3 frame `TRSN`
     ///
     /// Contains the name of the internet radio station from which the audio is streamed.

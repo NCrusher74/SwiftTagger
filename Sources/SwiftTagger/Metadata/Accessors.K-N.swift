@@ -8,7 +8,8 @@
 import Foundation
 import SwiftLanguageAndLocaleCodes
 
-@available(OSX 11.0, iOS 14.0, *)
+
+@available(OSX 10.12, iOS 12.0, *)
 extension AudioFile {
     /// Name of record label MP4 atom `©lab`
     ///

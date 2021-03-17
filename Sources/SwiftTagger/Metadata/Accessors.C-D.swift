@@ -8,9 +8,9 @@
 import Foundation
 import SwiftConvenienceExtensions
 
-@available(OSX 11.0, iOS 14.0, *)
-extension AudioFile {
-    
+
+@available(OSX 10.12, iOS 12.0, *)
+extension AudioFile {    
     /// Comments ID3 frame `COMM` MP4 atom `©cmt`
     ///
     /// This frame is intended for any kind of full text information that does not fit in any other frame. ALLOWS `(/n)` new line characters.

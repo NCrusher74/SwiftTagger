@@ -8,7 +8,7 @@
 import XCTest
 @testable import SwiftTagger
 
-@available(OSX 11.0, iOS 14.0, *)
+
 final class SwiftTaggerTests_ID3: XCTestCase {
     
     func testRead() throws {

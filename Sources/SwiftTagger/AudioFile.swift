@@ -8,34 +8,26 @@
 import Foundation
 import SwiftTaggerID3
 import SwiftTaggerMP4
-import UniformTypeIdentifiers
 
 /// A type representing an audio file stored locally
-@available(OSX 11.0, iOS 14.0, *)
+@available(OSX 10.12, iOS 12.0, *)
 public struct AudioFile {
     // MARK: - Properties
     var location: URL
     var library: Library
     private var _id3Tag: SwiftTaggerID3.Tag?
     private var _mp4Tag: SwiftTaggerMP4.Tag?
-    public var fileType: UTType
-
+    
     public init(location: URL) throws {
         self.location = location
-        if let type = UTType(filenameExtension: location.pathExtension) {
-            self.library = try Library(fileType: type)
-        } else {
-            throw AudioFileError.CannotInitializeFileType
-        }
+        self.library = try Library(fileExtension: location.pathExtension)
         
         switch library {
             case .id3:
                 let file = try Mp3File(location: location)
-                self.fileType = file.fileType
                 self._id3Tag = try file.tag()
             case .mp4:
                 let file = try Mp4File(location: location)
-                self.fileType = file.fileType
                 self._mp4Tag = try file.tag()
         }
     }
@@ -66,7 +58,7 @@ public struct AudioFile {
             self._id3Tag = newValue
         }
     }
-
+    
     var id3Metadata: [FrameKey : Frame ] {
         get {
             return id3Tag.frames
@@ -89,7 +81,7 @@ public struct AudioFile {
             self._mp4Tag = newValue
         }
     }
-
+    
     var mp4Metadata: [AtomKey : Atom ] {
         get {
             return mp4Tag.metadataAtoms
@@ -98,38 +90,18 @@ public struct AudioFile {
             mp4Tag.metadataAtoms = newValue
         }
     }
-    
-//    public var library: Library {
-//        let fileExtension = location.pathExtension.lowercased()
-//        if ["mp4", "m4a", "m4b", "aac", "m4r", "m4p", "aax"].contains(fileExtension) {
-//            return .mp4
-//        } else if fileExtension == "mp3" {
-//            return .id3
-//        } else {
-//            fatalError("Invalid file type with extension \(fileExtension). Must have valid extension for MP3 or MP4 audio files")
-//        }
-//    }
 }
 
-@available(OSX 11.0, iOS 14.0, *)
 public enum Library {
     case id3
     case mp4
     
-    init(fileType: UTType) throws {
-        if fileType == .mp3 {
+    init(fileExtension: String) throws {
+        if fileExtension.lowercased() == "mp3" {
             self = .id3
         } else {
-            let recognizedTypes: [UTType] = [
-                .appleProtectedMPEG4Audio,
-                .mpeg4Audio,
-                .appleProtectedMPEG4Video,
-                .mpeg4Movie,
-                UTType(importedAs: "com.apple.m4a-audio"),
-                UTType(importedAs: "com.apple.protected-mpeg-4-audio-b"),
-                UTType(importedAs: "com.audible.aax-audiobook")
-            ]
-            if recognizedTypes.contains(fileType) {
+            let recognizedMp4Extensions: [String] = ["aax", "aac", "mp4", "m4a", "m4b"]
+            if recognizedMp4Extensions.contains(fileExtension.lowercased()) {
                 self = .mp4
             } else {
                 throw AudioFileError.InvalidFileType

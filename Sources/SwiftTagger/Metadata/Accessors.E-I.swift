@@ -7,7 +7,8 @@
 
 import Foundation
 import SwiftTaggerMP4
-@available(OSX 11.0, iOS 14.0, *)
+
+@available(OSX 10.12, iOS 12.0, *)
 extension AudioFile {
     /// Encoding date/time. ID3 frame `TDEN`
     ///
