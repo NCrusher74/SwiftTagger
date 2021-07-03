@@ -45,7 +45,7 @@ public struct AudioFile {
         }
     }
     
-    var id3Tag: SwiftTaggerID3.Tag {
+    public var id3Tag: SwiftTaggerID3.Tag {
         get {
             if let tag = self._id3Tag {
                 return tag
@@ -68,7 +68,7 @@ public struct AudioFile {
         }
     }
     
-    var mp4Tag: SwiftTaggerMP4.Tag {
+    public var mp4Tag: SwiftTaggerMP4.Tag {
         get {
             if let tag = self._mp4Tag {
                 return tag

@@ -404,15 +404,4 @@ final class SwiftTaggerTests_MP4: XCTestCase {
         XCTAssertNotNil(output.coverArt)
         XCTAssertEqual(file["Unknown"], "unknown")
     }
-    
-    func testFullM4B() throws {
-        let path = "/Users/nolainecrusher/Desktop/test-real/1-01 Honor Harrington Book 1.m4b"
-        let url = URL(fileURLWithPath: path)
-        var file = try AudioFile(location: url)
-        
-        let output = URL(fileURLWithPath: "/Users/nolainecrusher/Desktop/TestOutput/1-01 Honor Harrington Book 1-new.m4b")
-            
-        file.title = "New Title"
-        try file.write(outputLocation: output)
-    }
 }
